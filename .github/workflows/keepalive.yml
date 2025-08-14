@@ -1,0 +1,27 @@
+name: keepalive
+
+on:
+  schedule:
+    - cron: '0 0 1 * *'
+  workflow_dispatch:
+
+concurrency:
+  group: keepalive
+  cancel-in-progress: false
+
+jobs:
+  keepalive:
+    permissions:
+      actions: write
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Authenticate GitHub CLI
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo $GH_TOKEN | gh auth login --with-token
+
+      - name: Re-enable workflows
+        run: |
+          gh workflow enable keepalive
+          gh workflow enable tests
