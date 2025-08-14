@@ -2,12 +2,13 @@
 
 [English](./README.md) | [日本語](./README_ja.md)
 
-[![Build Status](https://github.com/shimomo/bvp-trimmer/workflows/Tests/badge.svg)](https://github.com/shimomo/bvp-trimmer/actions?query=workflow%3Atests)
+[![tests](https://github.com/shimomo/bvp-trimmer/actions/workflows/tests.yml/badge.svg)](https://github.com/shimomo/bvp-trimmer/actions/workflows/tests.yml)
+[![keepalive](https://github.com/shimomo/bvp-trimmer/actions/workflows/keepalive.yml/badge.svg)](https://github.com/shimomo/bvp-trimmer/actions/workflows/keepalive.yml)
 [![codecov](https://codecov.io/gh/shimomo/bvp-trimmer/branch/5.x/graph/badge.svg?token=27E93D01MN)](https://codecov.io/gh/shimomo/bvp-trimmer)
-[![PHP Version Require](https://poser.pugx.org/bvp/trimmer/require/php)](https://packagist.org/packages/bvp/trimmer)
-[![Latest Stable Version](https://poser.pugx.org/bvp/trimmer/v/stable)](https://packagist.org/packages/bvp/trimmer)
-[![Latest Unstable Version](https://poser.pugx.org/bvp/trimmer/v/unstable)](https://packagist.org/packages/bvp/trimmer#5.x-dev)
-[![License](https://poser.pugx.org/bvp/trimmer/license)](https://packagist.org/packages/bvp/trimmer)
+[![php](https://poser.pugx.org/bvp/trimmer/require/php)](https://packagist.org/packages/bvp/trimmer)
+[![stable](https://poser.pugx.org/bvp/trimmer/v/stable)](https://packagist.org/packages/bvp/trimmer)
+[![unstable](https://poser.pugx.org/bvp/trimmer/v/unstable)](https://packagist.org/packages/bvp/trimmer#5.x-dev)
+[![license](https://poser.pugx.org/bvp/trimmer/license)](https://packagist.org/packages/bvp/trimmer)
 
 BVP Trimmer は、PHP 組み込みの trim / ltrim / rtrim 関数を拡張し、配列やオブジェクトにも適用可能にするユーティリティパッケージです。
 
@@ -58,7 +59,7 @@ Trimmer::trim([' trimmerA ', [' trimmerB ', 1, 1.0, true, null]]);
 // => ["trimmerA", ["trimmerB", 1, 1.0, true, null]]
 ```
 
-ltrim, rtrim も同様に使用可能ですが、冗長を避けるためここでは省略しています。
+`ltrim` と `rtrim` の例は簡潔のため省略していますが、これらの関数は完全にサポートされています。
 
 ### オブジェクトに対して
 プロパティのトリムは getter / setter が定義されている必要があります。ネストしたオブジェクトにも対応します。
@@ -95,7 +96,7 @@ Trimmer::trim($objectB);
 // $propertyC と $objectA->propertyA がトリムされます。$propertyD と $objectA->propertyB はそのままです。
 ```
 
-ltrim, rtrim も同様に使用可能ですが、冗長を避けるためここでは省略しています。
+`ltrim` と `rtrim` の例は簡潔のため省略していますが、これらの関数は完全にサポートされています。
 
 ## 備考
 `Trimmer::trim`, `Trimmer::ltrim`, `Trimmer::rtrim` はすべて **非破壊的** です（新しい値を返します）。
