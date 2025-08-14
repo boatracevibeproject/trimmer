@@ -2,12 +2,13 @@
 
 [English](./README.md) | [日本語](./README_ja.md)
 
-[![Build Status](https://github.com/shimomo/bvp-trimmer/workflows/Tests/badge.svg)](https://github.com/shimomo/bvp-trimmer/actions?query=workflow%3Atests)
+[![tests](https://github.com/shimomo/bvp-trimmer/actions/workflows/tests.yml/badge.svg)](https://github.com/shimomo/bvp-trimmer/actions/workflows/tests.yml)
+[![keepalive](https://github.com/shimomo/bvp-trimmer/actions/workflows/keepalive.yml/badge.svg)](https://github.com/shimomo/bvp-trimmer/actions/workflows/keepalive.yml)
 [![codecov](https://codecov.io/gh/shimomo/bvp-trimmer/branch/5.x/graph/badge.svg?token=27E93D01MN)](https://codecov.io/gh/shimomo/bvp-trimmer)
-[![PHP Version Require](https://poser.pugx.org/bvp/trimmer/require/php)](https://packagist.org/packages/bvp/trimmer)
-[![Latest Stable Version](https://poser.pugx.org/bvp/trimmer/v/stable)](https://packagist.org/packages/bvp/trimmer)
-[![Latest Unstable Version](https://poser.pugx.org/bvp/trimmer/v/unstable)](https://packagist.org/packages/bvp/trimmer#5.x-dev)
-[![License](https://poser.pugx.org/bvp/trimmer/license)](https://packagist.org/packages/bvp/trimmer)
+[![php](https://poser.pugx.org/bvp/trimmer/require/php)](https://packagist.org/packages/bvp/trimmer)
+[![stable](https://poser.pugx.org/bvp/trimmer/v/stable)](https://packagist.org/packages/bvp/trimmer)
+[![unstable](https://poser.pugx.org/bvp/trimmer/v/unstable)](https://packagist.org/packages/bvp/trimmer#5.x-dev)
+[![license](https://poser.pugx.org/bvp/trimmer/license)](https://packagist.org/packages/bvp/trimmer)
 
 The BVP Trimmer package extends PHP's built-in trim, ltrim, and rtrim functions so they can also be used with arrays and objects.
 
@@ -58,7 +59,7 @@ Trimmer::trim([' trimmerA ', [' trimmerB ', 1, 1.0, true, null]]);
 // => ["trimmerA", ["trimmerB", 1, 1.0, true, null]]
 ```
 
-Examples for ltrim and rtrim are omitted for brevity but work the same way.
+Examples for `ltrim` and `rtrim` are omitted for brevity, but these functions are fully supported.
 
 ### For objects
 Trimming object properties requires both getter and setter methods. Nested objects are also supported.
@@ -95,7 +96,7 @@ Trimmer::trim($objectB);
 // $propertyC and $objectA->propertyA will be trimmed, $propertyD and $objectA->$propertyB will remain unchanged.
 ```
 
-Examples for ltrim and rtrim are omitted for brevity but are fully supported.
+Examples for `ltrim` and `rtrim` are omitted for brevity, but these functions are fully supported.
 
 ## Notes
 All `Trimmer::trim`, `Trimmer::ltrim`, and `Trimmer::rtrim` methods are **non-destructive** (they return new values rather than modifying the original data).
