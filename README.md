@@ -1,6 +1,6 @@
 # BVP Trimmer
 
-[English](./README.md) | [日本語](./README_ja.md)
+[English](README.md) | [日本語](README_ja.md)
 
 [![tests](https://github.com/shimomo/bvp-trimmer/actions/workflows/tests.yml/badge.svg)](https://github.com/shimomo/bvp-trimmer/actions/workflows/tests.yml)
 [![keepalive](https://github.com/shimomo/bvp-trimmer/actions/workflows/keepalive.yml/badge.svg)](https://github.com/shimomo/bvp-trimmer/actions/workflows/keepalive.yml)
@@ -10,7 +10,7 @@
 [![unstable](https://poser.pugx.org/bvp/trimmer/v/unstable)](https://packagist.org/packages/bvp/trimmer#5.x-dev)
 [![license](https://poser.pugx.org/bvp/trimmer/license)](https://packagist.org/packages/bvp/trimmer)
 
-The BVP Trimmer package extends PHP's built-in trim, ltrim, and rtrim functions so they can also be used with arrays and objects.
+The BVP Trimmer extends PHP's built-in trim, ltrim, and rtrim functions so they can also be used with arrays and objects.
 
 ## Features
 - Recursively trims all string elements in arrays
@@ -102,4 +102,4 @@ Examples for `ltrim` and `rtrim` are omitted for brevity, but these functions ar
 All `Trimmer::trim`, `Trimmer::ltrim`, and `Trimmer::rtrim` methods are **non-destructive** (they return new values rather than modifying the original data).
 
 ## License
-The BVP Trimmer package is open source software licensed under the [MIT license](LICENSE).
+The BVP Trimmer is open source software licensed under the [MIT license](LICENSE).
