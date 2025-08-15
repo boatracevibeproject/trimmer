@@ -1,7 +1,7 @@
 {
     "$schema": "https://getcomposer.org/schema.json",
     "name": "bvp/trimmer",
-    "description": "The BVP Trimmer package for strings, arrays, and objects.",
+    "description": "The BVP Trimmer for strings, arrays, and objects.",
     "keywords": [
         "boatrace",
         "library",
