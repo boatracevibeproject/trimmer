@@ -1,6 +1,6 @@
 # BVP Trimmer
 
-[English](./README.md) | [日本語](./README_ja.md)
+[English](README.md) | [日本語](README_ja.md)
 
 [![tests](https://github.com/shimomo/bvp-trimmer/actions/workflows/tests.yml/badge.svg)](https://github.com/shimomo/bvp-trimmer/actions/workflows/tests.yml)
 [![keepalive](https://github.com/shimomo/bvp-trimmer/actions/workflows/keepalive.yml/badge.svg)](https://github.com/shimomo/bvp-trimmer/actions/workflows/keepalive.yml)
@@ -10,7 +10,7 @@
 [![unstable](https://poser.pugx.org/bvp/trimmer/v/unstable)](https://packagist.org/packages/bvp/trimmer#5.x-dev)
 [![license](https://poser.pugx.org/bvp/trimmer/license)](https://packagist.org/packages/bvp/trimmer)
 
-BVP Trimmer は、PHP 組み込みの trim / ltrim / rtrim 関数を拡張し、配列やオブジェクトにも適用可能にするユーティリティパッケージです。
+BVP Trimmer は、PHP 組み込みの trim / ltrim / rtrim 関数を拡張し、配列やオブジェクトにも適用可能にするユーティリティライブラリです。
 
 ## 特徴
 - 配列のすべての文字列要素を再帰的にトリム
@@ -102,4 +102,4 @@ Trimmer::trim($objectB);
 `Trimmer::trim`, `Trimmer::ltrim`, `Trimmer::rtrim` はすべて **非破壊的** です（新しい値を返します）。
 
 ## ライセンス
-このパッケージは [MIT license](LICENSE) のもとで公開されています。
+このライブラリは [MIT license](LICENSE) のもとで公開されています。
