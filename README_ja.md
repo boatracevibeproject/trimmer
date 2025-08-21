@@ -10,78 +10,121 @@
 [![unstable](https://poser.pugx.org/bvp/trimmer/v/unstable)](https://packagist.org/packages/bvp/trimmer#5.x-dev)
 [![license](https://poser.pugx.org/bvp/trimmer/license)](https://packagist.org/packages/bvp/trimmer)
 
-BVP Trimmer は、PHP 組み込みの trim / ltrim / rtrim 関数を拡張し、配列やオブジェクトにも適用可能にするユーティリティライブラリです。
+BVP Trimmer は、PHP の組み込み関数 `trim`、`ltrim`、`rtrim` を拡張し、**配列**や**オブジェクト**に対しても再帰的にトリミングを適用できるライブラリです。
 
-## 特徴
-- 配列のすべての文字列要素を再帰的にトリム
-- オブジェクトのプロパティ（getter / setter 経由）をトリム
-- ネストされた配列・オブジェクトにも対応
-- trim / ltrim / rtrim を同様の使い勝手で提供
+## 📦 Requirements
+- PHP ^8.2
+- myclabs/deep-copy: ^1.11
 
-## インストール方法
+## 💾 Installation
 ```bash
 composer require bvp/trimmer
 ```
 
-## 使用方法
+## ⚡ Usage
+
+### サポートメソッド一覧
+
+| メソッド | 説明 | 引数 |
+|---|---|---|
+| `Trimmer::trim($value, $characters = null)` | 文字列・配列・オブジェクトをトリミング | `$value` : string \| array \| object<br>`$characters` : 削除対象の文字列（任意） |
+| `Trimmer::ltrim($value, $characters = null)` | 左側のトリミング | 同上 |
+| `Trimmer::rtrim($value, $characters = null)` | 右側のトリミング | 同上 |
+
+### 基本的な使い方
+
 ```php
 <?php
 
 require __DIR__ . '/vendor/autoload.php';
 
 use BVP\Trimmer\Trimmer;
+
+// 文字列をトリミング
+echo Trimmer::trim(' trimmer ');                // "trimmer"
+echo Trimmer::trim(' @trimmer@ ', "\x20\x40");  // "trimmer"
+
+// 左側のみトリミング
+echo Trimmer::ltrim(' trimmer ');               // "trimmer "
+echo Trimmer::ltrim(' @trimmer@ ', "\x20\x40"); // "trimmer@ "
+
+// 右側のみトリミング
+echo Trimmer::rtrim(' trimmer ');               // " trimmer"
+echo Trimmer::rtrim(' @trimmer@ ', "\x20\x40"); // " @trimmer"
 ```
 
-### 文字列に対して
+---
+
+### Trimmer::trim() - 配列のトリミング
+
 ```php
-Trimmer::trim(' trimmer ');                // "trimmer"
-Trimmer::trim(' @trimmer@ ', "\x20\x40");  // "trimmer"
+$result = Trimmer::trim([' trimmerA ']);
+print_r($result);
 
-Trimmer::ltrim(' trimmer ');               // "trimmer "
-Trimmer::ltrim(' @trimmer@ ', "\x20\x40"); // "trimmer@ "
-
-Trimmer::rtrim(' trimmer ');               // " trimmer"
-Trimmer::rtrim(' @trimmer@ ', "\x20\x40"); // " @trimmer"
+// 出力結果:
+Array
+(
+    [0] => trimmerA
+)
 ```
 
-### 配列に対して
 ```php
-Trimmer::trim([' trimmerA ']);
-// => ["trimmerA"]
+$result = Trimmer::trim([' trimmerA ', [' trimmerB ']]);
+print_r($result);
 
-Trimmer::trim([' trimmerA ', [' trimmerB ']]);
-// => ["trimmerA", ["trimmerB"]]
-
-Trimmer::trim([' trimmerA ', 1, 1.0, true, null]);
-// => ["trimmerA", 1, 1.0, true, null]
-
-Trimmer::trim([' trimmerA ', [' trimmerB ', 1, 1.0, true, null]]);
-// => ["trimmerA", ["trimmerB", 1, 1.0, true, null]]
+// 出力結果:
+Array
+(
+    [0] => trimmerA
+    [1] => Array
+        (
+            [0] => trimmerB
+        )
+)
 ```
 
-`ltrim` と `rtrim` の例は簡潔のため省略していますが、これらの関数は完全にサポートされています。
+```php
+$result = Trimmer::trim([' trimmerA ', 1, 1.0, true, null]);
+print_r($result);
 
-### オブジェクトに対して
-プロパティのトリムは getter / setter が定義されている必要があります。ネストしたオブジェクトにも対応します。
+// 出力結果:
+Array
+(
+    [0] => trimmerA
+    [1] => 1
+    [2] => 1
+    [3] => 1
+    [4] =>
+)
+```
+
+---
+
+### Trimmer::trim() - オブジェクトのトリミング
+
+オブジェクトのプロパティをトリミングするには、**getter** と **setter** メソッドが必要です。  
+ネストしたオブジェクトもサポートしています。
 
 ```php
 $objectA = new class {
     private string $propertyA = ' trimmerA ';
-    private string $propertyB = ' trimmerB '; // このプロパティはトリムされません。
+    private string $propertyB = ' trimmerB '; // トリミングされない
     public function getPropertyA(): string { return $this->propertyA; }
     public function setPropertyA(string $value): void { $this->propertyA = $value; }
     public function getPropertyB(): string { return $this->propertyB; }
 };
 
 Trimmer::trim($objectA);
-// $propertyA がトリムされ、$propertyB はそのままです。
+
+// $propertyA はトリミングされるが、$propertyB はそのまま
 ```
 
-ネストされたオブジェクトも処理可能
+ネストしたオブジェクトにも対応しています。
+
 ```php
 $objectB = new class($objectA) {
     private string $propertyC = ' trimmerC ';
-    private string $propertyD = ' trimmerD '; // このプロパティはトリムされません。
+    private string $propertyD = ' trimmerD '; // トリミングされない
     private object $objectA;
     public function __construct(object $objectA) {
         $this->objectA = $objectA;
@@ -93,13 +136,16 @@ $objectB = new class($objectA) {
 };
 
 Trimmer::trim($objectB);
-// $propertyC と $objectA->propertyA がトリムされます。$propertyD と $objectA->propertyB はそのままです。
+
+// $propertyC と $objectA->propertyA はトリミングされるが、$propertyD と $objectA->propertyB はそのまま
 ```
 
-`ltrim` と `rtrim` の例は簡潔のため省略していますが、これらの関数は完全にサポートされています。
+---
 
-## 備考
-`Trimmer::trim`, `Trimmer::ltrim`, `Trimmer::rtrim` はすべて **非破壊的** です（新しい値を返します）。
+## ⚠️ Notes
+- `Trimmer::trim`、`Trimmer::ltrim`、`Trimmer::rtrim` は**非破壊的**です。
+  元の値を変更せず、新しい値を返します。
+- getter / setter メソッドが存在しないオブジェクトのプロパティはトリミングされません。
 
-## ライセンス
-このライブラリは [MIT license](LICENSE) のもとで公開されています。
+## 📄 License
+BVP Trimmer は [MIT license](LICENSE) の元で公開されています。
