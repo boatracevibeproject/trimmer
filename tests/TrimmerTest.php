@@ -16,8 +16,8 @@ use PHPUnit\Framework\TestCase;
 final class TrimmerTest extends TestCase
 {
     /**
-     * @param  mixed  $input
-     * @param  mixed  $expected
+     * @param  array<int, mixed>  $input
+     * @param  array<int, mixed>  $expected
      * @return void
      */
     #[DataProviderExternal(TrimmerDataProvider::class, 'trimArrayProvider')]
@@ -70,8 +70,8 @@ final class TrimmerTest extends TestCase
     }
 
     /**
-     * @param  object  $input
-     * @param  array   $expected
+     * @param  object              $input
+     * @param  array<int, string>  $expected
      * @return void
      */
     #[DataProviderExternal(TrimmerDataProvider::class, 'trimObjectProvider')]
@@ -98,8 +98,8 @@ final class TrimmerTest extends TestCase
     }
 
     /**
-     * @param  mixed  $input
-     * @param  mixed  $expected
+     * @param  array<int, mixed>  $input
+     * @param  array<int, mixed>  $expected
      * @return void
      */
     #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimArrayProvider')]
@@ -152,8 +152,8 @@ final class TrimmerTest extends TestCase
     }
 
     /**
-     * @param  object  $input
-     * @param  array   $expected
+     * @param  object              $input
+     * @param  array<int, string>  $expected
      * @return void
      */
     #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimObjectProvider')]
@@ -180,8 +180,8 @@ final class TrimmerTest extends TestCase
     }
 
     /**
-     * @param  mixed  $input
-     * @param  mixed  $expected
+     * @param  array<int, mixed>  $input
+     * @param  array<int, mixed>  $expected
      * @return void
      */
     #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimArrayProvider')]
@@ -234,8 +234,8 @@ final class TrimmerTest extends TestCase
     }
 
     /**
-     * @param  object  $input
-     * @param  array   $expected
+     * @param  object              $input
+     * @param  array<int, string>  $expected
      * @return void
      */
     #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimObjectProvider')]

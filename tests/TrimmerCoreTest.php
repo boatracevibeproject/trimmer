@@ -28,8 +28,8 @@ final class TrimmerCoreTest extends TestCase
     }
 
     /**
-     * @param  mixed  $input
-     * @param  mixed  $expected
+     * @param  array<int, mixed>  $input
+     * @param  array<int, mixed>  $expected
      * @return void
      */
     #[DataProviderExternal(TrimmerCoreDataProvider::class, 'trimArrayProvider')]
@@ -82,8 +82,8 @@ final class TrimmerCoreTest extends TestCase
     }
 
     /**
-     * @param  object  $input
-     * @param  array   $expected
+     * @param  object              $input
+     * @param  array<int, string>  $expected
      * @return void
      */
     #[DataProviderExternal(TrimmerCoreDataProvider::class, 'trimObjectProvider')]
@@ -110,8 +110,8 @@ final class TrimmerCoreTest extends TestCase
     }
 
     /**
-     * @param  mixed  $input
-     * @param  mixed  $expected
+     * @param  array<int, mixed>  $input
+     * @param  array<int, mixed>  $expected
      * @return void
      */
     #[DataProviderExternal(TrimmerCoreDataProvider::class, 'ltrimArrayProvider')]
@@ -164,8 +164,8 @@ final class TrimmerCoreTest extends TestCase
     }
 
     /**
-     * @param  object  $input
-     * @param  array   $expected
+     * @param  object              $input
+     * @param  array<int, string>  $expected
      * @return void
      */
     #[DataProviderExternal(TrimmerCoreDataProvider::class, 'ltrimObjectProvider')]
@@ -192,8 +192,8 @@ final class TrimmerCoreTest extends TestCase
     }
 
     /**
-     * @param  mixed  $input
-     * @param  mixed  $expected
+     * @param  array<int, mixed>  $input
+     * @param  array<int, mixed>  $expected
      * @return void
      */
     #[DataProviderExternal(TrimmerCoreDataProvider::class, 'rtrimArrayProvider')]
@@ -246,8 +246,8 @@ final class TrimmerCoreTest extends TestCase
     }
 
     /**
-     * @param  object  $input
-     * @param  array   $expected
+     * @param  object              $input
+     * @param  array<int, string>  $expected
      * @return void
      */
     #[DataProviderExternal(TrimmerCoreDataProvider::class, 'rtrimObjectProvider')]

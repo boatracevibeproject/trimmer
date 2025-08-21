@@ -10,7 +10,7 @@ namespace BVP\Trimmer\Tests;
 final class TrimmerDataProvider
 {
     /**
-     * @return array
+     * @return array<int, array<int, array<int, mixed>>>
      */
     public static function trimArrayProvider(): array
     {
@@ -29,7 +29,7 @@ final class TrimmerDataProvider
     }
 
     /**
-     * @return array
+     * @return array<int, array<int, bool>>
      */
     public static function trimBoolProvider(): array
     {
@@ -40,7 +40,7 @@ final class TrimmerDataProvider
     }
 
     /**
-     * @return array
+     * @return array<int, array<int, float>>
      */
     public static function trimFloatProvider(): array
     {
@@ -51,7 +51,7 @@ final class TrimmerDataProvider
     }
 
     /**
-     * @return array
+     * @return array<int, array<int, int>>
      */
     public static function trimIntProvider(): array
     {
@@ -62,7 +62,7 @@ final class TrimmerDataProvider
     }
 
     /**
-     * @return array
+     * @return array<int, array<int, null>>
      */
     public static function trimNullProvider(): array
     {
@@ -72,7 +72,7 @@ final class TrimmerDataProvider
     }
 
     /**
-     * @return array
+     * @return array<int, array<int, object|array<int, string>>>
      */
     public static function trimObjectProvider(): array
     {
@@ -101,7 +101,7 @@ final class TrimmerDataProvider
     }
 
     /**
-     * @return array
+     * @return array<int, array<int, string>>
      */
     public static function trimStringProvider(): array
     {
@@ -114,7 +114,7 @@ final class TrimmerDataProvider
     }
 
     /**
-     * @return array
+     * @return array<int, array<int, array<int, mixed>>>
      */
     public static function ltrimArrayProvider(): array
     {
@@ -133,7 +133,7 @@ final class TrimmerDataProvider
     }
 
     /**
-     * @return array
+     * @return array<int, array<int, bool>>
      */
     public static function ltrimBoolProvider(): array
     {
@@ -144,7 +144,7 @@ final class TrimmerDataProvider
     }
 
     /**
-     * @return array
+     * @return array<int, array<int, float>>
      */
     public static function ltrimFloatProvider(): array
     {
@@ -155,7 +155,7 @@ final class TrimmerDataProvider
     }
 
     /**
-     * @return array
+     * @return array<int, array<int, int>>
      */
     public static function ltrimIntProvider(): array
     {
@@ -166,7 +166,7 @@ final class TrimmerDataProvider
     }
 
     /**
-     * @return array
+     * @return array<int, array<int, null>>
      */
     public static function ltrimNullProvider(): array
     {
@@ -176,7 +176,7 @@ final class TrimmerDataProvider
     }
 
     /**
-     * @return array
+     * @return array<int, array<int, object|array<int, string>>>
      */
     public static function ltrimObjectProvider(): array
     {
@@ -205,7 +205,7 @@ final class TrimmerDataProvider
     }
 
     /**
-     * @return array
+     * @return array<int, array<int, string>>
      */
     public static function ltrimStringProvider(): array
     {
@@ -218,7 +218,7 @@ final class TrimmerDataProvider
     }
 
     /**
-     * @return array
+     * @return array<int, array<int, array<int, mixed>>>
      */
     public static function rtrimArrayProvider(): array
     {
@@ -237,7 +237,7 @@ final class TrimmerDataProvider
     }
 
     /**
-     * @return array
+     * @return array<int, array<int, bool>>
      */
     public static function rtrimBoolProvider(): array
     {
@@ -248,7 +248,7 @@ final class TrimmerDataProvider
     }
 
     /**
-     * @return array
+     * @return array<int, array<int, float>>
      */
     public static function rtrimFloatProvider(): array
     {
@@ -259,7 +259,7 @@ final class TrimmerDataProvider
     }
 
     /**
-     * @return array
+     * @return array<int, array<int, int>>
      */
     public static function rtrimIntProvider(): array
     {
@@ -270,7 +270,7 @@ final class TrimmerDataProvider
     }
 
     /**
-     * @return array
+     * @return array<int, array<int, null>>
      */
     public static function rtrimNullProvider(): array
     {
@@ -280,7 +280,7 @@ final class TrimmerDataProvider
     }
 
     /**
-     * @return array
+     * @return array<int, array<int, object|array<int, string>>>
      */
     public static function rtrimObjectProvider(): array
     {
@@ -309,7 +309,7 @@ final class TrimmerDataProvider
     }
 
     /**
-     * @return array
+     * @return array<int, array<int, string>>
      */
     public static function rtrimStringProvider(): array
     {

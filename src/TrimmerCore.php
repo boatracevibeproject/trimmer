@@ -9,7 +9,7 @@ use DeepCopy\DeepCopy;
 /**
  * @author shimomo
  */
-class TrimmerCore implements TrimmerCoreInterface
+final class TrimmerCore implements TrimmerCoreInterface
 {
     /**
      * @param  \DeepCopy\DeepCopy  $copier
@@ -18,8 +18,8 @@ class TrimmerCore implements TrimmerCoreInterface
     public function __construct(private readonly DeepCopy $copier) {}
 
     /**
-     * @param  string  $name
-     * @param  array   $arguments
+     * @param  string             $name
+     * @param  array<int, mixed>  $arguments
      * @return never
      *
      * @throws \BadMethodCallException
@@ -36,9 +36,11 @@ class TrimmerCore implements TrimmerCoreInterface
      * @param  string  $characters
      * @return mixed
      */
+    #[\Override]
     public function trim(mixed $items, string $characters = "\x00\x09\x0A\x0B\x0D\x20"): mixed
     {
-        $function = fn($value, $characters) => trim($value, $characters);
+        $function = fn(string $value, string $characters): mixed => trim($value, $characters);
+        /** @var mixed $copyItems */
         $copyItems = $this->copier->copy($items);
         return $this->applyTrim($function, $copyItems, $characters);
     }
@@ -48,9 +50,11 @@ class TrimmerCore implements TrimmerCoreInterface
      * @param  string  $characters
      * @return mixed
      */
+    #[\Override]
     public function ltrim(mixed $items, string $characters = "\x00\x09\x0A\x0B\x0D\x20"): mixed
     {
-        $function = fn($value, $characters) => ltrim($value, $characters);
+        $function = fn(string $value, string $characters): mixed => ltrim($value, $characters);
+        /** @var mixed $copyItems */
         $copyItems = $this->copier->copy($items);
         return $this->applyTrim($function, $copyItems, $characters);
     }
@@ -60,9 +64,11 @@ class TrimmerCore implements TrimmerCoreInterface
      * @param  string  $characters
      * @return mixed
      */
+    #[\Override]
     public function rtrim(mixed $items, string $characters = "\x00\x09\x0A\x0B\x0D\x20"): mixed
     {
-        $function = fn($value, $characters) => rtrim($value, $characters);
+        $function = fn(string $value, string $characters): mixed => rtrim($value, $characters);
+        /** @var mixed $copyItems */
         $copyItems = $this->copier->copy($items);
         return $this->applyTrim($function, $copyItems, $characters);
     }
@@ -87,14 +93,14 @@ class TrimmerCore implements TrimmerCoreInterface
     }
 
     /**
-     * @param  callable  $function
-     * @param  string    $characters
-     * @param  array     $items
-     * @return array
+     * @param  callable                 $function
+     * @param  string                   $characters
+     * @param  array<array-key, mixed>  $items
+     * @return array<array-key, mixed>
      */
     private function applyTrimArray(callable $function, string $characters, array $items): array
     {
-        return array_map(fn($item) => $this->applyTrim($function, $item, $characters), $items);
+        return array_map(fn(mixed $item): mixed => $this->applyTrim($function, $item, $characters), $items);
     }
 
     /**
@@ -116,7 +122,9 @@ class TrimmerCore implements TrimmerCoreInterface
             $getter = 'get' . $propertyName;
             $setter = 'set' . $propertyName;
             if (method_exists($items, $getter)) {
+                /** @var mixed $value */
                 $value = $items->$getter();
+                /** @var mixed $trimmedValue */
                 $trimmedValue = $this->applyTrim($function, $value, $characters);
                 if (method_exists($items, $setter)) {
                     $items->$setter($trimmedValue);

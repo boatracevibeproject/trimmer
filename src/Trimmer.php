@@ -9,7 +9,7 @@ use DeepCopy\DeepCopy;
 /**
  * @author shimomo
  */
-class Trimmer implements TrimmerInterface
+final class Trimmer implements TrimmerInterface
 {
     /**
      * @var \BVP\Trimmer\TrimmerInterface|null
@@ -46,6 +46,7 @@ class Trimmer implements TrimmerInterface
      * @param  \BVP\Trimmer\TrimmerCoreInterface|null  $trimmerCore
      * @return \BVP\Trimmer\TrimmerInterface
      */
+    #[\Override]
     public static function getInstance(?TrimmerCoreInterface $trimmerCore = null): TrimmerInterface
     {
         return self::$instance ??= new self($trimmerCore ?? new TrimmerCore(new DeepCopy()));
@@ -55,6 +56,7 @@ class Trimmer implements TrimmerInterface
      * @param  \BVP\Trimmer\TrimmerCoreInterface|null  $trimmerCore
      * @return \BVP\Trimmer\TrimmerInterface
      */
+    #[\Override]
     public static function createInstance(?TrimmerCoreInterface $trimmerCore = null): TrimmerInterface
     {
         return self::$instance = new self($trimmerCore ?? new TrimmerCore(new DeepCopy()));
@@ -63,6 +65,7 @@ class Trimmer implements TrimmerInterface
     /**
      * @return void
      */
+    #[\Override]
     public static function resetInstance(): void
     {
         self::$instance = null;
