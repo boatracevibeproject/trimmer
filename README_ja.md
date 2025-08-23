@@ -2,7 +2,7 @@
 
 [English](README.md) | [日本語](README_ja.md)
 
-[![tests](https://github.com/shimomo/bvp-trimmer/actions/workflows/tests.yml/badge.svg)](https://github.com/shimomo/bvp-trimmer/actions/workflows/tests.yml)
+[![test](https://github.com/shimomo/bvp-trimmer/actions/workflows/test.yml/badge.svg)](https://github.com/shimomo/bvp-trimmer/actions/workflows/test.yml)
 [![keepalive](https://github.com/shimomo/bvp-trimmer/actions/workflows/keepalive.yml/badge.svg)](https://github.com/shimomo/bvp-trimmer/actions/workflows/keepalive.yml)
 [![codecov](https://codecov.io/gh/shimomo/bvp-trimmer/graph/badge.svg?token=27E93D01MN)](https://codecov.io/gh/shimomo/bvp-trimmer)
 [![php](https://poser.pugx.org/bvp/trimmer/require/php)](https://packagist.org/packages/bvp/trimmer)
@@ -13,7 +13,7 @@
 BVP Trimmer は、PHP の組み込み関数 `trim`、`ltrim`、`rtrim` を拡張し、**配列**や**オブジェクト**に対しても再帰的にトリミングを適用できるライブラリです。
 
 ## 📦 Requirements
-- PHP ^8.2
+- PHP: ^8.2
 - myclabs/deep-copy: ^1.11
 
 ## 💾 Installation
