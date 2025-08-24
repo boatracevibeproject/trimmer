@@ -1,9 +1,10 @@
-# BVP Trimmer
+# Trimmer for Boatrace Venture Project
 
 [English](README.md) | [日本語](README_ja.md)
 
-[![test](https://github.com/shimomo/bvp-trimmer/actions/workflows/test.yml/badge.svg)](https://github.com/shimomo/bvp-trimmer/actions/workflows/test.yml)
 [![keepalive](https://github.com/shimomo/bvp-trimmer/actions/workflows/keepalive.yml/badge.svg)](https://github.com/shimomo/bvp-trimmer/actions/workflows/keepalive.yml)
+[![psalm](https://github.com/shimomo/bvp-trimmer/actions/workflows/psalm.yml/badge.svg)](https://github.com/shimomo/bvp-trimmer/actions/workflows/psalm.yml)
+[![test](https://github.com/shimomo/bvp-trimmer/actions/workflows/test.yml/badge.svg)](https://github.com/shimomo/bvp-trimmer/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/shimomo/bvp-trimmer/graph/badge.svg?token=27E93D01MN)](https://codecov.io/gh/shimomo/bvp-trimmer)
 [![php](https://poser.pugx.org/bvp/trimmer/require/php)](https://packagist.org/packages/bvp/trimmer)
 [![stable](https://poser.pugx.org/bvp/trimmer/v/stable)](https://packagist.org/packages/bvp/trimmer)
@@ -27,9 +28,9 @@ composer require bvp/trimmer
 
 | Method | Description | Parameters |
 |---|---|---|
-| `Trimmer::trim($value, $characters = null)` | Trims strings, arrays, and objects | `$value` : string \| array \| object<br>`$characters` : Characters to remove (optional) |
-| `Trimmer::ltrim($value, $characters = null)` | Left-side trimming | Same as above |
-| `Trimmer::rtrim($value, $characters = null)` | Right-side trimming | Same as above |
+| `Trimmer::trim(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$characters = null`<br>`)` | Trims strings, arrays, and objects | `$value` : string \| array \| object<br>`$characters` : Characters to remove (optional) |
+| `Trimmer::ltrim(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$characters = null`<br>`)` | Left-side trimming | Same as above |
+| `Trimmer::rtrim(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$characters = null`<br>`)` | Right-side trimming | Same as above |
 
 ### Basic Usage
 
@@ -149,4 +150,4 @@ They return new values without modifying the originals.
 - Object properties without both getter and setter methods cannot be trimmed.
 
 ## 📄 License
-BVP Trimmer is open-source software released under the [MIT license](LICENSE).
+Trimmer is open-source software released under the [MIT license](LICENSE).
