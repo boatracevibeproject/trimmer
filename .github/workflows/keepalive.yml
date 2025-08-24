@@ -11,13 +11,14 @@ concurrency:
 
 jobs:
   keepalive:
+    name: Keep Workflows Alive on Ubuntu 24.04
+    runs-on: ubuntu-24.04
     permissions:
       actions: write
-    runs-on: ubuntu-24.04
     steps:
-      - name: Re-enable workflows
+      - name: Re-enable Workflows
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           gh workflow enable keepalive.yml --repo $GITHUB_REPOSITORY
-          gh workflow enable tests.yml --repo $GITHUB_REPOSITORY
+          gh workflow enable test.yml --repo $GITHUB_REPOSITORY
