@@ -32,7 +32,7 @@ final class TrimmerCoreTest extends TestCase
      * @param  array<int, mixed>  $expected
      * @return void
      */
-    #[DataProviderExternal(TrimmerCoreDataProvider::class, 'trimArrayProvider')]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'trimArrayProvider')]
     public function testTrimArray(array $input, array $expected): void
     {
         $this->assertSame($expected, $this->trimmer->trim($input));
@@ -43,7 +43,7 @@ final class TrimmerCoreTest extends TestCase
      * @param  bool  $expected
      * @return void
      */
-    #[DataProviderExternal(TrimmerCoreDataProvider::class, 'trimBoolProvider')]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'trimBoolProvider')]
     public function testTrimBool(bool $input, bool $expected): void
     {
         $this->assertSame($expected, $this->trimmer->trim($input));
@@ -54,7 +54,7 @@ final class TrimmerCoreTest extends TestCase
      * @param  float  $expected
      * @return void
      */
-    #[DataProviderExternal(TrimmerCoreDataProvider::class, 'trimFloatProvider')]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'trimFloatProvider')]
     public function testTrimFloat(float $input, float $expected): void
     {
         $this->assertSame($expected, $this->trimmer->trim($input));
@@ -65,7 +65,7 @@ final class TrimmerCoreTest extends TestCase
      * @param  int  $expected
      * @return void
      */
-    #[DataProviderExternal(TrimmerCoreDataProvider::class, 'trimIntProvider')]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'trimIntProvider')]
     public function testTrimInt(int $input, int $expected): void
     {
         $this->assertSame($expected, $this->trimmer->trim($input));
@@ -75,7 +75,7 @@ final class TrimmerCoreTest extends TestCase
      * @param  null  $input
      * @return void
      */
-    #[DataProviderExternal(TrimmerCoreDataProvider::class, 'trimNullProvider')]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'trimNullProvider')]
     public function testTrimNull(null $input): void
     {
         $this->assertNull($this->trimmer->trim($input));
@@ -86,7 +86,7 @@ final class TrimmerCoreTest extends TestCase
      * @param  array<int, string>  $expected
      * @return void
      */
-    #[DataProviderExternal(TrimmerCoreDataProvider::class, 'trimObjectProvider')]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'trimObjectProvider')]
     public function testTrimObject(object $input, array $expected): void
     {
         $actual = $this->trimmer->trim($input);
@@ -103,7 +103,7 @@ final class TrimmerCoreTest extends TestCase
      * @param  string  $expected
      * @return void
      */
-    #[DataProviderExternal(TrimmerCoreDataProvider::class, 'trimStringProvider')]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'trimStringProvider')]
     public function testTrimString(string $input, string $expected): void
     {
         $this->assertSame($expected, $this->trimmer->trim($input));
@@ -114,7 +114,7 @@ final class TrimmerCoreTest extends TestCase
      * @param  array<int, mixed>  $expected
      * @return void
      */
-    #[DataProviderExternal(TrimmerCoreDataProvider::class, 'ltrimArrayProvider')]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimArrayProvider')]
     public function testLtrimArray(array $input, array $expected): void
     {
         $this->assertSame($expected, $this->trimmer->ltrim($input));
@@ -125,7 +125,7 @@ final class TrimmerCoreTest extends TestCase
      * @param  bool  $expected
      * @return void
      */
-    #[DataProviderExternal(TrimmerCoreDataProvider::class, 'ltrimBoolProvider')]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimBoolProvider')]
     public function testLtrimBool(bool $input, bool $expected): void
     {
         $this->assertSame($expected, $this->trimmer->ltrim($input));
@@ -136,7 +136,7 @@ final class TrimmerCoreTest extends TestCase
      * @param  float  $expected
      * @return void
      */
-    #[DataProviderExternal(TrimmerCoreDataProvider::class, 'ltrimFloatProvider')]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimFloatProvider')]
     public function testLtrimFloat(float $input, float $expected): void
     {
         $this->assertSame($expected, $this->trimmer->ltrim($input));
@@ -147,7 +147,7 @@ final class TrimmerCoreTest extends TestCase
      * @param  int  $expected
      * @return void
      */
-    #[DataProviderExternal(TrimmerCoreDataProvider::class, 'ltrimIntProvider')]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimIntProvider')]
     public function testLtrimInt(int $input, int $expected): void
     {
         $this->assertSame($expected, $this->trimmer->ltrim($input));
@@ -157,7 +157,7 @@ final class TrimmerCoreTest extends TestCase
      * @param  null  $input
      * @return void
      */
-    #[DataProviderExternal(TrimmerCoreDataProvider::class, 'ltrimNullProvider')]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimNullProvider')]
     public function testLtrimNull(null $input): void
     {
         $this->assertNull($this->trimmer->ltrim($input));
@@ -168,7 +168,7 @@ final class TrimmerCoreTest extends TestCase
      * @param  array<int, string>  $expected
      * @return void
      */
-    #[DataProviderExternal(TrimmerCoreDataProvider::class, 'ltrimObjectProvider')]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimObjectProvider')]
     public function testLtrimObject(object $input, array $expected): void
     {
         $actual = $this->trimmer->ltrim($input);
@@ -185,7 +185,7 @@ final class TrimmerCoreTest extends TestCase
      * @param  string  $expected
      * @return void
      */
-    #[DataProviderExternal(TrimmerCoreDataProvider::class, 'ltrimStringProvider')]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimStringProvider')]
     public function testLtrimString(string $input, string $expected): void
     {
         $this->assertSame($expected, $this->trimmer->ltrim($input));
@@ -196,7 +196,7 @@ final class TrimmerCoreTest extends TestCase
      * @param  array<int, mixed>  $expected
      * @return void
      */
-    #[DataProviderExternal(TrimmerCoreDataProvider::class, 'rtrimArrayProvider')]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimArrayProvider')]
     public function testRtrimArray(array $input, array $expected): void
     {
         $this->assertSame($expected, $this->trimmer->rtrim($input));
@@ -207,7 +207,7 @@ final class TrimmerCoreTest extends TestCase
      * @param  bool  $expected
      * @return void
      */
-    #[DataProviderExternal(TrimmerCoreDataProvider::class, 'rtrimBoolProvider')]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimBoolProvider')]
     public function testRtrimBool(bool $input, bool $expected): void
     {
         $this->assertSame($expected, $this->trimmer->rtrim($input));
@@ -218,7 +218,7 @@ final class TrimmerCoreTest extends TestCase
      * @param  float  $expected
      * @return void
      */
-    #[DataProviderExternal(TrimmerCoreDataProvider::class, 'rtrimFloatProvider')]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimFloatProvider')]
     public function testRtrimFloat(float $input, float $expected): void
     {
         $this->assertSame($expected, $this->trimmer->rtrim($input));
@@ -229,7 +229,7 @@ final class TrimmerCoreTest extends TestCase
      * @param  int  $expected
      * @return void
      */
-    #[DataProviderExternal(TrimmerCoreDataProvider::class, 'rtrimIntProvider')]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimIntProvider')]
     public function testRtrimInt(int $input, int $expected): void
     {
         $this->assertSame($expected, $this->trimmer->rtrim($input));
@@ -239,7 +239,7 @@ final class TrimmerCoreTest extends TestCase
      * @param  null  $input
      * @return void
      */
-    #[DataProviderExternal(TrimmerCoreDataProvider::class, 'rtrimNullProvider')]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimNullProvider')]
     public function testRtrimNull(null $input): void
     {
         $this->assertNull($this->trimmer->rtrim($input));
@@ -250,7 +250,7 @@ final class TrimmerCoreTest extends TestCase
      * @param  array<int, string>  $expected
      * @return void
      */
-    #[DataProviderExternal(TrimmerCoreDataProvider::class, 'rtrimObjectProvider')]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimObjectProvider')]
     public function testRtrimObject(object $input, array $expected): void
     {
         $actual = $this->trimmer->rtrim($input);
@@ -267,7 +267,7 @@ final class TrimmerCoreTest extends TestCase
      * @param  string  $expected
      * @return void
      */
-    #[DataProviderExternal(TrimmerCoreDataProvider::class, 'rtrimStringProvider')]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimStringProvider')]
     public function testRtrimString(string $input, string $expected): void
     {
         $this->assertSame($expected, $this->trimmer->rtrim($input));
