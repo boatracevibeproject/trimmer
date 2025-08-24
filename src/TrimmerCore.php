@@ -15,7 +15,10 @@ final class TrimmerCore implements TrimmerCoreInterface
      * @param  \DeepCopy\DeepCopy  $copier
      * @return void
      */
-    public function __construct(private readonly DeepCopy $copier) {}
+    public function __construct(private readonly DeepCopy $copier)
+    {
+        //
+    }
 
     /**
      * @param  string             $name

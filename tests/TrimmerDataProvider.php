@@ -80,19 +80,49 @@ final class TrimmerDataProvider
             private string $propertyA = ' trimmerA ';
             private string $propertyB = ' trimmerB ';
             private object $objectB;
-            public function __construct() {
+
+            public function __construct()
+            {
                 $this->objectB = new class {
                     private string $propertyC = ' trimmerC ';
                     private string $propertyD = ' trimmerD ';
-                    public function getPropertyC(): string { return $this->propertyC; }
-                    public function setPropertyC(string $value): void { $this->propertyC = $value; }
-                    public function getPropertyD(): string { return $this->propertyD; }
+
+                    public function getPropertyC(): string
+                    {
+                        return $this->propertyC;
+                    }
+
+                    public function setPropertyC(string $value): void
+                    {
+                        $this->propertyC = $value;
+                    }
+
+                    public function getPropertyD(): string
+                    {
+                        return $this->propertyD;
+                    }
                 };
             }
-            public function getPropertyA(): string { return $this->propertyA; }
-            public function setPropertyA(string $value): void { $this->propertyA = $value; }
-            public function getPropertyB(): string { return $this->propertyB; }
-            public function getObjectB(): object { return $this->objectB; }
+
+            public function getPropertyA(): string
+            {
+                return $this->propertyA;
+            }
+
+            public function setPropertyA(string $value): void
+            {
+                $this->propertyA = $value;
+            }
+
+            public function getPropertyB(): string
+            {
+                return $this->propertyB;
+            }
+
+            public function getObjectB(): object
+            {
+                return $this->objectB;
+            }
         };
 
         return [
@@ -184,19 +214,49 @@ final class TrimmerDataProvider
             private string $propertyA = ' trimmerA ';
             private string $propertyB = ' trimmerB ';
             private object $objectB;
-            public function __construct() {
+
+            public function __construct()
+            {
                 $this->objectB = new class {
                     private string $propertyC = ' trimmerC ';
                     private string $propertyD = ' trimmerD ';
-                    public function getPropertyC(): string { return $this->propertyC; }
-                    public function setPropertyC(string $value): void { $this->propertyC = $value; }
-                    public function getPropertyD(): string { return $this->propertyD; }
+
+                    public function getPropertyC(): string
+                    {
+                        return $this->propertyC;
+                    }
+
+                    public function setPropertyC(string $value): void
+                    {
+                        $this->propertyC = $value;
+                    }
+
+                    public function getPropertyD(): string
+                    {
+                        return $this->propertyD;
+                    }
                 };
             }
-            public function getPropertyA(): string { return $this->propertyA; }
-            public function setPropertyA(string $value): void { $this->propertyA = $value; }
-            public function getPropertyB(): string { return $this->propertyB; }
-            public function getObjectB(): object { return $this->objectB; }
+
+            public function getPropertyA(): string
+            {
+                return $this->propertyA;
+            }
+
+            public function setPropertyA(string $value): void
+            {
+                $this->propertyA = $value;
+            }
+
+            public function getPropertyB(): string
+            {
+                return $this->propertyB;
+            }
+
+            public function getObjectB(): object
+            {
+                return $this->objectB;
+            }
         };
 
         return [
@@ -288,19 +348,49 @@ final class TrimmerDataProvider
             private string $propertyA = ' trimmerA ';
             private string $propertyB = ' trimmerB ';
             private object $objectB;
-            public function __construct() {
+
+            public function __construct()
+            {
                 $this->objectB = new class {
                     private string $propertyC = ' trimmerC ';
                     private string $propertyD = ' trimmerD ';
-                    public function getPropertyC(): string { return $this->propertyC; }
-                    public function setPropertyC(string $value): void { $this->propertyC = $value; }
-                    public function getPropertyD(): string { return $this->propertyD; }
+
+                    public function getPropertyC(): string
+                    {
+                        return $this->propertyC;
+                    }
+
+                    public function setPropertyC(string $value): void
+                    {
+                        $this->propertyC = $value;
+                    }
+
+                    public function getPropertyD(): string
+                    {
+                        return $this->propertyD;
+                    }
                 };
             }
-            public function getPropertyA(): string { return $this->propertyA; }
-            public function setPropertyA(string $value): void { $this->propertyA = $value; }
-            public function getPropertyB(): string { return $this->propertyB; }
-            public function getObjectB(): object { return $this->objectB; }
+
+            public function getPropertyA(): string
+            {
+                return $this->propertyA;
+            }
+
+            public function setPropertyA(string $value): void
+            {
+                $this->propertyA = $value;
+            }
+
+            public function getPropertyB(): string
+            {
+                return $this->propertyB;
+            }
+
+            public function getObjectB(): object
+            {
+                return $this->objectB;
+            }
         };
 
         return [
