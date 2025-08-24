@@ -1,9 +1,10 @@
-# BVP Trimmer
+# Trimmer for Boatrace Venture Project
 
 [English](README.md) | [日本語](README_ja.md)
 
-[![test](https://github.com/shimomo/bvp-trimmer/actions/workflows/test.yml/badge.svg)](https://github.com/shimomo/bvp-trimmer/actions/workflows/test.yml)
 [![keepalive](https://github.com/shimomo/bvp-trimmer/actions/workflows/keepalive.yml/badge.svg)](https://github.com/shimomo/bvp-trimmer/actions/workflows/keepalive.yml)
+[![psalm](https://github.com/shimomo/bvp-trimmer/actions/workflows/psalm.yml/badge.svg)](https://github.com/shimomo/bvp-trimmer/actions/workflows/psalm.yml)
+[![test](https://github.com/shimomo/bvp-trimmer/actions/workflows/test.yml/badge.svg)](https://github.com/shimomo/bvp-trimmer/actions/workflows/test.yml)
 [![codecov](https://codecov.io/gh/shimomo/bvp-trimmer/graph/badge.svg?token=27E93D01MN)](https://codecov.io/gh/shimomo/bvp-trimmer)
 [![php](https://poser.pugx.org/bvp/trimmer/require/php)](https://packagist.org/packages/bvp/trimmer)
 [![stable](https://poser.pugx.org/bvp/trimmer/v/stable)](https://packagist.org/packages/bvp/trimmer)
@@ -27,9 +28,9 @@ composer require bvp/trimmer
 
 | メソッド | 説明 | 引数 |
 |---|---|---|
-| `Trimmer::trim($value, $characters = null)` | 文字列・配列・オブジェクトをトリミング | `$value` : string \| array \| object<br>`$characters` : 削除対象の文字列（任意） |
-| `Trimmer::ltrim($value, $characters = null)` | 左側のトリミング | 同上 |
-| `Trimmer::rtrim($value, $characters = null)` | 右側のトリミング | 同上 |
+| `Trimmer::trim(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$characters = null`<br>`)` | 文字列・配列・オブジェクトをトリミング | `$value` : string \| array \| object<br>`$characters` : 削除対象の文字列（任意） |
+| `Trimmer::ltrim(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$characters = null`<br>`)` | 左側のトリミング | 同上 |
+| `Trimmer::rtrim(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$characters = null`<br>`)` | 右側のトリミング | 同上 |
 
 ### 基本的な使い方
 
@@ -148,4 +149,4 @@ Trimmer::trim($objectB);
 - getter / setter メソッドが存在しないオブジェクトのプロパティはトリミングされません。
 
 ## 📄 License
-BVP Trimmer は [MIT license](LICENSE) の元で公開されています。
+Trimmer は [MIT license](LICENSE) の元で公開されています。
