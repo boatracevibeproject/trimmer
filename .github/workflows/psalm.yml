@@ -32,22 +32,6 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Cache Composer vendor Directory
-        uses: actions/cache@v3
-        with:
-          path: vendor
-          key: ${{ runner.os }}-composer-vendor-${{ matrix.php-version }}-${{ hashFiles('composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-composer-vendor-${{ matrix.php-version }}-
-
-      - name: Cache Composer cache Directory
-        uses: actions/cache@v3
-        with:
-          path: ~/.composer/cache
-          key: ${{ runner.os }}-composer-cache-${{ matrix.php-version }}-${{ hashFiles('composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-composer-cache-${{ matrix.php-version }}-
-
       - name: Install Dependencies
         run: composer install --prefer-dist --no-interaction --no-progress --dev
 
