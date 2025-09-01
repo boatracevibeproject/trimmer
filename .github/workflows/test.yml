@@ -49,7 +49,7 @@ jobs:
         run: vendor/bin/phpcs --standard=phpcs.xml.dist
 
       - name: Run PHPUnit ${{ matrix.phpunit-version }}
-        run: vendor/bin/phpunit --coverage-xml=build/coverage-xml
+        run: vendor/bin/phpunit --configuration=phpunit.xml.dist --coverage-xml=build/coverage-xml
 
       - name: Upload Code Coverage to Codecov
         uses: codecov/codecov-action@v5
