@@ -31,6 +31,14 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v5
 
+      - name: Cache Composer Packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.composer/cache
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-composer-
+
       - name: Install Dependencies
         run: composer install --prefer-dist --no-interaction --no-progress --dev
 
