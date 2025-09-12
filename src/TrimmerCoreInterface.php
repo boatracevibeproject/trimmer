@@ -14,19 +14,31 @@ interface TrimmerCoreInterface
      * @param  string  $characters
      * @return mixed
      */
-    public function trim(mixed $items, string $characters = "\x00\x09\x0A\x0B\x0D\x20"): mixed;
+    public function trim(
+        mixed $items,
+        ?string $characters = null,
+        ?string $encoding = null
+    ): mixed;
 
     /**
      * @param  mixed   $items
      * @param  string  $characters
      * @return mixed
      */
-    public function ltrim(mixed $items, string $characters = "\x00\x09\x0A\x0B\x0D\x20"): mixed;
+    public function ltrim(
+        mixed $items,
+        ?string $characters = null,
+        ?string $encoding = null
+    ): mixed;
 
     /**
      * @param  mixed   $items
      * @param  string  $characters
      * @return mixed
      */
-    public function rtrim(mixed $items, string $characters = "\x00\x09\x0A\x0B\x0D\x20"): mixed;
+    public function rtrim(
+        mixed $items,
+        ?string $characters = null,
+        ?string $encoding = null
+    ): mixed;
 }
