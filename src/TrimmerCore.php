@@ -36,60 +36,104 @@ final class TrimmerCore implements TrimmerCoreInterface
 
     /**
      * @param  mixed   $items
-     * @param  string  $characters
+     * @param  string|null  $characters
+     * @param  string|null  $encoding
      * @return mixed
      */
     #[\Override]
-    public function trim(mixed $items, string $characters = "\x00\x09\x0A\x0B\x0D\x20"): mixed
-    {
-        $function = fn(string $value, string $characters): mixed => trim($value, $characters);
+    public function trim(
+        mixed $items,
+        ?string $characters = null,
+        ?string $encoding = null
+    ): mixed {
+        if (PHP_VERSION_ID >= 80400) {
+            $function = fn(string $value, ?string $characters, ?string $encoding): mixed
+                => mb_trim($value, $characters, $encoding);
+            /** @var mixed $copyItems */
+            $copyItems = $this->copier->copy($items);
+            return $this->applyTrim($function, $copyItems, $characters, $encoding);
+        }
+
+        $function = fn(string $value, ?string $characters, ?string $encoding = null): mixed
+            => trim($value, $characters ?? "\x00\x09\x0A\x0B\x0D\x20");
         /** @var mixed $copyItems */
         $copyItems = $this->copier->copy($items);
-        return $this->applyTrim($function, $copyItems, $characters);
+        return $this->applyTrim($function, $copyItems, $characters, $encoding);
     }
 
     /**
      * @param  mixed   $items
-     * @param  string  $characters
+     * @param  string|null  $characters
+     * @param  string|null  $encoding
      * @return mixed
      */
     #[\Override]
-    public function ltrim(mixed $items, string $characters = "\x00\x09\x0A\x0B\x0D\x20"): mixed
-    {
-        $function = fn(string $value, string $characters): mixed => ltrim($value, $characters);
+    public function ltrim(
+        mixed $items,
+        ?string $characters = null,
+        ?string $encoding = null
+    ): mixed {
+        if (PHP_VERSION_ID >= 80400) {
+            $function = fn(string $value, ?string $characters, ?string $encoding): mixed
+                => mb_ltrim($value, $characters, $encoding);
+            /** @var mixed $copyItems */
+            $copyItems = $this->copier->copy($items);
+            return $this->applyTrim($function, $copyItems, $characters, $encoding);
+        }
+
+        $function = fn(string $value, ?string $characters, ?string $encoding = null): mixed
+            => ltrim($value, $characters ?? "\x00\x09\x0A\x0B\x0D\x20");
         /** @var mixed $copyItems */
         $copyItems = $this->copier->copy($items);
-        return $this->applyTrim($function, $copyItems, $characters);
+        return $this->applyTrim($function, $copyItems, $characters, $encoding);
     }
 
     /**
      * @param  mixed   $items
-     * @param  string  $characters
+     * @param  string|null  $characters
+     * @param  string|null  $encoding
      * @return mixed
      */
     #[\Override]
-    public function rtrim(mixed $items, string $characters = "\x00\x09\x0A\x0B\x0D\x20"): mixed
-    {
-        $function = fn(string $value, string $characters): mixed => rtrim($value, $characters);
+    public function rtrim(
+        mixed $items,
+        ?string $characters = null,
+        ?string $encoding = null
+    ): mixed {
+        if (PHP_VERSION_ID >= 80400) {
+            $function = fn(string $value, ?string $characters, ?string $encoding): mixed
+                => mb_rtrim($value, $characters, $encoding);
+            /** @var mixed $copyItems */
+            $copyItems = $this->copier->copy($items);
+            return $this->applyTrim($function, $copyItems, $characters, $encoding);
+        }
+
+        $function = fn(string $value, ?string $characters, ?string $encoding = null): mixed
+            => rtrim($value, $characters ?? "\x00\x09\x0A\x0B\x0D\x20");
         /** @var mixed $copyItems */
         $copyItems = $this->copier->copy($items);
-        return $this->applyTrim($function, $copyItems, $characters);
+        return $this->applyTrim($function, $copyItems, $characters, $encoding);
     }
 
     /**
      * @param  callable  $function
      * @param  mixed     $items
-     * @param  string    $characters
+     * @param  string|null  $characters
+     * @param  string|null  $encoding
      * @return mixed
      */
-    private function applyTrim(callable $function, mixed $items, string $characters): mixed
-    {
+    private function applyTrim(
+        callable $function,
+        mixed $items,
+        ?string $characters = null,
+        ?string $encoding = null
+    ): mixed {
         if (is_string($items)) {
-            return $function($items, $characters);
+            return $function($items, $characters, $encoding);
         } elseif (is_array($items)) {
-            return $this->applyTrimArray($function, $characters, $items);
+            return $this->applyTrimArray($function, $characters, $items, $encoding);
         } elseif (is_object($items)) {
-            return $this->applyTrimObject($function, $characters, $items);
+            return $this->applyTrimObject($function, $characters, $items, $encoding);
         }
 
         return $items;
@@ -99,11 +143,17 @@ final class TrimmerCore implements TrimmerCoreInterface
      * @param  callable                 $function
      * @param  string                   $characters
      * @param  array<array-key, mixed>  $items
+     * @param  string|null  $encoding
      * @return array<array-key, mixed>
      */
-    private function applyTrimArray(callable $function, string $characters, array $items): array
-    {
-        return array_map(fn(mixed $item): mixed => $this->applyTrim($function, $item, $characters), $items);
+    private function applyTrimArray(
+        callable $function,
+        ?string $characters,
+        array $items,
+        ?string $encoding = null
+    ): array {
+        return array_map(fn(mixed $item): mixed
+            => $this->applyTrim($function, $item, $characters, $encoding), $items);
     }
 
     /**
@@ -112,8 +162,12 @@ final class TrimmerCore implements TrimmerCoreInterface
      * @param  object    $items
      * @return object
      */
-    private function applyTrimObject(callable $function, string $characters, object $items): object
-    {
+    private function applyTrimObject(
+        callable $function,
+        ?string $characters,
+        object $items,
+        ?string $encoding = null
+    ): object {
         $propertyNames = [];
         foreach (get_class_methods($items) as $methodName) {
             if (preg_match('/^get([A-Z].*)$/u', $methodName, $matches)) {
@@ -128,7 +182,7 @@ final class TrimmerCore implements TrimmerCoreInterface
                 /** @var mixed $value */
                 $value = $items->$getter();
                 /** @var mixed $trimmedValue */
-                $trimmedValue = $this->applyTrim($function, $value, $characters);
+                $trimmedValue = $this->applyTrim($function, $value, $characters, $encoding);
                 if (method_exists($items, $setter)) {
                     $items->$setter($trimmedValue);
                 }
