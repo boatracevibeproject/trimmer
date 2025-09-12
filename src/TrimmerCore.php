@@ -12,8 +12,9 @@ use DeepCopy\DeepCopy;
 final class TrimmerCore implements TrimmerCoreInterface
 {
     /**
-     * @param  \DeepCopy\DeepCopy  $copier
-     * @return void
+     * @psalm-param \DeepCopy\DeepCopy $copier
+     *
+     * @param \DeepCopy\DeepCopy $copier
      */
     public function __construct(private readonly DeepCopy $copier)
     {
