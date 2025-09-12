@@ -179,7 +179,7 @@ final class TrimmerCore implements TrimmerCoreInterface
     private function applyTrimArray(
         callable $function,
         array $items,
-        ?string $characters,
+        ?string $characters = null,
         ?string $encoding = null
     ): array {
         return array_map(fn(mixed $item): mixed
@@ -202,7 +202,7 @@ final class TrimmerCore implements TrimmerCoreInterface
     private function applyTrimObject(
         callable $function,
         object $items,
-        ?string $characters,
+        ?string $characters = null,
         ?string $encoding = null
     ): object {
         $propertyNames = [];
