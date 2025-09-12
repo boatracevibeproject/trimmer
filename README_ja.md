@@ -28,9 +28,9 @@ composer require bvp/trimmer
 
 | メソッド | 説明 | 引数 |
 |---|---|---|
-| `Trimmer::trim(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$characters = null`<br>`)` | 文字列・配列・オブジェクトをトリミング | `$value` : string \| array \| object<br>`$characters` : 削除対象の文字列（任意） |
-| `Trimmer::ltrim(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$characters = null`<br>`)` | 左側のトリミング | 同上 |
-| `Trimmer::rtrim(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$characters = null`<br>`)` | 右側のトリミング | 同上 |
+| `Trimmer::trim(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$characters = null`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$encoding = null`<br>`)` | 文字列・配列・オブジェクトをトリミング | `$value` : string \| array \| object<br>`$characters` : 削除対象の文字列（任意）<br>`$encoding` : 文字エンコーディング（任意、例：'UTF-8'） |
+| `Trimmer::ltrim(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$characters = null`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$encoding = null`<br>`)` | 左側のトリミング | 同上 |
+| `Trimmer::rtrim(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$characters = null`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$encoding = null`<br>`)` | 右側のトリミング | 同上 |
 
 ### 基本的な使い方
 
