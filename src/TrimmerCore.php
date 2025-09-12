@@ -131,9 +131,9 @@ final class TrimmerCore implements TrimmerCoreInterface
         if (is_string($items)) {
             return $function($items, $characters, $encoding);
         } elseif (is_array($items)) {
-            return $this->applyTrimArray($function, $characters, $items, $encoding);
+            return $this->applyTrimArray($function, $items, $characters, $encoding);
         } elseif (is_object($items)) {
-            return $this->applyTrimObject($function, $characters, $items, $encoding);
+            return $this->applyTrimObject($function, $items, $characters, $encoding);
         }
 
         return $items;
@@ -141,15 +141,15 @@ final class TrimmerCore implements TrimmerCoreInterface
 
     /**
      * @param  callable                 $function
-     * @param  string                   $characters
      * @param  array<array-key, mixed>  $items
+     * @param  string                   $characters
      * @param  string|null  $encoding
      * @return array<array-key, mixed>
      */
     private function applyTrimArray(
         callable $function,
-        ?string $characters,
         array $items,
+        ?string $characters,
         ?string $encoding = null
     ): array {
         return array_map(fn(mixed $item): mixed
@@ -164,8 +164,8 @@ final class TrimmerCore implements TrimmerCoreInterface
      */
     private function applyTrimObject(
         callable $function,
-        ?string $characters,
         object $items,
+        ?string $characters,
         ?string $encoding = null
     ): object {
         $propertyNames = [];
