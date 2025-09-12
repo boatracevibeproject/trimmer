@@ -28,9 +28,9 @@ composer require bvp/trimmer
 
 | Method | Description | Parameters |
 |---|---|---|
-| `Trimmer::trim(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$characters = null`<br>`)` | Trims strings, arrays, and objects | `$value` : string \| array \| object<br>`$characters` : Characters to remove (optional) |
-| `Trimmer::ltrim(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$characters = null`<br>`)` | Left-side trimming | Same as above |
-| `Trimmer::rtrim(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$characters = null`<br>`)` | Right-side trimming | Same as above |
+| `Trimmer::trim(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$characters = null`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$encoding = null`<br>`)` | Trims strings, arrays, and objects | `$value` : string \| array \| object<br>`$characters` : Characters to remove (optional)<br>`$encoding` : Character encoding (optional, e.g., 'UTF-8') |
+| `Trimmer::ltrim(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$characters = null`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$encoding = null`<br>`)` | Left-side trimming | Same as above |
+| `Trimmer::rtrim(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$characters = null`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$encoding = null`<br>`)` | Right-side trimming | Same as above |
 
 ### Basic Usage
 
