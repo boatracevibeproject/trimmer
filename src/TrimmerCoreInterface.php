@@ -10,8 +10,14 @@ namespace BVP\Trimmer;
 interface TrimmerCoreInterface
 {
     /**
-     * @param  mixed   $items
-     * @param  string  $characters
+     * @psalm-param mixed $items
+     * @psalm-param string|null $characters
+     * @psalm-param string|null $encoding
+     * @psalm-return mixed
+     *
+     * @param mixed $items
+     * @param string|null $characters
+     * @param string|null $encoding
      * @return mixed
      */
     public function trim(
@@ -21,8 +27,14 @@ interface TrimmerCoreInterface
     ): mixed;
 
     /**
-     * @param  mixed   $items
-     * @param  string  $characters
+     * @psalm-param mixed $items
+     * @psalm-param string|null $characters
+     * @psalm-param string|null $encoding
+     * @psalm-return mixed
+     *
+     * @param mixed $items
+     * @param string|null $characters
+     * @param string|null $encoding
      * @return mixed
      */
     public function ltrim(
@@ -32,8 +44,14 @@ interface TrimmerCoreInterface
     ): mixed;
 
     /**
-     * @param  mixed   $items
-     * @param  string  $characters
+     * @psalm-param mixed $items
+     * @psalm-param string|null $characters
+     * @psalm-param string|null $encoding
+     * @psalm-return mixed
+     *
+     * @param mixed $items
+     * @param string|null $characters
+     * @param string|null $encoding
      * @return mixed
      */
     public function rtrim(

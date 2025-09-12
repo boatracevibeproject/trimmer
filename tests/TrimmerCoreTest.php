@@ -15,11 +15,15 @@ use PHPUnit\Framework\TestCase;
 final class TrimmerCoreTest extends TestCase
 {
     /**
+     * @psalm-var \BVP\Trimmer\TrimmerCore
+     *
      * @var \BVP\Trimmer\TrimmerCore
      */
     protected TrimmerCore $trimmer;
 
     /**
+     * @psalm-return void
+     *
      * @return void
      */
     protected function setUp(): void
@@ -28,8 +32,12 @@ final class TrimmerCoreTest extends TestCase
     }
 
     /**
-     * @param  array<int, mixed>  $input
-     * @param  array<int, mixed>  $expected
+     * @psalm-param array<int, mixed> $input
+     * @psalm-param array<int, mixed> $expected
+     * @psalm-return void
+     *
+     * @param array $input
+     * @param array $expected
      * @return void
      */
     #[DataProviderExternal(TrimmerDataProvider::class, 'trimArrayProvider')]
@@ -39,8 +47,12 @@ final class TrimmerCoreTest extends TestCase
     }
 
     /**
-     * @param  bool  $input
-     * @param  bool  $expected
+     * @psalm-param bool $input
+     * @psalm-param bool $expected
+     * @psalm-return void
+     *
+     * @param bool $input
+     * @param bool $expected
      * @return void
      */
     #[DataProviderExternal(TrimmerDataProvider::class, 'trimBoolProvider')]
@@ -50,8 +62,12 @@ final class TrimmerCoreTest extends TestCase
     }
 
     /**
-     * @param  float  $input
-     * @param  float  $expected
+     * @psalm-param float $input
+     * @psalm-param float $expected
+     * @psalm-return void
+     *
+     * @param float $input
+     * @param float $expected
      * @return void
      */
     #[DataProviderExternal(TrimmerDataProvider::class, 'trimFloatProvider')]
@@ -61,8 +77,12 @@ final class TrimmerCoreTest extends TestCase
     }
 
     /**
-     * @param  int  $input
-     * @param  int  $expected
+     * @psalm-param int $input
+     * @psalm-param int $expected
+     * @psalm-return void
+     *
+     * @param int $input
+     * @param int $expected
      * @return void
      */
     #[DataProviderExternal(TrimmerDataProvider::class, 'trimIntProvider')]
@@ -72,7 +92,10 @@ final class TrimmerCoreTest extends TestCase
     }
 
     /**
-     * @param  null  $input
+     * @psalm-param null $input
+     * @psalm-return void
+     *
+     * @param null $input
      * @return void
      */
     #[DataProviderExternal(TrimmerDataProvider::class, 'trimNullProvider')]
@@ -82,8 +105,12 @@ final class TrimmerCoreTest extends TestCase
     }
 
     /**
-     * @param  object              $input
-     * @param  array<int, string>  $expected
+     * @psalm-param object $input
+     * @psalm-param array<int, string> $expected
+     * @psalm-return void
+     *
+     * @param object $input
+     * @param array $expected
      * @return void
      */
     #[DataProviderExternal(TrimmerDataProvider::class, 'trimObjectProvider')]
@@ -99,8 +126,12 @@ final class TrimmerCoreTest extends TestCase
     }
 
     /**
-     * @param  string  $input
-     * @param  string  $expected
+     * @psalm-param string $input
+     * @psalm-param string $expected
+     * @psalm-return void
+     *
+     * @param string $input
+     * @param string $expected
      * @return void
      */
     #[DataProviderExternal(TrimmerDataProvider::class, 'trimStringProvider')]
@@ -110,8 +141,12 @@ final class TrimmerCoreTest extends TestCase
     }
 
     /**
-     * @param  array<int, mixed>  $input
-     * @param  array<int, mixed>  $expected
+     * @psalm-param array<int, mixed> $input
+     * @psalm-param array<int, mixed> $expected
+     * @psalm-return void
+     *
+     * @param array $input
+     * @param array $expected
      * @return void
      */
     #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimArrayProvider')]
@@ -121,8 +156,12 @@ final class TrimmerCoreTest extends TestCase
     }
 
     /**
-     * @param  bool  $input
-     * @param  bool  $expected
+     * @psalm-param bool $input
+     * @psalm-param bool $expected
+     * @psalm-return void
+     *
+     * @param bool $input
+     * @param bool $expected
      * @return void
      */
     #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimBoolProvider')]
@@ -132,8 +171,12 @@ final class TrimmerCoreTest extends TestCase
     }
 
     /**
-     * @param  float  $input
-     * @param  float  $expected
+     * @psalm-param float $input
+     * @psalm-param float $expected
+     * @psalm-return void
+     *
+     * @param float $input
+     * @param float $expected
      * @return void
      */
     #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimFloatProvider')]
@@ -143,8 +186,12 @@ final class TrimmerCoreTest extends TestCase
     }
 
     /**
-     * @param  int  $input
-     * @param  int  $expected
+     * @psalm-param int $input
+     * @psalm-param int $expected
+     * @psalm-return void
+     *
+     * @param int $input
+     * @param int $expected
      * @return void
      */
     #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimIntProvider')]
@@ -154,7 +201,10 @@ final class TrimmerCoreTest extends TestCase
     }
 
     /**
-     * @param  null  $input
+     * @psalm-param null $input
+     * @psalm-return void
+     *
+     * @param null $input
      * @return void
      */
     #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimNullProvider')]
@@ -164,8 +214,12 @@ final class TrimmerCoreTest extends TestCase
     }
 
     /**
-     * @param  object              $input
-     * @param  array<int, string>  $expected
+     * @psalm-param object $input
+     * @psalm-param array<int, string> $expected
+     * @psalm-return void
+     *
+     * @param object $input
+     * @param array $expected
      * @return void
      */
     #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimObjectProvider')]
@@ -181,8 +235,12 @@ final class TrimmerCoreTest extends TestCase
     }
 
     /**
-     * @param  string  $input
-     * @param  string  $expected
+     * @psalm-param string $input
+     * @psalm-param string $expected
+     * @psalm-return void
+     *
+     * @param string $input
+     * @param string $expected
      * @return void
      */
     #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimStringProvider')]
@@ -192,8 +250,12 @@ final class TrimmerCoreTest extends TestCase
     }
 
     /**
-     * @param  array<int, mixed>  $input
-     * @param  array<int, mixed>  $expected
+     * @psalm-param array<int, mixed> $input
+     * @psalm-param array<int, mixed> $expected
+     * @psalm-return void
+     *
+     * @param array $input
+     * @param array $expected
      * @return void
      */
     #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimArrayProvider')]
@@ -203,8 +265,12 @@ final class TrimmerCoreTest extends TestCase
     }
 
     /**
-     * @param  bool  $input
-     * @param  bool  $expected
+     * @psalm-param bool $input
+     * @psalm-param bool $expected
+     * @psalm-return void
+     *
+     * @param bool $input
+     * @param bool $expected
      * @return void
      */
     #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimBoolProvider')]
@@ -214,6 +280,10 @@ final class TrimmerCoreTest extends TestCase
     }
 
     /**
+     * @psalm-param float $input
+     * @psalm-param float $expected
+     * @psalm-return void
+     *
      * @param  float  $input
      * @param  float  $expected
      * @return void
@@ -225,8 +295,12 @@ final class TrimmerCoreTest extends TestCase
     }
 
     /**
-     * @param  int  $input
-     * @param  int  $expected
+     * @psalm-param int $input
+     * @psalm-param int $expected
+     * @psalm-return void
+     *
+     * @param int $input
+     * @param int $expected
      * @return void
      */
     #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimIntProvider')]
@@ -236,7 +310,10 @@ final class TrimmerCoreTest extends TestCase
     }
 
     /**
-     * @param  null  $input
+     * @psalm-param null $input
+     * @psalm-return void
+     *
+     * @param null $input
      * @return void
      */
     #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimNullProvider')]
@@ -246,8 +323,12 @@ final class TrimmerCoreTest extends TestCase
     }
 
     /**
-     * @param  object              $input
-     * @param  array<int, string>  $expected
+     * @psalm-param object $input
+     * @psalm-param array<int, string> $expected
+     * @psalm-return void
+     *
+     * @param object $input
+     * @param array $expected
      * @return void
      */
     #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimObjectProvider')]
@@ -263,8 +344,12 @@ final class TrimmerCoreTest extends TestCase
     }
 
     /**
-     * @param  string  $input
-     * @param  string  $expected
+     * @psalm-param string $input
+     * @psalm-param string $expected
+     * @psalm-return void
+     *
+     * @param string $input
+     * @param string $expected
      * @return void
      */
     #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimStringProvider')]
@@ -274,6 +359,8 @@ final class TrimmerCoreTest extends TestCase
     }
 
     /**
+     * @psalm-return void
+     *
      * @return void
      */
     public function testThrowsExceptionWhenMethodDoesNotExist(): void

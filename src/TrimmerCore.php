@@ -21,10 +21,13 @@ final class TrimmerCore implements TrimmerCoreInterface
     }
 
     /**
-     * @param  string             $name
-     * @param  array<int, mixed>  $arguments
-     * @return never
+     * @psalm-param non-empty-string $name
+     * @psalm-param array<int, mixed> $arguments
+     * @psalm-return never
      *
+     * @param string $name
+     * @param array $arguments
+     * @return never
      * @throws \BadMethodCallException
      */
     public function __call(string $name, array $arguments): never
@@ -35,9 +38,14 @@ final class TrimmerCore implements TrimmerCoreInterface
     }
 
     /**
-     * @param  mixed   $items
-     * @param  string|null  $characters
-     * @param  string|null  $encoding
+     * @psalm-param mixed $items
+     * @psalm-param string|null $characters
+     * @psalm-param string|null $encoding
+     * @psalm-return mixed
+     *
+     * @param mixed $items
+     * @param string|null $characters
+     * @param string|null $encoding
      * @return mixed
      */
     #[\Override]
@@ -62,9 +70,14 @@ final class TrimmerCore implements TrimmerCoreInterface
     }
 
     /**
-     * @param  mixed   $items
-     * @param  string|null  $characters
-     * @param  string|null  $encoding
+     * @psalm-param mixed $items
+     * @psalm-param string|null $characters
+     * @psalm-param string|null $encoding
+     * @psalm-return mixed
+     *
+     * @param mixed $items
+     * @param string|null $characters
+     * @param string|null $encoding
      * @return mixed
      */
     #[\Override]
@@ -89,9 +102,14 @@ final class TrimmerCore implements TrimmerCoreInterface
     }
 
     /**
-     * @param  mixed   $items
-     * @param  string|null  $characters
-     * @param  string|null  $encoding
+     * @psalm-param mixed $items
+     * @psalm-param string|null $characters
+     * @psalm-param string|null $encoding
+     * @psalm-return mixed
+     *
+     * @param mixed $items
+     * @param string|null $characters
+     * @param string|null $encoding
      * @return mixed
      */
     #[\Override]
@@ -116,10 +134,16 @@ final class TrimmerCore implements TrimmerCoreInterface
     }
 
     /**
-     * @param  callable  $function
-     * @param  mixed     $items
-     * @param  string|null  $characters
-     * @param  string|null  $encoding
+     * @psalm-param callable $function
+     * @psalm-param mixed $items
+     * @psalm-param string|null $characters
+     * @psalm-param string|null $encoding
+     * @psalm-return mixed
+     *
+     * @param callable $function
+     * @param mixed $items
+     * @param string|null $characters
+     * @param string|null $encoding
      * @return mixed
      */
     private function applyTrim(
@@ -140,11 +164,17 @@ final class TrimmerCore implements TrimmerCoreInterface
     }
 
     /**
-     * @param  callable                 $function
-     * @param  array<array-key, mixed>  $items
-     * @param  string                   $characters
-     * @param  string|null  $encoding
-     * @return array<array-key, mixed>
+     * @psalm-param callable $function
+     * @psalm-param array<array-key, mixed> $items
+     * @psalm-param string $characters
+     * @psalm-param string|null $encoding
+     * @psalm-return array<array-key, mixed>
+     *
+     * @param callable $function
+     * @param array $items
+     * @param string|null $characters
+     * @param string|null $encoding
+     * @return array
      */
     private function applyTrimArray(
         callable $function,
@@ -157,9 +187,16 @@ final class TrimmerCore implements TrimmerCoreInterface
     }
 
     /**
-     * @param  callable  $function
-     * @param  string    $characters
-     * @param  object    $items
+     * @psalm-param callable $function
+     * @psalm-param object $items
+     * @psalm-param string|null $characters
+     * @psalm-param string|null $encoding
+     * @psalm-return object
+     *
+     * @param callable $function
+     * @param object $items
+     * @param string|null $characters
+     * @param string|null $encoding
      * @return object
      */
     private function applyTrimObject(
