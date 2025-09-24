@@ -14,10 +14,12 @@
 BVP Trimmer は、PHP の組み込み関数 `trim`、`ltrim`、`rtrim` を拡張し、**配列**や**オブジェクト**に対しても再帰的にトリミングを適用できるライブラリです。
 
 ## 📦 Requirements
+
 - PHP: ^8.2
 - myclabs/deep-copy: ^1.11
 
 ## 💾 Installation
+
 ```bash
 composer require bvp/trimmer
 ```
@@ -144,9 +146,11 @@ Trimmer::trim($objectB);
 ---
 
 ## ⚠️ Notes
+
 - `Trimmer::trim`、`Trimmer::ltrim`、`Trimmer::rtrim` は**非破壊的**です。
   元の値を変更せず、新しい値を返します。
 - getter / setter メソッドが存在しないオブジェクトのプロパティはトリミングされません。
 
 ## 📄 License
+
 Trimmer は [MIT license](LICENSE) の元で公開されています。
