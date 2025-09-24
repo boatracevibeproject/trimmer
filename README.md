@@ -14,10 +14,12 @@
 BVP Trimmer is a PHP library that extends the built-in functions `trim`, `ltrim`, and `rtrim` and allows you to recursively trim **arrays** and **objects** as well.
 
 ## 📦 Requirements
+
 - PHP: ^8.2
 - myclabs/deep-copy: ^1.11
 
 ## 💾 Installation
+
 ```bash
 composer require bvp/trimmer
 ```
@@ -145,9 +147,11 @@ Trimmer::trim($objectB);
 ---
 
 ## ⚠️ Notes
+
 - `Trimmer::trim`, `Trimmer::ltrim`, and `Trimmer::rtrim` are **non-destructive**.
 They return new values without modifying the originals.
 - Object properties without both getter and setter methods cannot be trimmed.
 
 ## 📄 License
+
 Trimmer is open-source software released under the [MIT license](LICENSE).
