@@ -343,6 +343,115 @@ final class TrimmerTest extends TestCase
     }
 
     /**
+     * @psalm-param array<int, mixed> $input
+     * @psalm-param array<int, mixed> $expected
+     * @psalm-return void
+     *
+     * @param array $input
+     * @param array $expected
+     * @return void
+     */
+    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimArrayProvider')]
+    public function testTrimStartArray(array $input, array $expected): void
+    {
+        $this->assertSame($expected, Trimmer::trimStart($input));
+    }
+
+    /**
+     * @psalm-param bool $input
+     * @psalm-param bool $expected
+     * @psalm-return void
+     *
+     * @param bool $input
+     * @param bool $expected
+     * @return void
+     */
+    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimBoolProvider')]
+    public function testTrimStartBool(bool $input, bool $expected): void
+    {
+        $this->assertSame($expected, Trimmer::trimStart($input));
+    }
+
+    /**
+     * @psalm-param float $input
+     * @psalm-param float $expected
+     * @psalm-return void
+     *
+     * @param float $input
+     * @param float $expected
+     * @return void
+     */
+    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimFloatProvider')]
+    public function testTrimStartFloat(float $input, float $expected): void
+    {
+        $this->assertSame($expected, Trimmer::trimStart($input));
+    }
+
+    /**
+     * @psalm-param int $input
+     * @psalm-param int $expected
+     * @psalm-return void
+     *
+     * @param int $input
+     * @param int $expected
+     * @return void
+     */
+    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimIntProvider')]
+    public function testTrimStartInt(int $input, int $expected): void
+    {
+        $this->assertSame($expected, Trimmer::trimStart($input));
+    }
+
+    /**
+     * @psalm-param null $input
+     * @psalm-return void
+     *
+     * @param null $input
+     * @return void
+     */
+    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimNullProvider')]
+    public function testTrimStartNull(null $input): void
+    {
+        $this->assertNull(Trimmer::trimStart($input));
+    }
+
+    /**
+     * @psalm-param object $input
+     * @psalm-param array<int, string> $expected
+     * @psalm-return void
+     *
+     * @param object $input
+     * @param array $expected
+     * @return void
+     */
+    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimObjectProvider')]
+    public function testTrimStartObject(object $input, array $expected): void
+    {
+        $actual = Trimmer::trimStart($input);
+        $this->assertSame($expected, [
+            $actual->getPropertyA(),
+            $actual->getPropertyB(),
+            $actual->getObjectB()->getPropertyC(),
+            $actual->getObjectB()->getPropertyD(),
+        ]);
+    }
+
+    /**
+     * @psalm-param string $input
+     * @psalm-param string $expected
+     * @psalm-return void
+     *
+     * @param string $input
+     * @param string $expected
+     * @return void
+     */
+    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimStringProvider')]
+    public function testTrimStartString(string $input, string $expected): void
+    {
+        $this->assertSame($expected, Trimmer::trimStart($input));
+    }
+
+    /**
      * @return void
      */
     public function testGetInstance(): void
