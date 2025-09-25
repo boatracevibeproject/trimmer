@@ -155,6 +155,26 @@ final class TrimmerCore implements TrimmerCoreInterface
     }
 
     /**
+     * @psalm-param mixed $items
+     * @psalm-param string|null $characters
+     * @psalm-param string|null $encoding
+     * @psalm-return mixed
+     *
+     * @param mixed $items
+     * @param string|null $characters
+     * @param string|null $encoding
+     * @return mixed
+     */
+    #[\Override]
+    public function trimEnd(
+        mixed $items,
+        ?string $characters = null,
+        ?string $encoding = null
+    ): mixed {
+        return $this->rtrim($items, $characters, $encoding);
+    }
+
+    /**
      * @psalm-param callable $function
      * @psalm-param mixed $items
      * @psalm-param string|null $characters
