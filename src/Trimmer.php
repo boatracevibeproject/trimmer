@@ -20,10 +20,8 @@ final class Trimmer implements TrimmerInterface
 
     /**
      * @psalm-param \BVP\Trimmer\TrimmerCoreInterface $trimmer
-     * @psalm-return void
      *
      * @param \BVP\Trimmer\TrimmerCoreInterface $trimmer
-     * @return void
      */
     public function __construct(private readonly TrimmerCoreInterface $trimmer)
     {
