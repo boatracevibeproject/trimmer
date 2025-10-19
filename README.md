@@ -11,7 +11,7 @@
 [![stable](https://poser.pugx.org/bvp/trimmer/v/stable)](https://packagist.org/packages/bvp/trimmer)
 [![license](https://poser.pugx.org/bvp/trimmer/license)](https://packagist.org/packages/bvp/trimmer)
 
-BVP Trimmer is a PHP library that extends the built-in functions `trim`, `ltrim`, and `rtrim` and allows you to recursively trim **arrays** and **objects** as well.
+Trimmer is a PHP library that extends the built-in functions `trim`, `ltrim`, and `rtrim` and allows you to recursively trim **arrays** and **objects** as well.
 
 ## 📦 Requirements
 
