@@ -572,14 +572,14 @@ final class TrimmerTest extends TestCase
     /**
      * @return void
      */
-    public function testGetInstanceWithMockInput(): void
+    public function testGetInstanceWithStubInput(): void
     {
         Trimmer::resetInstance();
-        $mock = $this->createMock(TrimmerCoreInterface::class);
-        $mock->method('trim')->willReturn(' exampleA ');
-        $mock->method('ltrim')->willReturn(' exampleB ');
-        $mock->method('rtrim')->willReturn(' exampleC ');
-        $trimmer = Trimmer::getInstance($mock);
+        $stub = $this->createStub(TrimmerCoreInterface::class);
+        $stub->method('trim')->willReturn(' exampleA ');
+        $stub->method('ltrim')->willReturn(' exampleB ');
+        $stub->method('rtrim')->willReturn(' exampleC ');
+        $trimmer = Trimmer::getInstance($stub);
         $this->assertInstanceOf(TrimmerInterface::class, $trimmer);
         $this->assertSame(' exampleA ', $trimmer::trim(' exampleA '));
         $this->assertSame(' exampleB ', $trimmer::ltrim(' exampleB '));
@@ -598,14 +598,14 @@ final class TrimmerTest extends TestCase
     /**
      * @return void
      */
-    public function testCreateInstanceWithMockInput(): void
+    public function testCreateInstanceWithStubInput(): void
     {
         Trimmer::resetInstance();
-        $mock = $this->createMock(TrimmerCoreInterface::class);
-        $mock->method('trim')->willReturn(' exampleA ');
-        $mock->method('ltrim')->willReturn(' exampleB ');
-        $mock->method('rtrim')->willReturn(' exampleC ');
-        $trimmer = Trimmer::createInstance($mock);
+        $stub = $this->createStub(TrimmerCoreInterface::class);
+        $stub->method('trim')->willReturn(' exampleA ');
+        $stub->method('ltrim')->willReturn(' exampleB ');
+        $stub->method('rtrim')->willReturn(' exampleC ');
+        $trimmer = Trimmer::createInstance($stub);
         $this->assertInstanceOf(TrimmerInterface::class, $trimmer);
         $this->assertSame(' exampleA ', $trimmer::trim(' exampleA '));
         $this->assertSame(' exampleB ', $trimmer::ltrim(' exampleB '));
