@@ -31,13 +31,13 @@ jobs:
             phpunit-version: '12.0'
     steps:
       - name: Setup PHP ${{ matrix.php-version }}
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@44454db4f0199b8b9685a5d763dc37cbf79108e1
         with:
           php-version: ${{ matrix.php-version }}
           coverage: pcov
 
       - name: Checkout Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8
 
       - name: Require PHPUnit ${{ matrix.phpunit-version }}
         run: composer require --dev phpunit/phpunit:^${{ matrix.phpunit-version }} --with-all-dependencies
@@ -52,7 +52,7 @@ jobs:
         run: vendor/bin/phpunit --configuration=phpunit.xml.dist --coverage-xml=build/coverage-xml
 
       - name: Upload Code Coverage to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@5a1091511ad55cbe89839c7260b706298ca349f7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: build/coverage-xml/coverage.xml
