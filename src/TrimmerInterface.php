@@ -10,19 +10,19 @@ namespace BVP\Trimmer;
 interface TrimmerInterface
 {
     /**
-     * @psalm-param \BVP\Trimmer\TrimmerCoreInterface|null $trimmerCore
+     * @psalm-param ?\BVP\Trimmer\TrimmerCoreInterface $trimmerCore
      * @psalm-return \BVP\Trimmer\TrimmerInterface
      *
-     * @param \BVP\Trimmer\TrimmerCoreInterface|null $trimmerCore
+     * @param ?\BVP\Trimmer\TrimmerCoreInterface $trimmerCore
      * @return \BVP\Trimmer\TrimmerInterface
      */
     public static function getInstance(?TrimmerCoreInterface $trimmerCore = null): TrimmerInterface;
 
     /**
-     * @psalm-param \BVP\Trimmer\TrimmerCoreInterface|null $trimmerCore
+     * @psalm-param ?\BVP\Trimmer\TrimmerCoreInterface $trimmerCore
      * @psalm-return \BVP\Trimmer\TrimmerInterface
      *
-     * @param \BVP\Trimmer\TrimmerCoreInterface|null $trimmerCore
+     * @param ?\BVP\Trimmer\TrimmerCoreInterface $trimmerCore
      * @return \BVP\Trimmer\TrimmerInterface
      */
     public static function createInstance(?TrimmerCoreInterface $trimmerCore = null): TrimmerInterface;

@@ -10,79 +10,156 @@ namespace BVP\Trimmer\Tests;
 final class TrimmerDataProvider
 {
     /**
-     * @psalm-return array<int, array<int, array<int, mixed>>>
+     * @psalm-return non-empty-list<
+     *     array{
+     *         arguments: list<mixed>,
+     *         expected: list<mixed>,
+     *     }
+     * >
      *
      * @return array
      */
     public static function trimArrayProvider(): array
     {
         return [
-            [[' trimmerA '], ['trimmerA']],
-            [[' trimmerA ', [' trimmerB ']], ['trimmerA', ['trimmerB']]],
-            [["\n trimmerA \t"], ['trimmerA']],
-            [["\n trimmerA \t", ["\n trimmerB \t"]], ['trimmerA', ['trimmerB']]],
-            [[' trimmerA ', 1, 1.0, true, null], ['trimmerA', 1, 1.0, true, null]],
-            [[' trimmerA ', [' trimmerB ', 1, 1.0, true, null]], ['trimmerA', ['trimmerB', 1, 1.0, true, null]]],
-            [[1, 1.0, true, null], [1, 1.0, true, null]],
-            [[1, 1.0, true, null, [1, 1.0, true, null]], [1, 1.0, true, null, [1, 1.0, true, null]]],
-            [[], []],
-            [[[]], [[]]],
+            [
+                'arguments' => [' trimmerA '],
+                'expected' => ['trimmerA']
+            ],
+            [
+                'arguments' => [' trimmerA ', [' trimmerB ']],
+                'expected' => ['trimmerA', ['trimmerB']],
+            ],
+            [
+                'arguments' => ["\n trimmerA \t"],
+                'expected' => ['trimmerA'],
+            ],
+            [
+                'arguments' => ["\n trimmerA \t", ["\n trimmerB \t"]],
+                'expected' => ['trimmerA', ['trimmerB']],
+            ],
+            [
+                'arguments' => [' trimmerA ', 1, 1.0, true, null],
+                'expected' => ['trimmerA', 1, 1.0, true, null],
+            ],
+            [
+                'arguments' => [' trimmerA ', [' trimmerB ', 1, 1.0, true, null]],
+                'expected' => ['trimmerA', ['trimmerB', 1, 1.0, true, null]],
+            ],
+            [
+                'arguments' => [1, 1.0, true, null],
+                'expected' => [1, 1.0, true, null],
+            ],
+            [
+                'arguments' => [1, 1.0, true, null, [1, 1.0, true, null]],
+                'expected' => [1, 1.0, true, null, [1, 1.0, true, null]],
+            ],
+            [
+                'arguments' => [],
+                'expected' => [],
+            ],
+            [
+                'arguments' => [[]],
+                'expected' => [[]],
+            ],
         ];
     }
 
     /**
-     * @psalm-return array<int, array<int, bool>>
+     * @psalm-return non-empty-list<
+     *     array{
+     *         arguments: bool,
+     *         expected: bool,
+     *     }
+     * >
      *
      * @return array
      */
     public static function trimBoolProvider(): array
     {
         return [
-            [true, true],
-            [false, false],
+            [
+                'arguments' => true,
+                'expected' => true,
+            ],
+            [
+                'arguments' => false,
+                'expected' => false,
+            ],
         ];
     }
 
     /**
-     * @psalm-return array<int, array<int, float>>
+     * @psalm-return non-empty-list<
+     *     array{
+     *         arguments: float,
+     *         expected: float,
+     *     }
+     * >
      *
      * @return array
      */
     public static function trimFloatProvider(): array
     {
         return [
-            [0.0, 0.0],
-            [1.0, 1.0],
+            [
+                'arguments' => 0.0,
+                'expected' => 0.0,
+            ],
+            [
+                'arguments' => 1.0,
+                'expected' => 1.0,
+            ],
         ];
     }
 
     /**
-     * @psalm-return array<int, array<int, int>>
+     * @psalm-return non-empty-list<
+     *     array{
+     *         arguments: int,
+     *         expected: int,
+     *     }
+     * >
      *
      * @return array
      */
     public static function trimIntProvider(): array
     {
         return [
-            [0, 0],
-            [1, 1],
+            [
+                'arguments' => 0,
+                'expected' => 0,
+            ],
+            [
+                'arguments' => 1,
+                'expected' => 1,
+            ],
         ];
     }
 
     /**
-     * @psalm-return array<int, array<int, null>>
+     * @psalm-return non-empty-list<
+     *     array{arguments: null}
+     * >
      *
      * @return array
      */
     public static function trimNullProvider(): array
     {
         return [
-            [null],
+            [
+                'arguments' => null,
+            ],
         ];
     }
 
     /**
-     * @psalm-return array<int, array<int, object|array<int, string>>>
+     * @psalm-return non-empty-list<
+     *     array{
+     *         arguments: object,
+     *         expected: list<non-empty-string>,
+     *     }
+     * >
      *
      * @return array
      */
@@ -138,99 +215,191 @@ final class TrimmerDataProvider
         };
 
         return [
-            [$objectA, ['trimmerA', ' trimmerB ', 'trimmerC', ' trimmerD ']],
+            [
+                'arguments' => $objectA,
+                'expected' => ['trimmerA', ' trimmerB ', 'trimmerC', ' trimmerD '],
+            ],
         ];
     }
 
     /**
-     * @psalm-return array<int, array<int, string>>
+     * @psalm-return non-empty-list<
+     *     array{
+     *         arguments: string,
+     *         expected: string,
+     *     }
+     * >
      *
      * @return array
      */
     public static function trimStringProvider(): array
     {
         return [
-            [' trimmer ', 'trimmer'],
-            ["\n trimmer \t", 'trimmer'],
-            ['', ''],
-            [' ', ''],
+            [
+                'arguments' => ' trimmer ',
+                'expected' => 'trimmer',
+            ],
+            [
+                'arguments' => "\n trimmer \t",
+                'expected' => 'trimmer',
+            ],
+            [
+                'arguments' => '',
+                'expected' => '',
+            ],
+            [
+                'arguments' => ' ',
+                'expected' => '',
+            ],
         ];
     }
 
     /**
-     * @psalm-return array<int, array<int, array<int, mixed>>>
+     * @psalm-return non-empty-list<
+     *     array{
+     *         arguments: list<mixed>,
+     *         expected: list<mixed>,
+     *     }
+     * >
      *
      * @return array
      */
     public static function ltrimArrayProvider(): array
     {
         return [
-            [[' trimmerA '], ['trimmerA ']],
-            [[' trimmerA ', [' trimmerB ']], ['trimmerA ', ['trimmerB ']]],
-            [["\n trimmerA \t"], ["trimmerA \t"]],
-            [["\n trimmerA \t", ["\n trimmerB \t"]], ["trimmerA \t", ["trimmerB \t"]]],
-            [[' trimmerA ', 1, 1.0, true, null], ['trimmerA ', 1, 1.0, true, null]],
-            [[' trimmerA ', [' trimmerB ', 1, 1.0, true, null]], ['trimmerA ', ['trimmerB ', 1, 1.0, true, null]]],
-            [[1, 1.0, true, null], [1, 1.0, true, null]],
-            [[1, 1.0, true, null, [1, 1.0, true, null]], [1, 1.0, true, null, [1, 1.0, true, null]]],
-            [[], []],
-            [[[]], [[]]],
+            [
+                'arguments' => [' trimmerA '],
+                'expected' => ['trimmerA '],
+            ],
+            [
+                'arguments' => [' trimmerA ', [' trimmerB ']],
+                'expected' => ['trimmerA ', ['trimmerB ']],
+            ],
+            [
+                'arguments' => ["\n trimmerA \t"],
+                'expected' => ["trimmerA \t"],
+            ],
+            [
+                'arguments' => ["\n trimmerA \t", ["\n trimmerB \t"]],
+                'expected' => ["trimmerA \t", ["trimmerB \t"]],
+            ],
+            [
+                'arguments' => [' trimmerA ', 1, 1.0, true, null],
+                'expected' => ['trimmerA ', 1, 1.0, true, null]],
+            [
+                'arguments' => [' trimmerA ', [' trimmerB ', 1, 1.0, true, null]],
+                'expected' => ['trimmerA ', ['trimmerB ', 1, 1.0, true, null]]],
+            [
+                'arguments' => [1, 1.0, true, null],
+                'expected' => [1, 1.0, true, null]],
+            [
+                'arguments' => [1, 1.0, true, null, [1, 1.0, true, null]],
+                'expected' => [1, 1.0, true, null, [1, 1.0, true, null]]],
+            [
+                'arguments' => [],
+                'expected' => []],
+            [
+                'arguments' => [[]],
+                'expected' => [[]],
+            ],
         ];
     }
 
     /**
-     * @psalm-return array<int, array<int, bool>>
+     * @psalm-return non-empty-list<
+     *     array{
+     *         arguments: bool,
+     *         expected: bool,
+     *     }
+     * >
      *
      * @return array
      */
     public static function ltrimBoolProvider(): array
     {
         return [
-            [true, true],
-            [false, false],
+            [
+                'arguments' => true,
+                'expected' => true,
+            ],
+            [
+                'arguments' => false,
+                'expected' => false,
+            ],
         ];
     }
 
     /**
-     * @psalm-return array<int, array<int, float>>
+     * @psalm-return non-empty-list<
+     *     array{
+     *         arguments: float,
+     *         expected: float,
+     *     }
+     * >
      *
      * @return array
      */
     public static function ltrimFloatProvider(): array
     {
         return [
-            [0.0, 0.0],
-            [1.0, 1.0],
+            [
+                'arguments' => 0.0,
+                'expected' => 0.0,
+            ],
+            [
+                'arguments' => 1.0,
+                'expected' => 1.0,
+            ],
         ];
     }
 
     /**
-     * @psalm-return array<int, array<int, int>>
+     * @psalm-return non-empty-list<
+     *     array{
+     *         arguments: int,
+     *         expected: int,
+     *     }
+     * >
      *
      * @return array
      */
     public static function ltrimIntProvider(): array
     {
         return [
-            [0, 0],
-            [1, 1],
+            [
+                'arguments' => 0,
+                'expected' => 0,
+            ],
+            [
+                'arguments' => 1,
+                'expected' => 1,
+            ],
         ];
     }
 
     /**
-     * @psalm-return array<int, array<int, null>>
+     * @psalm-return non-empty-list<
+     *     array{arguments: null}
+     * >
      *
      * @return array
      */
     public static function ltrimNullProvider(): array
     {
         return [
-            [null],
+            [
+                'arguments' => null,
+            ],
         ];
     }
 
     /**
-     * @psalm-return array<int, array<int, object|array<int, string>>>
+     * @psalm-return non-empty-list<
+     *     array{
+     *         arguments: object,
+     *         expected: list<non-empty-string>,
+     *     }
+     * >
      *
      * @return array
      */
@@ -286,99 +455,196 @@ final class TrimmerDataProvider
         };
 
         return [
-            [$objectA, ['trimmerA ', ' trimmerB ', 'trimmerC ', ' trimmerD ']],
+            [
+                'arguments' => $objectA,
+                'expected' => ['trimmerA ', ' trimmerB ', 'trimmerC ', ' trimmerD '],
+            ],
         ];
     }
 
     /**
-     * @psalm-return array<int, array<int, string>>
+     * @psalm-return non-empty-list<
+     *     array{
+     *         arguments: string,
+     *         expected: string,
+     *     }
+     * >
      *
      * @return array
      */
     public static function ltrimStringProvider(): array
     {
         return [
-            [' trimmer ', 'trimmer '],
-            ["\n trimmer \t", "trimmer \t"],
-            ['', ''],
-            [' ', ''],
+            [
+                'arguments' => ' trimmer ',
+                'expected' => 'trimmer ',
+            ],
+            [
+                'arguments' => "\n trimmer \t",
+                'expected' => "trimmer \t",
+            ],
+            [
+                'arguments' => '',
+                'expected' => '',
+            ],
+            [
+                'arguments' => ' ',
+                'expected' => '',
+            ],
         ];
     }
 
     /**
-     * @psalm-return array<int, array<int, array<int, mixed>>>
+     * @psalm-return non-empty-list<
+     *     array{
+     *         arguments: list<mixed>,
+     *         expected: list<mixed>,
+     *     }
+     * >
      *
      * @return array
      */
     public static function rtrimArrayProvider(): array
     {
         return [
-            [[' trimmerA '], [' trimmerA']],
-            [[' trimmerA ', [' trimmerB ']], [' trimmerA', [' trimmerB']]],
-            [["\n trimmerA \t"], ["\n trimmerA"]],
-            [["\n trimmerA \t", ["\n trimmerB \t"]], ["\n trimmerA", ["\n trimmerB"]]],
-            [[' trimmerA ', 1, 1.0, true, null], [' trimmerA', 1, 1.0, true, null]],
-            [[' trimmerA ', [' trimmerB ', 1, 1.0, true, null]], [' trimmerA', [' trimmerB', 1, 1.0, true, null]]],
-            [[1, 1.0, true, null], [1, 1.0, true, null]],
-            [[1, 1.0, true, null, [1, 1.0, true, null]], [1, 1.0, true, null, [1, 1.0, true, null]]],
-            [[], []],
-            [[[]], [[]]],
+            [
+                'arguments' => [' trimmerA '],
+                'expected' => [' trimmerA'],
+            ],
+            [
+                'arguments' => [' trimmerA ', [' trimmerB ']],
+                'expected' => [' trimmerA', [' trimmerB']],
+            ],
+            [
+                'arguments' => ["\n trimmerA \t"],
+                'expected' => ["\n trimmerA"],
+            ],
+            [
+                'arguments' => ["\n trimmerA \t", ["\n trimmerB \t"]],
+                'expected' => ["\n trimmerA", ["\n trimmerB"]],
+            ],
+            [
+                'arguments' => [' trimmerA ', 1, 1.0, true, null],
+                'expected' => [' trimmerA', 1, 1.0, true, null],
+            ],
+            [
+                'arguments' => [' trimmerA ', [' trimmerB ', 1, 1.0, true, null]],
+                'expected' => [' trimmerA', [' trimmerB', 1, 1.0, true, null]],
+            ],
+            [
+                'arguments' => [1, 1.0, true, null],
+                'expected' => [1, 1.0, true, null],
+            ],
+            [
+                'arguments' => [1, 1.0, true, null, [1, 1.0, true, null]],
+                'expected' => [1, 1.0, true, null, [1, 1.0, true, null]],
+            ],
+            [
+                'arguments' => [],
+                'expected' => [],
+            ],
+            [
+                'arguments' => [[]],
+                'expected' => [[]],
+            ],
         ];
     }
 
     /**
-     * @psalm-return array<int, array<int, bool>>
+     * @psalm-return non-empty-list<
+     *     array{
+     *         arguments: bool,
+     *         expected: bool,
+     *     }
+     * >
      *
      * @return array
      */
     public static function rtrimBoolProvider(): array
     {
         return [
-            [true, true],
-            [false, false],
+            [
+                'arguments' => true,
+                'expected' => true,
+            ],
+            [
+                'arguments' => false,
+                'expected' => false,
+            ],
         ];
     }
 
     /**
-     * @psalm-return array<int, array<int, float>>
+     * @psalm-return non-empty-list<
+     *     array{
+     *         arguments: float,
+     *         expected: float,
+     *     }
+     * >
      *
      * @return array
      */
     public static function rtrimFloatProvider(): array
     {
         return [
-            [0.0, 0.0],
-            [1.0, 1.0],
+            [
+                'arguments' => 0.0,
+                'expected' => 0.0,
+            ],
+            [
+                'arguments' => 1.0,
+                'expected' => 1.0,
+            ],
         ];
     }
 
     /**
-     * @psalm-return array<int, array<int, int>>
+     * @psalm-return non-empty-list<
+     *     array{
+     *         arguments: int,
+     *         expected: int,
+     *     }
+     * >
      *
      * @return array
      */
     public static function rtrimIntProvider(): array
     {
         return [
-            [0, 0],
-            [1, 1],
+            [
+                'arguments' => 0,
+                'expected' => 0,
+            ],
+            [
+                'arguments' => 1,
+                'expected' => 1,
+            ],
         ];
     }
 
     /**
-     * psalm-return array<int, array<int, null>>
+     * @psalm-return non-empty-list<
+     *     array{arguments: null}
+     * >
      *
      * @return array
      */
     public static function rtrimNullProvider(): array
     {
         return [
-            [null],
+            [
+                'arguments' => null,
+            ],
         ];
     }
 
     /**
-     * @psalm-return array<int, array<int, object|array<int, string>>>
+     * @psalm-return non-empty-list<
+     *     array{
+     *         arguments: object,
+     *         expected: list<non-empty-string>,
+     *     }
+     * >
      *
      * @return array
      */
@@ -434,22 +700,42 @@ final class TrimmerDataProvider
         };
 
         return [
-            [$objectA, [' trimmerA', ' trimmerB ', ' trimmerC', ' trimmerD ']],
+            [
+                'arguments' => $objectA,
+                'expected' => [' trimmerA', ' trimmerB ', ' trimmerC', ' trimmerD '],
+            ],
         ];
     }
 
     /**
-     * @psalm-return array<int, array<int, string>>
+     * @psalm-return non-empty-list<
+     *     array{
+     *         arguments: string,
+     *         expected: string,
+     *     }
+     * >
      *
      * @return array
      */
     public static function rtrimStringProvider(): array
     {
         return [
-            [' trimmer ', ' trimmer'],
-            ["\n trimmer \t", "\n trimmer"],
-            ['', ''],
-            [' ', ''],
+            [
+                'arguments' => ' trimmer ',
+                'expected' => ' trimmer',
+            ],
+            [
+                'arguments' => "\n trimmer \t",
+                'expected' => "\n trimmer",
+            ],
+            [
+                'arguments' => '',
+                'expected' => '',
+            ],
+            [
+                'arguments' => ' ',
+                'expected' => '',
+            ],
         ];
     }
 }

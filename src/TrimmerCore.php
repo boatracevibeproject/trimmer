@@ -34,19 +34,19 @@ final class TrimmerCore implements TrimmerCoreInterface
     public function __call(string $name, array $arguments): never
     {
         throw new \BadMethodCallException(
-            __METHOD__ . "() - Call to undefined method '" . self::class . "::{$name}()'."
+            __METHOD__ . "() - Call to undefined method `" . self::class . "::{$name}()`."
         );
     }
 
     /**
      * @psalm-param mixed $items
-     * @psalm-param string|null $characters
-     * @psalm-param string|null $encoding
+     * @psalm-param ?string $characters
+     * @psalm-param ?string $encoding
      * @psalm-return mixed
      *
      * @param mixed $items
-     * @param string|null $characters
-     * @param string|null $encoding
+     * @param ?string $characters
+     * @param ?string $encoding
      * @return mixed
      */
     #[\Override]
@@ -58,27 +58,27 @@ final class TrimmerCore implements TrimmerCoreInterface
         if (PHP_VERSION_ID >= 80400) {
             $function = fn(string $value, ?string $characters, ?string $encoding): mixed
                 => mb_trim($value, $characters, $encoding);
-            /** @var mixed $copyItems */
+            /** @psalm-var mixed */
             $copyItems = $this->copier->copy($items);
             return $this->applyTrim($function, $copyItems, $characters, $encoding);
         }
 
         $function = fn(string $value, ?string $characters, ?string $encoding = null): mixed
             => trim($value, $characters ?? "\x00\x09\x0A\x0B\x0D\x20");
-        /** @var mixed $copyItems */
+        /** @psalm-var mixed */
         $copyItems = $this->copier->copy($items);
         return $this->applyTrim($function, $copyItems, $characters, $encoding);
     }
 
     /**
      * @psalm-param mixed $items
-     * @psalm-param string|null $characters
-     * @psalm-param string|null $encoding
+     * @psalm-param ?string $characters
+     * @psalm-param ?string $encoding
      * @psalm-return mixed
      *
      * @param mixed $items
-     * @param string|null $characters
-     * @param string|null $encoding
+     * @param ?string $characters
+     * @param ?string $encoding
      * @return mixed
      */
     #[\Override]
@@ -90,27 +90,27 @@ final class TrimmerCore implements TrimmerCoreInterface
         if (PHP_VERSION_ID >= 80400) {
             $function = fn(string $value, ?string $characters, ?string $encoding): mixed
                 => mb_ltrim($value, $characters, $encoding);
-            /** @var mixed $copyItems */
+            /** @psalm-var mixed */
             $copyItems = $this->copier->copy($items);
             return $this->applyTrim($function, $copyItems, $characters, $encoding);
         }
 
         $function = fn(string $value, ?string $characters, ?string $encoding = null): mixed
             => ltrim($value, $characters ?? "\x00\x09\x0A\x0B\x0D\x20");
-        /** @var mixed $copyItems */
+        /** @psalm-var mixed */
         $copyItems = $this->copier->copy($items);
         return $this->applyTrim($function, $copyItems, $characters, $encoding);
     }
 
     /**
      * @psalm-param mixed $items
-     * @psalm-param string|null $characters
-     * @psalm-param string|null $encoding
+     * @psalm-param ?string $characters
+     * @psalm-param ?string $encoding
      * @psalm-return mixed
      *
      * @param mixed $items
-     * @param string|null $characters
-     * @param string|null $encoding
+     * @param ?string $characters
+     * @param ?string $encoding
      * @return mixed
      */
     #[\Override]
@@ -122,27 +122,27 @@ final class TrimmerCore implements TrimmerCoreInterface
         if (PHP_VERSION_ID >= 80400) {
             $function = fn(string $value, ?string $characters, ?string $encoding): mixed
                 => mb_rtrim($value, $characters, $encoding);
-            /** @var mixed $copyItems */
+            /** @psalm-var mixed */
             $copyItems = $this->copier->copy($items);
             return $this->applyTrim($function, $copyItems, $characters, $encoding);
         }
 
         $function = fn(string $value, ?string $characters, ?string $encoding = null): mixed
             => rtrim($value, $characters ?? "\x00\x09\x0A\x0B\x0D\x20");
-        /** @var mixed $copyItems */
+        /** @psalm-var mixed */
         $copyItems = $this->copier->copy($items);
         return $this->applyTrim($function, $copyItems, $characters, $encoding);
     }
 
     /**
      * @psalm-param mixed $items
-     * @psalm-param string|null $characters
-     * @psalm-param string|null $encoding
+     * @psalm-param ?string $characters
+     * @psalm-param ?string $encoding
      * @psalm-return mixed
      *
      * @param mixed $items
-     * @param string|null $characters
-     * @param string|null $encoding
+     * @param ?string $characters
+     * @param ?string $encoding
      * @return mixed
      */
     #[\Override]
@@ -156,13 +156,13 @@ final class TrimmerCore implements TrimmerCoreInterface
 
     /**
      * @psalm-param mixed $items
-     * @psalm-param string|null $characters
-     * @psalm-param string|null $encoding
+     * @psalm-param ?string $characters
+     * @psalm-param ?string $encoding
      * @psalm-return mixed
      *
      * @param mixed $items
-     * @param string|null $characters
-     * @param string|null $encoding
+     * @param ?string $characters
+     * @param ?string $encoding
      * @return mixed
      */
     #[\Override]
@@ -177,14 +177,14 @@ final class TrimmerCore implements TrimmerCoreInterface
     /**
      * @psalm-param callable $function
      * @psalm-param mixed $items
-     * @psalm-param string|null $characters
-     * @psalm-param string|null $encoding
+     * @psalm-param ?string $characters
+     * @psalm-param ?string $encoding
      * @psalm-return mixed
      *
      * @param callable $function
      * @param mixed $items
-     * @param string|null $characters
-     * @param string|null $encoding
+     * @param ?string $characters
+     * @param ?string $encoding
      * @return mixed
      */
     private function applyTrim(
@@ -207,14 +207,14 @@ final class TrimmerCore implements TrimmerCoreInterface
     /**
      * @psalm-param callable $function
      * @psalm-param array<array-key, mixed> $items
-     * @psalm-param string $characters
-     * @psalm-param string|null $encoding
+     * @psalm-param ?string $characters
+     * @psalm-param ?string $encoding
      * @psalm-return array<array-key, mixed>
      *
      * @param callable $function
      * @param array $items
-     * @param string|null $characters
-     * @param string|null $encoding
+     * @param ?string $characters
+     * @param ?string $encoding
      * @return array
      */
     private function applyTrimArray(
@@ -230,14 +230,14 @@ final class TrimmerCore implements TrimmerCoreInterface
     /**
      * @psalm-param callable $function
      * @psalm-param object $items
-     * @psalm-param string|null $characters
-     * @psalm-param string|null $encoding
+     * @psalm-param ?string $characters
+     * @psalm-param ?string $encoding
      * @psalm-return object
      *
      * @param callable $function
      * @param object $items
-     * @param string|null $characters
-     * @param string|null $encoding
+     * @param ?string $characters
+     * @param ?string $encoding
      * @return object
      */
     private function applyTrimObject(
@@ -257,9 +257,9 @@ final class TrimmerCore implements TrimmerCoreInterface
             $getter = 'get' . $propertyName;
             $setter = 'set' . $propertyName;
             if (method_exists($items, $getter)) {
-                /** @var mixed $value */
+                /** @psalm-var mixed */
                 $value = $items->$getter();
-                /** @var mixed $trimmedValue */
+                /** @psalm-var mixed */
                 $trimmedValue = $this->applyTrim($function, $value, $characters, $encoding);
                 if (method_exists($items, $setter)) {
                     $items->$setter($trimmedValue);

@@ -11,13 +11,13 @@ interface TrimmerCoreInterface
 {
     /**
      * @psalm-param mixed $items
-     * @psalm-param string|null $characters
-     * @psalm-param string|null $encoding
+     * @psalm-param ?string $characters
+     * @psalm-param ?string $encoding
      * @psalm-return mixed
      *
      * @param mixed $items
-     * @param string|null $characters
-     * @param string|null $encoding
+     * @param ?string $characters
+     * @param ?string $encoding
      * @return mixed
      */
     public function trim(
@@ -28,13 +28,13 @@ interface TrimmerCoreInterface
 
     /**
      * @psalm-param mixed $items
-     * @psalm-param string|null $characters
-     * @psalm-param string|null $encoding
+     * @psalm-param ?string $characters
+     * @psalm-param ?string $encoding
      * @psalm-return mixed
      *
      * @param mixed $items
-     * @param string|null $characters
-     * @param string|null $encoding
+     * @param ?string $characters
+     * @param ?string $encoding
      * @return mixed
      */
     public function ltrim(
@@ -45,13 +45,13 @@ interface TrimmerCoreInterface
 
     /**
      * @psalm-param mixed $items
-     * @psalm-param string|null $characters
-     * @psalm-param string|null $encoding
+     * @psalm-param ?string $characters
+     * @psalm-param ?string $encoding
      * @psalm-return mixed
      *
      * @param mixed $items
-     * @param string|null $characters
-     * @param string|null $encoding
+     * @param ?string $characters
+     * @param ?string $encoding
      * @return mixed
      */
     public function rtrim(
@@ -62,13 +62,13 @@ interface TrimmerCoreInterface
 
     /**
      * @psalm-param mixed $items
-     * @psalm-param string|null $characters
-     * @psalm-param string|null $encoding
+     * @psalm-param ?string $characters
+     * @psalm-param ?string $encoding
      * @psalm-return mixed
      *
      * @param mixed $items
-     * @param string|null $characters
-     * @param string|null $encoding
+     * @param ?string $characters
+     * @param ?string $encoding
      * @return mixed
      */
     public function trimStart(
@@ -79,13 +79,13 @@ interface TrimmerCoreInterface
 
     /**
      * @psalm-param mixed $items
-     * @psalm-param string|null $characters
-     * @psalm-param string|null $encoding
+     * @psalm-param ?string $characters
+     * @psalm-param ?string $encoding
      * @psalm-return mixed
      *
      * @param mixed $items
-     * @param string|null $characters
-     * @param string|null $encoding
+     * @param ?string $characters
+     * @param ?string $encoding
      * @return mixed
      */
     public function trimEnd(

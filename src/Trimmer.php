@@ -7,14 +7,26 @@ namespace BVP\Trimmer;
 use DeepCopy\DeepCopy;
 
 /**
+ * @psalm-method static mixed trim(mixed $items, ?string $characters = null, ?string $encoding = null)
+ * @psalm-method static mixed ltrim(mixed $items, ?string $characters = null, ?string $encoding = null)
+ * @psalm-method static mixed rtrim(mixed $items, ?string $characters = null, ?string $encoding = null)
+ * @psalm-method static mixed trimStart(mixed $items, ?string $characters = null, ?string $encoding = null)
+ * @psalm-method static mixed trimEnd(mixed $items, ?string $characters = null, ?string $encoding = null)
+ *
+ * @method static mixed trim(mixed $items, ?string $characters = null, ?string $encoding = null)
+ * @method static mixed ltrim(mixed $items, ?string $characters = null, ?string $encoding = null)
+ * @method static mixed rtrim(mixed $items, ?string $characters = null, ?string $encoding = null)
+ * @method static mixed trimStart(mixed $items, ?string $characters = null, ?string $encoding = null)
+ * @method static mixed trimEnd(mixed $items, ?string $characters = null, ?string $encoding = null)
+ *
  * @author shimomo
  */
 final class Trimmer implements TrimmerInterface
 {
     /**
-     * @psalm-var \BVP\Trimmer\TrimmerInterface|null
+     * @psalm-var ?\BVP\Trimmer\TrimmerInterface
      *
-     * @var \BVP\Trimmer\TrimmerInterface|null
+     * @var ?\BVP\Trimmer\TrimmerInterface
      */
     private static ?TrimmerInterface $instance;
 
@@ -57,10 +69,10 @@ final class Trimmer implements TrimmerInterface
     }
 
     /**
-     * @psalm-param \BVP\Trimmer\TrimmerCoreInterface|null $trimmerCore
+     * @psalm-param ?\BVP\Trimmer\TrimmerCoreInterface $trimmerCore
      * @psalm-return \BVP\Trimmer\TrimmerInterface
      *
-     * @param \BVP\Trimmer\TrimmerCoreInterface|null $trimmerCore
+     * @param ?\BVP\Trimmer\TrimmerCoreInterface $trimmerCore
      * @return \BVP\Trimmer\TrimmerInterface
      */
     #[\Override]
@@ -70,10 +82,10 @@ final class Trimmer implements TrimmerInterface
     }
 
     /**
-     * @psalm-param \BVP\Trimmer\TrimmerCoreInterface|null $trimmerCore
+     * @psalm-param ?\BVP\Trimmer\TrimmerCoreInterface $trimmerCore
      * @psalm-return \BVP\Trimmer\TrimmerInterface
      *
-     * @param \BVP\Trimmer\TrimmerCoreInterface|null $trimmerCore
+     * @param ?\BVP\Trimmer\TrimmerCoreInterface $trimmerCore
      * @return \BVP\Trimmer\TrimmerInterface
      */
     #[\Override]
