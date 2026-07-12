@@ -68,7 +68,7 @@ final class TrimmerTest extends TestCase
      */
     #[Test]
     #[DataProviderExternal(TrimmerDataProvider::class, 'trimNullProvider')]
-    public function testTrimNull(null $items): void
+    public function testTrimNull($items): void
     {
         $this->assertNull(Trimmer::trim($items));
     }
