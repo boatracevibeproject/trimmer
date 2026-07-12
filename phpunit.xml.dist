@@ -7,7 +7,7 @@
     stopOnFailure="false"
 >
     <testsuites>
-        <testsuite name="Boatrace Venture Project">
+        <testsuite name="Boatrace Vibe Project">
             <directory suffix="Test.php">tests/</directory>
         </testsuite>
     </testsuites>
@@ -17,10 +17,4 @@
             <directory>src/</directory>
         </include>
     </source>
-
-    <coverage>
-        <report>
-            <clover outputFile="build/coverage-xml/coverage.xml"/>
-        </report>
-    </coverage>
 </phpunit>

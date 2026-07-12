@@ -1,157 +1,72 @@
-# Trimmer for Boatrace Venture Project
+# Trimmer
 
 [English](README.md) | [日本語](README_ja.md)
 
-[![keepalive](https://github.com/shimomo/bvp-trimmer/actions/workflows/keepalive.yml/badge.svg)](https://github.com/shimomo/bvp-trimmer/actions/workflows/keepalive.yml)
-[![psalm](https://github.com/shimomo/bvp-trimmer/actions/workflows/psalm.yml/badge.svg)](https://github.com/shimomo/bvp-trimmer/actions/workflows/psalm.yml)
-[![security](https://github.com/shimomo/bvp-trimmer/actions/workflows/security.yml/badge.svg)](https://github.com/shimomo/bvp-trimmer/actions/workflows/security.yml)
-[![test](https://github.com/shimomo/bvp-trimmer/actions/workflows/test.yml/badge.svg)](https://github.com/shimomo/bvp-trimmer/actions/workflows/test.yml)
-[![codecov](https://codecov.io/gh/shimomo/bvp-trimmer/graph/badge.svg?token=27E93D01MN)](https://codecov.io/gh/shimomo/bvp-trimmer)
-[![php](https://poser.pugx.org/bvp/trimmer/require/php)](https://packagist.org/packages/bvp/trimmer)
-[![stable](https://poser.pugx.org/bvp/trimmer/v/stable)](https://packagist.org/packages/bvp/trimmer)
-[![license](https://poser.pugx.org/bvp/trimmer/license)](https://packagist.org/packages/bvp/trimmer)
+A small utility class that recursively trims whitespace (or custom characters) from strings, including strings nested inside arrays of any depth.
 
-Trimmer is a PHP library that extends the built-in functions `trim`, `ltrim`, and `rtrim` and allows you to recursively trim **arrays** and **objects** as well.
+## Why
 
-## 📦 Requirements
+PHP's built-in `trim()` / `ltrim()` / `rtrim()` only operate on a single string. Trimming every string value inside a (possibly nested) array normally means writing your own recursive helper, or reaching for `array_map()` — which breaks as soon as the array contains nested arrays or non-string values.
 
-- PHP: ^8.2
-- myclabs/deep-copy: ^1.11
+`Trimmer` handles this for you.
 
-## 💾 Installation
+## Installation
 
 ```bash
 composer require bvp/trimmer
 ```
 
-## ⚡ Usage
-
-### Supported Methods
-
-| Method | Description | Parameters |
-|---|---|---|
-| `Trimmer::trim(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$characters = null`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$encoding = null`<br>`)` | Trims strings, arrays, and objects | `$value` : string \| array \| object<br>`$characters` : Characters to remove (optional)<br>`$encoding` : Character encoding (optional, e.g., 'UTF-8') |
-| `Trimmer::ltrim(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$characters = null`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$encoding = null`<br>`)` | Left-side trimming | Same as above |
-| `Trimmer::rtrim(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$characters = null`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$encoding = null`<br>`)` | Right-side trimming | Same as above |
-
-### Basic Usage
+## Usage
 
 ```php
-<?php
-
-require __DIR__ . '/vendor/autoload.php';
-
 use BVP\Trimmer\Trimmer;
 
-// Trim strings
-echo Trimmer::trim(' trimmer ');                // "trimmer"
-echo Trimmer::trim(' @trimmer@ ', "\x20\x40");  // "trimmer"
+Trimmer::trim('  hello  ');
+// 'hello'
 
-// Left-side trim only
-echo Trimmer::ltrim(' trimmer ');               // "trimmer "
-echo Trimmer::ltrim(' @trimmer@ ', "\x20\x40"); // "trimmer@ "
-
-// Right-side trim only
-echo Trimmer::rtrim(' trimmer ');               // " trimmer"
-echo Trimmer::rtrim(' @trimmer@ ', "\x20\x40"); // " @trimmer"
+Trimmer::trim([' foo ', ' bar ', ['  baz  ', null, 42]]);
+// ['foo', 'bar', ['baz', null, 42]]
 ```
 
----
+### Available methods
 
-### Trimmer::trim() - Trimming Arrays
+| Method | Behavior |
+|---|---|
+| `Trimmer::trim($items, $characters = null, $encoding = null, $trimKeys = false)` | Trims both ends |
+| `Trimmer::ltrim(...)` | Trims the left end only |
+| `Trimmer::rtrim(...)` | Trims the right end only |
+| `Trimmer::trimStart(...)` | Alias for `ltrim()` |
+| `Trimmer::trimEnd(...)` | Alias for `rtrim()` |
+
+All methods accept the same four parameters:
+
+- **`$items`** *(mixed)* — a string, an array (nested to any depth), or any other value. Strings are trimmed; arrays are walked recursively; anything else is returned untouched.
+- **`$characters`** *(?string)* — the set of characters to trim. Defaults to the standard whitespace characters (`" \t\n\r\0\x0B"`), same as PHP's built-in `trim()`.
+- **`$encoding`** *(?string)* — character encoding, only used on PHP ≥ 8.4 (see below).
+- **`$trimKeys`** *(bool, default `false`)* — when `true`, string array keys are trimmed as well (see [Trimming array keys](#trimming-array-keys)).
+
+### PHP version behavior
+
+- **PHP ≥ 8.4**: uses the multibyte-aware `mb_trim()` / `mb_ltrim()` / `mb_rtrim()`, so `$encoding` is respected.
+- **PHP < 8.4**: falls back to the built-in `trim()` / `ltrim()` / `rtrim()` (byte-based); `$encoding` is ignored.
+
+### Trimming array keys
+
+By default, only array *values* are trimmed — keys are left as-is, matching how a plain `array_map('trim', $array)` would behave.
+
+Pass `trimKeys: true` to also trim string keys:
 
 ```php
-$result = Trimmer::trim([' trimmerA ']);
-print_r($result);
-
-// Output:
-Array
-(
-    [0] => trimmerA
-)
+Trimmer::trim([' foo ' => ' bar ', 'foo' => 'baz'], trimKeys: true);
+// ['foo' => 'baz']
 ```
 
-```php
-$result = Trimmer::trim([' trimmerA ', [' trimmerB ']]);
-print_r($result);
+**Note on collisions:** if trimming causes two keys to become identical (including PHP's automatic casting of a canonical numeric string key like `"8"` to the integer `8`), the later value silently overwrites the earlier one — the same behavior you'd get from a normal PHP array assignment (`$array[$key] = $value`).
 
-// Output:
-Array
-(
-    [0] => trimmerA
-    [1] => Array
-        (
-            [0] => trimmerB
-        )
-)
-```
+## What it does not do
 
-```php
-$result = Trimmer::trim([' trimmerA ', 1, 1.0, true, null]);
-print_r($result);
+- It does not trim object properties. Objects are returned untouched, since trimming them safely would require knowing each class's getters/setters, `readonly` properties, and constructor validation — which can't be handled generically without risking broken invariants.
 
-// Output:
-Array
-(
-    [0] => trimmerA
-    [1] => 1
-    [2] => 1
-    [3] => 1
-    [4] =>
-)
-```
-
----
-
-### Trimmer::trim() - Trimming Objects
-
-To trim object properties, you must provide **getter** and **setter** methods.
-Nested objects are also supported.
-
-```php
-$objectA = new class {
-    private string $propertyA = ' trimmerA ';
-    private string $propertyB = ' trimmerB '; // Will NOT be trimmed
-    public function getPropertyA(): string { return $this->propertyA; }
-    public function setPropertyA(string $value): void { $this->propertyA = $value; }
-    public function getPropertyB(): string { return $this->propertyB; }
-};
-
-Trimmer::trim($objectA);
-
-// $propertyA will be trimmed, but $propertyB remains unchanged
-```
-
-Nested objects are also supported:
-
-```php
-$objectB = new class($objectA) {
-    private string $propertyC = ' trimmerC ';
-    private string $propertyD = ' trimmerD '; // Will NOT be trimmed
-    private object $objectA;
-    public function __construct(object $objectA) {
-        $this->objectA = $objectA;
-    }
-    public function getPropertyC(): string { return $this->propertyC; }
-    public function setPropertyC(string $value): void { $this->propertyC = $value; }
-    public function getPropertyD(): string { return $this->propertyD; }
-    public function getObjectA(): object { return $this->objectA; }
-};
-
-Trimmer::trim($objectB);
-
-// $propertyC and $objectA->propertyA will be trimmed,
-// but $propertyD and $objectA->propertyB remain unchanged
-```
-
----
-
-## ⚠️ Notes
-
-- `Trimmer::trim`, `Trimmer::ltrim`, and `Trimmer::rtrim` are **non-destructive**.
-They return new values without modifying the originals.
-- Object properties without both getter and setter methods cannot be trimmed.
-
-## 📄 License
+## License
 
 Trimmer is open-source software released under the [MIT license](LICENSE).

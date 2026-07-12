@@ -5,9 +5,8 @@ declare(strict_types=1);
 namespace BVP\Trimmer\Tests;
 
 use BVP\Trimmer\Trimmer;
-use BVP\Trimmer\TrimmerCoreInterface;
-use BVP\Trimmer\TrimmerInterface;
 use PHPUnit\Framework\Attributes\DataProviderExternal;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -16,749 +15,516 @@ use PHPUnit\Framework\TestCase;
 final class TrimmerTest extends TestCase
 {
     /**
-     * @psalm-param list<mixed> $arguments
-     * @psalm-param list<mixed> $expected
-     * @psalm-return void
-     *
-     * @param array $arguments
-     * @param array $expected
+     * @param list<mixed> $items
+     * @param list<mixed> $expected
      * @return void
      */
+    #[Test]
     #[DataProviderExternal(TrimmerDataProvider::class, 'trimArrayProvider')]
-    public function testTrimArray(array $arguments, array $expected): void
+    public function testTrimArray(array $items, array $expected): void
     {
-        $this->assertSame($expected, Trimmer::trim($arguments));
+        $this->assertSame($expected, Trimmer::trim($items));
     }
 
     /**
-     * @psalm-param bool $arguments
-     * @psalm-param bool $expected
-     * @psalm-return void
-     *
-     * @param bool $arguments
+     * @param bool $items
      * @param bool $expected
      * @return void
      */
+    #[Test]
     #[DataProviderExternal(TrimmerDataProvider::class, 'trimBoolProvider')]
-    public function testTrimBool(bool $arguments, bool $expected): void
+    public function testTrimBool(bool $items, bool $expected): void
     {
-        $this->assertSame($expected, Trimmer::trim($arguments));
+        $this->assertSame($expected, Trimmer::trim($items));
     }
 
     /**
-     * @psalm-param float $arguments
-     * @psalm-param float $expected
-     * @psalm-return void
-     *
-     * @param float $arguments
+     * @param float $items
      * @param float $expected
      * @return void
      */
+    #[Test]
     #[DataProviderExternal(TrimmerDataProvider::class, 'trimFloatProvider')]
-    public function testTrimFloat(float $arguments, float $expected): void
+    public function testTrimFloat(float $items, float $expected): void
     {
-        $this->assertSame($expected, Trimmer::trim($arguments));
+        $this->assertSame($expected, Trimmer::trim($items));
     }
 
     /**
-     * @psalm-param int $arguments
-     * @psalm-param int $expected
-     * @psalm-return void
-     *
-     * @param int $arguments
+     * @param int $items
      * @param int $expected
      * @return void
      */
+    #[Test]
     #[DataProviderExternal(TrimmerDataProvider::class, 'trimIntProvider')]
-    public function testTrimInt(int $arguments, int $expected): void
+    public function testTrimInt(int $items, int $expected): void
     {
-        $this->assertSame($expected, Trimmer::trim($arguments));
+        $this->assertSame($expected, Trimmer::trim($items));
     }
 
     /**
-     * @psalm-param null $arguments
-     * @psalm-return void
-     *
-     * @param null $arguments
+     * @param null $items
      * @return void
      */
+    #[Test]
     #[DataProviderExternal(TrimmerDataProvider::class, 'trimNullProvider')]
-    public function testTrimNull(null $arguments): void
+    public function testTrimNull(null $items): void
     {
-        $this->assertNull(Trimmer::trim($arguments));
+        $this->assertNull(Trimmer::trim($items));
     }
 
     /**
-     * @psalm-param object $arguments
-     * @psalm-param array<int, string> $expected
-     * @psalm-return void
-     *
-     * @param object $arguments
-     * @param array $expected
-     * @return void
-     */
-    #[DataProviderExternal(TrimmerDataProvider::class, 'trimObjectProvider')]
-    public function testTrimObject(object $arguments, array $expected): void
-    {
-        $objectA = Trimmer::trim($arguments);
-        if (!is_object($objectA)) {
-            return;
-        }
-
-        if (!method_exists($objectA, 'getObjectB')) {
-            return;
-        }
-
-        $objectB = $objectA->getObjectB();
-        if (!is_object($objectB)) {
-            return;
-        }
-
-        if (!method_exists($objectA, 'getPropertyA') || !method_exists($objectA, 'getPropertyB')) {
-            return;
-        }
-
-        if (!method_exists($objectB, 'getPropertyC') || !method_exists($objectB, 'getPropertyD')) {
-            return;
-        }
-
-        $this->assertSame($expected, [
-            $objectA->getPropertyA(),
-            $objectA->getPropertyB(),
-            $objectB->getPropertyC(),
-            $objectB->getPropertyD(),
-        ]);
-    }
-
-    /**
-     * @psalm-param string $arguments
-     * @psalm-param string $expected
-     * @psalm-return void
-     *
-     * @param string $arguments
+     * @param string $items
      * @param string $expected
      * @return void
      */
+    #[Test]
     #[DataProviderExternal(TrimmerDataProvider::class, 'trimStringProvider')]
-    public function testTrimString(string $arguments, string $expected): void
+    public function testTrimString(string $items, string $expected): void
     {
-        $this->assertSame($expected, Trimmer::trim($arguments));
+        $this->assertSame($expected, Trimmer::trim($items));
     }
 
     /**
-     * @psalm-param array<int, mixed> $arguments
-     * @psalm-param array<int, mixed> $expected
-     * @psalm-return void
-     *
-     * @param array $arguments
-     * @param array $expected
+     * @param object $items
      * @return void
      */
-    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimArrayProvider')]
-    public function testLtrimArray(array $arguments, array $expected): void
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'trimObjectProvider')]
+    public function testTrimObject(object $items): void
     {
-        $this->assertSame($expected, Trimmer::ltrim($arguments));
+        $this->assertSame($items, Trimmer::trim($items));
     }
 
     /**
-     * @psalm-param bool $arguments
-     * @psalm-param bool $expected
-     * @psalm-return void
-     *
-     * @param bool $arguments
+     * @param string $items
+     * @param non-empty-string $characters
+     * @param string $expected
+     * @return void
+     */
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'trimCharactersProvider')]
+    public function testTrimCharacters(string $items, string $characters, string $expected): void
+    {
+        $this->assertSame($expected, Trimmer::trim($items, $characters));
+    }
+
+    /**
+     * @param array<array-key, mixed> $items
+     * @param bool $trimKeys
+     * @param array<array-key, mixed> $expected
+     * @return void
+     */
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'trimKeysProvider')]
+    public function testTrimKeys(array $items, bool $trimKeys, array $expected): void
+    {
+        $this->assertSame($expected, Trimmer::trim($items, trimKeys: $trimKeys));
+    }
+
+    /**
+     * @param list<mixed> $items
+     * @param list<mixed> $expected
+     * @return void
+     */
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimArrayProvider')]
+    public function testLtrimArray(array $items, array $expected): void
+    {
+        $this->assertSame($expected, Trimmer::ltrim($items));
+    }
+
+    /**
+     * @param bool $items
      * @param bool $expected
      * @return void
      */
+    #[Test]
     #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimBoolProvider')]
-    public function testLtrimBool(bool $arguments, bool $expected): void
+    public function testLtrimBool(bool $items, bool $expected): void
     {
-        $this->assertSame($expected, Trimmer::ltrim($arguments));
+        $this->assertSame($expected, Trimmer::ltrim($items));
     }
 
     /**
-     * @psalm-param float $arguments
-     * @psalm-param float $expected
-     * @psalm-return void
-     *
-     * @param float $arguments
+     * @param float $items
      * @param float $expected
      * @return void
      */
+    #[Test]
     #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimFloatProvider')]
-    public function testLtrimFloat(float $arguments, float $expected): void
+    public function testLtrimFloat(float $items, float $expected): void
     {
-        $this->assertSame($expected, Trimmer::ltrim($arguments));
+        $this->assertSame($expected, Trimmer::ltrim($items));
     }
 
     /**
-     * @psalm-param int $arguments
-     * @psalm-param int $expected
-     * @psalm-return void
-     *
-     * @param int $arguments
+     * @param int $items
      * @param int $expected
      * @return void
      */
+    #[Test]
     #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimIntProvider')]
-    public function testLtrimInt(int $arguments, int $expected): void
+    public function testLtrimInt(int $items, int $expected): void
     {
-        $this->assertSame($expected, Trimmer::ltrim($arguments));
+        $this->assertSame($expected, Trimmer::ltrim($items));
     }
 
     /**
-     * @psalm-param null $arguments
-     * @psalm-return void
-     *
-     * @param null $arguments
+     * @param null $items
      * @return void
      */
+    #[Test]
     #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimNullProvider')]
-    public function testLtrimNull(null $arguments): void
+    public function testLtrimNull(null $items): void
     {
-        $this->assertNull(Trimmer::ltrim($arguments));
+        $this->assertNull(Trimmer::ltrim($items));
     }
 
     /**
-     * @psalm-param object $arguments
-     * @psalm-param array<int, string> $expected
-     * @psalm-return void
-     *
-     * @param object $arguments
-     * @param array $expected
-     * @return void
-     */
-    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimObjectProvider')]
-    public function testLtrimObject(object $arguments, array $expected): void
-    {
-        $objectA = Trimmer::ltrim($arguments);
-        if (!is_object($objectA)) {
-            return;
-        }
-
-        if (!method_exists($objectA, 'getObjectB')) {
-            return;
-        }
-
-        $objectB = $objectA->getObjectB();
-        if (!is_object($objectB)) {
-            return;
-        }
-
-        if (!method_exists($objectA, 'getPropertyA') || !method_exists($objectA, 'getPropertyB')) {
-            return;
-        }
-
-        if (!method_exists($objectB, 'getPropertyC') || !method_exists($objectB, 'getPropertyD')) {
-            return;
-        }
-
-        $this->assertSame($expected, [
-            $objectA->getPropertyA(),
-            $objectA->getPropertyB(),
-            $objectB->getPropertyC(),
-            $objectB->getPropertyD(),
-        ]);
-    }
-
-    /**
-     * @psalm-param string $arguments
-     * @psalm-param string $expected
-     * @psalm-return void
-     *
-     * @param string $arguments
+     * @param string $items
      * @param string $expected
      * @return void
      */
+    #[Test]
     #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimStringProvider')]
-    public function testLtrimString(string $arguments, string $expected): void
+    public function testLtrimString(string $items, string $expected): void
     {
-        $this->assertSame($expected, Trimmer::ltrim($arguments));
+        $this->assertSame($expected, Trimmer::ltrim($items));
     }
 
     /**
-     * @psalm-param array<int, mixed> $arguments
-     * @psalm-param array<int, mixed> $expected
-     * @psalm-return void
-     *
-     * @param array $arguments
-     * @param array $expected
+     * @param object $items
      * @return void
      */
-    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimArrayProvider')]
-    public function testRtrimArray(array $arguments, array $expected): void
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimObjectProvider')]
+    public function testLtrimObject(object $items): void
     {
-        $this->assertSame($expected, Trimmer::rtrim($arguments));
+        $this->assertSame($items, Trimmer::ltrim($items));
     }
 
     /**
-     * @psalm-param bool $arguments
-     * @psalm-param bool $expected
-     * @psalm-return void
-     *
-     * @param bool $arguments
-     * @param bool $expected
-     * @return void
-     */
-    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimBoolProvider')]
-    public function testRtrimBool(bool $arguments, bool $expected): void
-    {
-        $this->assertSame($expected, Trimmer::rtrim($arguments));
-    }
-
-    /**
-     * @psalm-param float $arguments
-     * @psalm-param float $expected
-     * @psalm-return void
-     *
-     * @param  float  $arguments
-     * @param  float  $expected
-     * @return void
-     */
-    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimFloatProvider')]
-    public function testRtrimFloat(float $arguments, float $expected): void
-    {
-        $this->assertSame($expected, Trimmer::rtrim($arguments));
-    }
-
-    /**
-     * @psalm-param int $arguments
-     * @psalm-param int $expected
-     * @psalm-return void
-     *
-     * @param int $arguments
-     * @param int $expected
-     * @return void
-     */
-    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimIntProvider')]
-    public function testRtrimInt(int $arguments, int $expected): void
-    {
-        $this->assertSame($expected, Trimmer::rtrim($arguments));
-    }
-
-    /**
-     * @psalm-param null $arguments
-     * @psalm-return void
-     *
-     * @param null $arguments
-     * @return void
-     */
-    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimNullProvider')]
-    public function testRtrimNull(null $arguments): void
-    {
-        $this->assertNull(Trimmer::rtrim($arguments));
-    }
-
-    /**
-     * @psalm-param object $arguments
-     * @psalm-param array<int, string> $expected
-     * @psalm-return void
-     *
-     * @param object $arguments
-     * @param array $expected
-     * @return void
-     */
-    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimObjectProvider')]
-    public function testRtrimObject(object $arguments, array $expected): void
-    {
-        $objectA = Trimmer::rtrim($arguments);
-        if (!is_object($objectA)) {
-            return;
-        }
-
-        if (!method_exists($objectA, 'getObjectB')) {
-            return;
-        }
-
-        $objectB = $objectA->getObjectB();
-        if (!is_object($objectB)) {
-            return;
-        }
-
-        if (!method_exists($objectA, 'getPropertyA') || !method_exists($objectA, 'getPropertyB')) {
-            return;
-        }
-
-        if (!method_exists($objectB, 'getPropertyC') || !method_exists($objectB, 'getPropertyD')) {
-            return;
-        }
-
-        $this->assertSame($expected, [
-            $objectA->getPropertyA(),
-            $objectA->getPropertyB(),
-            $objectB->getPropertyC(),
-            $objectB->getPropertyD(),
-        ]);
-    }
-
-    /**
-     * @psalm-param string $arguments
-     * @psalm-param string $expected
-     * @psalm-return void
-     *
-     * @param string $arguments
+     * @param string $items
+     * @param non-empty-string $characters
      * @param string $expected
      * @return void
      */
-    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimStringProvider')]
-    public function testRtrimString(string $arguments, string $expected): void
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimCharactersProvider')]
+    public function testLtrimCharacters(string $items, string $characters, string $expected): void
     {
-        $this->assertSame($expected, Trimmer::rtrim($arguments));
+        $this->assertSame($expected, Trimmer::ltrim($items, $characters));
     }
 
     /**
-     * @psalm-param array<int, mixed> $arguments
-     * @psalm-param array<int, mixed> $expected
-     * @psalm-return void
-     *
-     * @param array $arguments
-     * @param array $expected
+     * @param array<array-key, mixed> $items
+     * @param bool $trimKeys
+     * @param array<array-key, mixed> $expected
      * @return void
      */
-    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimArrayProvider')]
-    public function testTrimStartArray(array $arguments, array $expected): void
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimKeysProvider')]
+    public function testLtrimKeys(array $items, bool $trimKeys, array $expected): void
     {
-        $this->assertSame($expected, Trimmer::trimStart($arguments));
+        $this->assertSame($expected, Trimmer::ltrim($items, trimKeys: $trimKeys));
     }
 
     /**
-     * @psalm-param bool $arguments
-     * @psalm-param bool $expected
-     * @psalm-return void
-     *
-     * @param bool $arguments
+     * @param list<mixed> $items
+     * @param list<mixed> $expected
+     * @return void
+     */
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimArrayProvider')]
+    public function testRtrimArray(array $items, array $expected): void
+    {
+        $this->assertSame($expected, Trimmer::rtrim($items));
+    }
+
+    /**
+     * @param bool $items
      * @param bool $expected
      * @return void
      */
-    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimBoolProvider')]
-    public function testTrimStartBool(bool $arguments, bool $expected): void
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimBoolProvider')]
+    public function testRtrimBool(bool $items, bool $expected): void
     {
-        $this->assertSame($expected, Trimmer::trimStart($arguments));
+        $this->assertSame($expected, Trimmer::rtrim($items));
     }
 
     /**
-     * @psalm-param float $arguments
-     * @psalm-param float $expected
-     * @psalm-return void
-     *
-     * @param float $arguments
+     * @param float $items
      * @param float $expected
      * @return void
      */
-    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimFloatProvider')]
-    public function testTrimStartFloat(float $arguments, float $expected): void
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimFloatProvider')]
+    public function testRtrimFloat(float $items, float $expected): void
     {
-        $this->assertSame($expected, Trimmer::trimStart($arguments));
+        $this->assertSame($expected, Trimmer::rtrim($items));
     }
 
     /**
-     * @psalm-param int $arguments
-     * @psalm-param int $expected
-     * @psalm-return void
-     *
-     * @param int $arguments
+     * @param int $items
      * @param int $expected
      * @return void
      */
-    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimIntProvider')]
-    public function testTrimStartInt(int $arguments, int $expected): void
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimIntProvider')]
+    public function testRtrimInt(int $items, int $expected): void
     {
-        $this->assertSame($expected, Trimmer::trimStart($arguments));
+        $this->assertSame($expected, Trimmer::rtrim($items));
     }
 
     /**
-     * @psalm-param null $arguments
-     * @psalm-return void
-     *
-     * @param null $arguments
+     * @param null $items
      * @return void
      */
-    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimNullProvider')]
-    public function testTrimStartNull(null $arguments): void
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimNullProvider')]
+    public function testRtrimNull(null $items): void
     {
-        $this->assertNull(Trimmer::trimStart($arguments));
+        $this->assertNull(Trimmer::rtrim($items));
     }
 
     /**
-     * @psalm-param object $arguments
-     * @psalm-param array<int, string> $expected
-     * @psalm-return void
-     *
-     * @param object $arguments
-     * @param array $expected
-     * @return void
-     */
-    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimObjectProvider')]
-    public function testTrimStartObject(object $arguments, array $expected): void
-    {
-        $objectA = Trimmer::trimStart($arguments);
-        if (!is_object($objectA)) {
-            return;
-        }
-
-        if (!method_exists($objectA, 'getObjectB')) {
-            return;
-        }
-
-        $objectB = $objectA->getObjectB();
-        if (!is_object($objectB)) {
-            return;
-        }
-
-        if (!method_exists($objectA, 'getPropertyA') || !method_exists($objectA, 'getPropertyB')) {
-            return;
-        }
-
-        if (!method_exists($objectB, 'getPropertyC') || !method_exists($objectB, 'getPropertyD')) {
-            return;
-        }
-
-        $this->assertSame($expected, [
-            $objectA->getPropertyA(),
-            $objectA->getPropertyB(),
-            $objectB->getPropertyC(),
-            $objectB->getPropertyD(),
-        ]);
-    }
-
-    /**
-     * @psalm-param string $arguments
-     * @psalm-param string $expected
-     * @psalm-return void
-     *
-     * @param string $arguments
+     * @param string $items
      * @param string $expected
      * @return void
      */
-    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimStringProvider')]
-    public function testTrimStartString(string $arguments, string $expected): void
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimStringProvider')]
+    public function testRtrimString(string $items, string $expected): void
     {
-        $this->assertSame($expected, Trimmer::trimStart($arguments));
+        $this->assertSame($expected, Trimmer::rtrim($items));
     }
 
     /**
-     * @psalm-param array<int, mixed> $arguments
-     * @psalm-param array<int, mixed> $expected
-     * @psalm-return void
-     *
-     * @param array $arguments
-     * @param array $expected
+     * @param object $items
      * @return void
      */
-    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimArrayProvider')]
-    public function testTrimEndArray(array $arguments, array $expected): void
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimObjectProvider')]
+    public function testRtrimObject(object $items): void
     {
-        $this->assertSame($expected, Trimmer::trimEnd($arguments));
+        $this->assertSame($items, Trimmer::rtrim($items));
     }
 
     /**
-     * @psalm-param bool $arguments
-     * @psalm-param bool $expected
-     * @psalm-return void
-     *
-     * @param bool $arguments
+     * @param string $items
+     * @param non-empty-string $characters
+     * @param string $expected
+     * @return void
+     */
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimCharactersProvider')]
+    public function testRtrimCharacters(string $items, string $characters, string $expected): void
+    {
+        $this->assertSame($expected, Trimmer::rtrim($items, $characters));
+    }
+
+    /**
+     * @param array<array-key, mixed> $items
+     * @param bool $trimKeys
+     * @param array<array-key, mixed> $expected
+     * @return void
+     */
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimKeysProvider')]
+    public function testRtrimKeys(array $items, bool $trimKeys, array $expected): void
+    {
+        $this->assertSame($expected, Trimmer::rtrim($items, trimKeys: $trimKeys));
+    }
+
+    /**
+     * @param list<mixed> $items
+     * @param list<mixed> $expected
+     * @return void
+     */
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimArrayProvider')]
+    public function testTrimStartArray(array $items, array $expected): void
+    {
+        $this->assertSame($expected, Trimmer::trimStart($items));
+    }
+
+    /**
+     * @param bool $items
      * @param bool $expected
      * @return void
      */
-    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimBoolProvider')]
-    public function testTrimEndBool(bool $arguments, bool $expected): void
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimBoolProvider')]
+    public function testTrimStartBool(bool $items, bool $expected): void
     {
-        $this->assertSame($expected, Trimmer::trimEnd($arguments));
+        $this->assertSame($expected, Trimmer::trimStart($items));
     }
 
     /**
-     * @psalm-param float $arguments
-     * @psalm-param float $expected
-     * @psalm-return void
-     *
-     * @param  float  $arguments
-     * @param  float  $expected
+     * @param float $items
+     * @param float $expected
      * @return void
      */
-    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimFloatProvider')]
-    public function testTrimEndFloat(float $arguments, float $expected): void
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimFloatProvider')]
+    public function testTrimStartFloat(float $items, float $expected): void
     {
-        $this->assertSame($expected, Trimmer::trimEnd($arguments));
+        $this->assertSame($expected, Trimmer::trimStart($items));
     }
 
     /**
-     * @psalm-param int $arguments
-     * @psalm-param int $expected
-     * @psalm-return void
-     *
-     * @param int $arguments
+     * @param int $items
      * @param int $expected
      * @return void
      */
-    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimIntProvider')]
-    public function testTrimEndInt(int $arguments, int $expected): void
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimIntProvider')]
+    public function testTrimStartInt(int $items, int $expected): void
     {
-        $this->assertSame($expected, Trimmer::trimEnd($arguments));
+        $this->assertSame($expected, Trimmer::trimStart($items));
     }
 
     /**
-     * @psalm-param null $arguments
-     * @psalm-return void
-     *
-     * @param null $arguments
+     * @param null $items
      * @return void
      */
-    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimNullProvider')]
-    public function testTrimEndNull(null $arguments): void
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimNullProvider')]
+    public function testTrimStartNull(null $items): void
     {
-        $this->assertNull(Trimmer::trimEnd($arguments));
+        $this->assertNull(Trimmer::trimStart($items));
     }
 
     /**
-     * @psalm-param object $arguments
-     * @psalm-param array<int, string> $expected
-     * @psalm-return void
-     *
-     * @param object $arguments
-     * @param array $expected
-     * @return void
-     */
-    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimObjectProvider')]
-    public function testTrimEndObject(object $arguments, array $expected): void
-    {
-        $objectA = Trimmer::trimEnd($arguments);
-        if (!is_object($objectA)) {
-            return;
-        }
-
-        if (!method_exists($objectA, 'getObjectB')) {
-            return;
-        }
-
-        $objectB = $objectA->getObjectB();
-        if (!is_object($objectB)) {
-            return;
-        }
-
-        if (!method_exists($objectA, 'getPropertyA') || !method_exists($objectA, 'getPropertyB')) {
-            return;
-        }
-
-        if (!method_exists($objectB, 'getPropertyC') || !method_exists($objectB, 'getPropertyD')) {
-            return;
-        }
-
-        $this->assertSame($expected, [
-            $objectA->getPropertyA(),
-            $objectA->getPropertyB(),
-            $objectB->getPropertyC(),
-            $objectB->getPropertyD(),
-        ]);
-    }
-
-    /**
-     * @psalm-param string $arguments
-     * @psalm-param string $expected
-     * @psalm-return void
-     *
-     * @param string $arguments
+     * @param string $items
      * @param string $expected
      * @return void
      */
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimStringProvider')]
+    public function testTrimStartString(string $items, string $expected): void
+    {
+        $this->assertSame($expected, Trimmer::trimStart($items));
+    }
+
+    /**
+     * @param object $items
+     * @return void
+     */
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimObjectProvider')]
+    public function testTrimStartObject(object $items): void
+    {
+        $this->assertSame($items, Trimmer::trimStart($items));
+    }
+
+    /**
+     * @param array<array-key, mixed> $items
+     * @param bool $trimKeys
+     * @param array<array-key, mixed> $expected
+     * @return void
+     */
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimKeysProvider')]
+    public function testTrimStartKeys(array $items, bool $trimKeys, array $expected): void
+    {
+        $this->assertSame($expected, Trimmer::trimStart($items, trimKeys: $trimKeys));
+    }
+
+    /**
+     * @param list<mixed> $items
+     * @param list<mixed> $expected
+     * @return void
+     */
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimArrayProvider')]
+    public function testTrimEndArray(array $items, array $expected): void
+    {
+        $this->assertSame($expected, Trimmer::trimEnd($items));
+    }
+
+    /**
+     * @param bool $items
+     * @param bool $expected
+     * @return void
+     */
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimBoolProvider')]
+    public function testTrimEndBool(bool $items, bool $expected): void
+    {
+        $this->assertSame($expected, Trimmer::trimEnd($items));
+    }
+
+    /**
+     * @param float $items
+     * @param float $expected
+     * @return void
+     */
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimFloatProvider')]
+    public function testTrimEndFloat(float $items, float $expected): void
+    {
+        $this->assertSame($expected, Trimmer::trimEnd($items));
+    }
+
+    /**
+     * @param int $items
+     * @param int $expected
+     * @return void
+     */
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimIntProvider')]
+    public function testTrimEndInt(int $items, int $expected): void
+    {
+        $this->assertSame($expected, Trimmer::trimEnd($items));
+    }
+
+    /**
+     * @param null $items
+     * @return void
+     */
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimNullProvider')]
+    public function testTrimEndNull(null $items): void
+    {
+        $this->assertNull(Trimmer::trimEnd($items));
+    }
+
+    /**
+     * @param string $items
+     * @param string $expected
+     * @return void
+     */
+    #[Test]
     #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimStringProvider')]
-    public function testTrimEndString(string $arguments, string $expected): void
+    public function testTrimEndString(string $items, string $expected): void
     {
-        $this->assertSame($expected, Trimmer::trimEnd($arguments));
+        $this->assertSame($expected, Trimmer::trimEnd($items));
     }
 
     /**
-     * @psalm-return void
-     *
+     * @param object $items
      * @return void
      */
-    public function testGetInstance(): void
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimObjectProvider')]
+    public function testTrimEndObject(object $items): void
     {
-        Trimmer::resetInstance();
-        $this->assertInstanceOf(TrimmerInterface::class, Trimmer::getInstance());
+        $this->assertSame($items, Trimmer::trimEnd($items));
     }
 
     /**
-     * @psalm-return void
-     *
+     * @param array<array-key, mixed> $items
+     * @param bool $trimKeys
+     * @param array<array-key, mixed> $expected
      * @return void
      */
-    public function testGetInstanceWithStubInput(): void
+    #[Test]
+    #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimKeysProvider')]
+    public function testTrimEndKeys(array $items, bool $trimKeys, array $expected): void
     {
-        Trimmer::resetInstance();
-        $stub = $this->createStub(TrimmerCoreInterface::class);
-        $stub->method('trim')->willReturn(' exampleA ');
-        $stub->method('ltrim')->willReturn(' exampleB ');
-        $stub->method('rtrim')->willReturn(' exampleC ');
-        $trimmer = Trimmer::getInstance($stub);
-        $this->assertInstanceOf(TrimmerInterface::class, $trimmer);
-        /** @psalm-suppress UndefinedMethod */
-        $this->assertSame(' exampleA ', $trimmer::trim(' exampleA '));
-        /** @psalm-suppress UndefinedMethod */
-        $this->assertSame(' exampleB ', $trimmer::ltrim(' exampleB '));
-        /** @psalm-suppress UndefinedMethod */
-        $this->assertSame(' exampleC ', $trimmer::rtrim(' exampleC '));
-    }
-
-    /**
-     * @psalm-return void
-     *
-     * @return void
-     */
-    public function testCreateInstance(): void
-    {
-        Trimmer::resetInstance();
-        $this->assertInstanceOf(TrimmerInterface::class, Trimmer::createInstance());
-    }
-
-    /**
-     * @psalm-return void
-     *
-     * @return void
-     */
-    public function testCreateInstanceWithStubInput(): void
-    {
-        Trimmer::resetInstance();
-        $stub = $this->createStub(TrimmerCoreInterface::class);
-        $stub->method('trim')->willReturn(' exampleA ');
-        $stub->method('ltrim')->willReturn(' exampleB ');
-        $stub->method('rtrim')->willReturn(' exampleC ');
-        $trimmer = Trimmer::createInstance($stub);
-        $this->assertInstanceOf(TrimmerInterface::class, $trimmer);
-        /** @psalm-suppress UndefinedMethod */
-        $this->assertSame(' exampleA ', $trimmer::trim(' exampleA '));
-        /** @psalm-suppress UndefinedMethod */
-        $this->assertSame(' exampleB ', $trimmer::ltrim(' exampleB '));
-        /** @psalm-suppress UndefinedMethod */
-        $this->assertSame(' exampleC ', $trimmer::rtrim(' exampleC '));
-    }
-
-    /**
-     * @psalm-return void
-     *
-     * @return void
-     */
-    public function testResetInstance(): void
-    {
-        Trimmer::resetInstance();
-        $instance1 = Trimmer::getInstance();
-        Trimmer::resetInstance();
-        $instance2 = Trimmer::getInstance();
-        $this->assertNotSame($instance1, $instance2);
-    }
-
-    /**
-     * @psalm-return void
-     *
-     * @return void
-     */
-    public function testThrowsExceptionWhenMethodDoesNotExist(): void
-    {
-        $this->expectException(\BadMethodCallException::class);
-        $this->expectExceptionMessage(
-            "BVP\Trimmer\TrimmerCore::__call() - " .
-            "Call to undefined method `BVP\Trimmer\TrimmerCore::ghost()`."
-        );
-
-        /** @psalm-suppress UndefinedMagicMethod */
-        Trimmer::ghost();
+        $this->assertSame($expected, Trimmer::trimEnd($items, trimKeys: $trimKeys));
     }
 }

@@ -1,156 +1,72 @@
-# Trimmer for Boatrace Venture Project
+# Trimmer
 
 [English](README.md) | [日本語](README_ja.md)
 
-[![keepalive](https://github.com/shimomo/bvp-trimmer/actions/workflows/keepalive.yml/badge.svg)](https://github.com/shimomo/bvp-trimmer/actions/workflows/keepalive.yml)
-[![psalm](https://github.com/shimomo/bvp-trimmer/actions/workflows/psalm.yml/badge.svg)](https://github.com/shimomo/bvp-trimmer/actions/workflows/psalm.yml)
-[![security](https://github.com/shimomo/bvp-trimmer/actions/workflows/security.yml/badge.svg)](https://github.com/shimomo/bvp-trimmer/actions/workflows/security.yml)
-[![test](https://github.com/shimomo/bvp-trimmer/actions/workflows/test.yml/badge.svg)](https://github.com/shimomo/bvp-trimmer/actions/workflows/test.yml)
-[![codecov](https://codecov.io/gh/shimomo/bvp-trimmer/graph/badge.svg?token=27E93D01MN)](https://codecov.io/gh/shimomo/bvp-trimmer)
-[![php](https://poser.pugx.org/bvp/trimmer/require/php)](https://packagist.org/packages/bvp/trimmer)
-[![stable](https://poser.pugx.org/bvp/trimmer/v/stable)](https://packagist.org/packages/bvp/trimmer)
-[![license](https://poser.pugx.org/bvp/trimmer/license)](https://packagist.org/packages/bvp/trimmer)
+文字列（およびネストした配列の中の文字列）を再帰的にトリムする、小さなユーティリティクラスです。
 
-Trimmer は、PHP の組み込み関数 `trim`、`ltrim`、`rtrim` を拡張し、**配列**や**オブジェクト**に対しても再帰的にトリミングを適用できるライブラリです。
+## モチベーション
 
-## 📦 Requirements
+PHP 組み込みの `trim()` / `ltrim()` / `rtrim()` は 1 つの文字列にしか使えません。配列（ネストしている場合も含む）の中の文字列を全部トリムしようとすると、自前で再帰処理を書くか `array_map()` を使うことになりますが、後者は配列がネストしていたり文字列以外の値を含んでいたりすると途端に破綻します。
 
-- PHP: ^8.2
-- myclabs/deep-copy: ^1.11
+`Trimmer` はこれを代わりにやってくれます。
 
-## 💾 Installation
+## インストール
 
 ```bash
 composer require bvp/trimmer
 ```
 
-## ⚡ Usage
-
-### サポートメソッド一覧
-
-| メソッド | 説明 | 引数 |
-|---|---|---|
-| `Trimmer::trim(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$characters = null`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$encoding = null`<br>`)` | 文字列・配列・オブジェクトをトリミング | `$value` : string \| array \| object<br>`$characters` : 削除対象の文字列（任意）<br>`$encoding` : 文字エンコーディング（任意、例：'UTF-8'） |
-| `Trimmer::ltrim(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$characters = null`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$encoding = null`<br>`)` | 左側のトリミング | 同上 |
-| `Trimmer::rtrim(`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$value,`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$characters = null`<br>&nbsp;&nbsp;&nbsp;&nbsp;`$encoding = null`<br>`)` | 右側のトリミング | 同上 |
-
-### 基本的な使い方
+## 使い方
 
 ```php
-<?php
-
-require __DIR__ . '/vendor/autoload.php';
-
 use BVP\Trimmer\Trimmer;
 
-// 文字列をトリミング
-echo Trimmer::trim(' trimmer ');                // "trimmer"
-echo Trimmer::trim(' @trimmer@ ', "\x20\x40");  // "trimmer"
+Trimmer::trim('  hello  ');
+// 'hello'
 
-// 左側のみトリミング
-echo Trimmer::ltrim(' trimmer ');               // "trimmer "
-echo Trimmer::ltrim(' @trimmer@ ', "\x20\x40"); // "trimmer@ "
-
-// 右側のみトリミング
-echo Trimmer::rtrim(' trimmer ');               // " trimmer"
-echo Trimmer::rtrim(' @trimmer@ ', "\x20\x40"); // " @trimmer"
+Trimmer::trim([' foo ', ' bar ', ['  baz  ', null, 42]]);
+// ['foo', 'bar', ['baz', null, 42]]
 ```
 
----
+### 提供メソッド
 
-### Trimmer::trim() - 配列のトリミング
+| メソッド | 挙動 |
+|---|---|
+| `Trimmer::trim($items, $characters = null, $encoding = null, $trimKeys = false)` | 両端をトリム |
+| `Trimmer::ltrim(...)` | 左端のみトリム |
+| `Trimmer::rtrim(...)` | 右端のみトリム |
+| `Trimmer::trimStart(...)` | `ltrim()` のエイリアス |
+| `Trimmer::trimEnd(...)` | `rtrim()` のエイリアス |
+
+すべてのメソッドは共通して以下 4 つの引数を受け取ります。
+
+- **`$items`** *(mixed)* — 文字列、配列（何階層ネストしていても可）、またはそれ以外の任意の値。文字列はトリムされ、配列は再帰的に辿られ、それ以外はそのまま返されます。
+- **`$characters`** *(?string)* — トリム対象とする文字集合。未指定時はPHP組み込みの `trim()` と同じ標準的な空白文字（`" \t\n\r\0\x0B"`）になります。
+- **`$encoding`** *(?string)* — 文字エンコーディング。PHP 8.4 以上の場合のみ有効（後述）。
+- **`$trimKeys`** *(bool, デフォルト `false`)* — `true` にすると、配列の文字列キーもトリム対象になります（[配列キーのトリム](#配列キーのトリム)を参照）。
+
+### PHPバージョンによる挙動の違い
+
+- **PHP 8.4 以上**: マルチバイト対応の `mb_trim()` / `mb_ltrim()` / `mb_rtrim()` を使用するため、`$encoding` が反映されます。
+- **PHP 8.4 未満**: 組み込みの `trim()` / `ltrim()` / `rtrim()`（バイト単位）にフォールバックします。この場合 `$encoding` は無視されます。
+
+### 配列キーのトリム
+
+デフォルトでは配列の**値**のみがトリム対象で、キーはそのままです。これは素朴な `array_map('trim', $array)` の挙動と揃えています。
+
+`trimKeys: true` を渡すと、文字列キーもトリム対象になります。
 
 ```php
-$result = Trimmer::trim([' trimmerA ']);
-print_r($result);
-
-// 出力結果:
-Array
-(
-    [0] => trimmerA
-)
+Trimmer::trim([' foo ' => ' bar ', 'foo' => 'baz'], trimKeys: true);
+// ['foo' => 'baz']
 ```
 
-```php
-$result = Trimmer::trim([' trimmerA ', [' trimmerB ']]);
-print_r($result);
+**衝突時の注意:** トリムの結果、2 つのキーが同一になった場合（PHP がカノニカルな数値文字列キー、例えば `"8"` を自動的に整数 `8` にキャストする挙動により衝突するケースも含む）、後から代入された値が黙って前の値を上書きします。これは通常の PHP 配列代入（`$array[$key] = $value`）と同じ挙動です。
 
-// 出力結果:
-Array
-(
-    [0] => trimmerA
-    [1] => Array
-        (
-            [0] => trimmerB
-        )
-)
-```
+## 対応していないこと
 
-```php
-$result = Trimmer::trim([' trimmerA ', 1, 1.0, true, null]);
-print_r($result);
+- オブジェクトのプロパティはトリムしません。オブジェクトはそのまま返されます。各クラスの getter/setter、`readonly` プロパティ、コンストラクタでのバリデーションを個別に把握しない限り安全にトリムできず、汎用的に対応しようとすると不変条件を壊しかねないためです。
 
-// 出力結果:
-Array
-(
-    [0] => trimmerA
-    [1] => 1
-    [2] => 1
-    [3] => 1
-    [4] =>
-)
-```
-
----
-
-### Trimmer::trim() - オブジェクトのトリミング
-
-オブジェクトのプロパティをトリミングするには、**getter** と **setter** メソッドが必要です。  
-ネストしたオブジェクトもサポートしています。
-
-```php
-$objectA = new class {
-    private string $propertyA = ' trimmerA ';
-    private string $propertyB = ' trimmerB '; // トリミングされない
-    public function getPropertyA(): string { return $this->propertyA; }
-    public function setPropertyA(string $value): void { $this->propertyA = $value; }
-    public function getPropertyB(): string { return $this->propertyB; }
-};
-
-Trimmer::trim($objectA);
-
-// $propertyA はトリミングされるが、$propertyB はそのまま
-```
-
-ネストしたオブジェクトにも対応しています。
-
-```php
-$objectB = new class($objectA) {
-    private string $propertyC = ' trimmerC ';
-    private string $propertyD = ' trimmerD '; // トリミングされない
-    private object $objectA;
-    public function __construct(object $objectA) {
-        $this->objectA = $objectA;
-    }
-    public function getPropertyC(): string { return $this->propertyC; }
-    public function setPropertyC(string $value): void { $this->propertyC = $value; }
-    public function getPropertyD(): string { return $this->propertyD; }
-    public function getObjectA(): object { return $this->objectA; }
-};
-
-Trimmer::trim($objectB);
-
-// $propertyC と $objectA->propertyA はトリミングされるが、$propertyD と $objectA->propertyB はそのまま
-```
-
----
-
-## ⚠️ Notes
-
-- `Trimmer::trim`、`Trimmer::ltrim`、`Trimmer::rtrim` は**非破壊的**です。
-  元の値を変更せず、新しい値を返します。
-- getter / setter メソッドが存在しないオブジェクトのプロパティはトリミングされません。
-
-## 📄 License
+## ライセンス
 
 Trimmer は [MIT license](LICENSE) の元で公開されています。

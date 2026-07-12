@@ -4,104 +4,164 @@ declare(strict_types=1);
 
 namespace BVP\Trimmer;
 
-use DeepCopy\DeepCopy;
+use Closure;
 
 /**
- * @psalm-method static mixed trim(mixed $items, ?string $characters = null, ?string $encoding = null)
- * @psalm-method static mixed ltrim(mixed $items, ?string $characters = null, ?string $encoding = null)
- * @psalm-method static mixed rtrim(mixed $items, ?string $characters = null, ?string $encoding = null)
- * @psalm-method static mixed trimStart(mixed $items, ?string $characters = null, ?string $encoding = null)
- * @psalm-method static mixed trimEnd(mixed $items, ?string $characters = null, ?string $encoding = null)
- *
- * @method static mixed trim(mixed $items, ?string $characters = null, ?string $encoding = null)
- * @method static mixed ltrim(mixed $items, ?string $characters = null, ?string $encoding = null)
- * @method static mixed rtrim(mixed $items, ?string $characters = null, ?string $encoding = null)
- * @method static mixed trimStart(mixed $items, ?string $characters = null, ?string $encoding = null)
- * @method static mixed trimEnd(mixed $items, ?string $characters = null, ?string $encoding = null)
- *
  * @author shimomo
  */
-final class Trimmer implements TrimmerInterface
+final class Trimmer
 {
-    /**
-     * @psalm-var ?\BVP\Trimmer\TrimmerInterface
-     *
-     * @var ?\BVP\Trimmer\TrimmerInterface
-     */
-    private static ?TrimmerInterface $instance;
+    private const DEFAULT_CHARACTERS = "\x00\x09\x0A\x0B\x0D\x20";
 
     /**
-     * @psalm-param \BVP\Trimmer\TrimmerCoreInterface $trimmer
-     *
-     * @param \BVP\Trimmer\TrimmerCoreInterface $trimmer
-     */
-    public function __construct(private readonly TrimmerCoreInterface $trimmer)
-    {
-        //
-    }
-
-    /**
-     * @psalm-param non-empty-string $name
-     * @psalm-param list<mixed> $arguments
-     * @psalm-return mixed
-     *
-     * @param string $name
-     * @param array $arguments
+     * @param mixed $items
+     * @param ?string $characters
+     * @param ?string $encoding
+     * @param bool $trimKeys
      * @return mixed
      */
-    public function __call(string $name, array $arguments): mixed
-    {
-        return $this->trimmer->$name(...$arguments);
+    public static function trim(
+        mixed $items,
+        ?string $characters = null,
+        ?string $encoding = null,
+        bool $trimKeys = false,
+    ): mixed {
+        return self::apply(self::trimmer('trim', $characters, $encoding), $items, $trimKeys);
     }
 
     /**
-     * @psalm-param non-empty-string $name
-     * @psalm-param list<mixed> $arguments
-     * @psalm-return mixed
-     *
-     * @param string $name
-     * @param array $arguments
+     * @param mixed $items
+     * @param ?string $characters
+     * @param ?string $encoding
+     * @param bool $trimKeys
      * @return mixed
      */
-    public static function __callStatic(string $name, array $arguments): mixed
-    {
-        return self::getInstance()->$name(...$arguments);
+    public static function ltrim(
+        mixed $items,
+        ?string $characters = null,
+        ?string $encoding = null,
+        bool $trimKeys = false,
+    ): mixed {
+        return self::apply(self::trimmer('ltrim', $characters, $encoding), $items, $trimKeys);
     }
 
     /**
-     * @psalm-param ?\BVP\Trimmer\TrimmerCoreInterface $trimmerCore
-     * @psalm-return \BVP\Trimmer\TrimmerInterface
-     *
-     * @param ?\BVP\Trimmer\TrimmerCoreInterface $trimmerCore
-     * @return \BVP\Trimmer\TrimmerInterface
+     * @param mixed $items
+     * @param ?string $characters
+     * @param ?string $encoding
+     * @param bool $trimKeys
+     * @return mixed
      */
-    #[\Override]
-    public static function getInstance(?TrimmerCoreInterface $trimmerCore = null): TrimmerInterface
-    {
-        return self::$instance ??= new self($trimmerCore ?? new TrimmerCore(new DeepCopy()));
+    public static function rtrim(
+        mixed $items,
+        ?string $characters = null,
+        ?string $encoding = null,
+        bool $trimKeys = false,
+    ): mixed {
+        return self::apply(self::trimmer('rtrim', $characters, $encoding), $items, $trimKeys);
     }
 
     /**
-     * @psalm-param ?\BVP\Trimmer\TrimmerCoreInterface $trimmerCore
-     * @psalm-return \BVP\Trimmer\TrimmerInterface
-     *
-     * @param ?\BVP\Trimmer\TrimmerCoreInterface $trimmerCore
-     * @return \BVP\Trimmer\TrimmerInterface
+     * @param mixed $items
+     * @param ?string $characters
+     * @param ?string $encoding
+     * @param bool $trimKeys
+     * @return mixed
      */
-    #[\Override]
-    public static function createInstance(?TrimmerCoreInterface $trimmerCore = null): TrimmerInterface
-    {
-        return self::$instance = new self($trimmerCore ?? new TrimmerCore(new DeepCopy()));
+    public static function trimStart(
+        mixed $items,
+        ?string $characters = null,
+        ?string $encoding = null,
+        bool $trimKeys = false,
+    ): mixed {
+        return self::ltrim($items, $characters, $encoding, $trimKeys);
     }
 
     /**
-     * @psalm-return void
-     *
-     * @return void
+     * @param mixed $items
+     * @param ?string $characters
+     * @param ?string $encoding
+     * @param bool $trimKeys
+     * @return mixed
      */
-    #[\Override]
-    public static function resetInstance(): void
-    {
-        self::$instance = null;
+    public static function trimEnd(
+        mixed $items,
+        ?string $characters = null,
+        ?string $encoding = null,
+        bool $trimKeys = false,
+    ): mixed {
+        return self::rtrim($items, $characters, $encoding, $trimKeys);
+    }
+
+    /**
+     * @param 'trim'|'ltrim'|'rtrim' $mode
+     * @param ?string $characters
+     * @param ?string $encoding
+     * @return \Closure
+     */
+    private static function trimmer(
+        string $mode,
+        ?string $characters,
+        ?string $encoding,
+    ): Closure {
+        if (PHP_VERSION_ID >= 80400) {
+            $mbMode = match ($mode) {
+                'trim' => 'mb_trim',
+                'ltrim' => 'mb_ltrim',
+                'rtrim' => 'mb_rtrim',
+            };
+            /** @var callable(string, ?string, ?string): string $mbMode */
+            return static fn(string $value): string => $mbMode($value, $characters, $encoding);
+        }
+
+        $fallbackCharacters = $characters ?? self::DEFAULT_CHARACTERS;
+        /** @var callable(string, string): string $mode */
+        return static fn(string $value): string => $mode($value, $fallbackCharacters);
+    }
+
+    /**
+     * @param \Closure $function
+     * @param mixed $items
+     * @param bool $trimKeys
+     * @return mixed
+     */
+    private static function apply(
+        Closure $function,
+        mixed $items,
+        bool $trimKeys,
+    ): mixed {
+        return match (true) {
+            is_string($items) => $function($items),
+            is_array($items) => self::applyArray($function, $items, $trimKeys),
+            default => $items,
+        };
+    }
+
+    /**
+     * @param \Closure $function
+     * @param array<array-key, mixed> $items
+     * @param bool $trimKeys
+     * @return array<array-key, mixed>
+     */
+    private static function applyArray(
+        Closure $function,
+        array $items,
+        bool $trimKeys,
+    ): array {
+        $newItems = [];
+
+        /** @var mixed $value */
+        foreach ($items as $key => $value) {
+            /** @var mixed $newKey */
+            $newKey = ($trimKeys && is_string($key)) ? $function($key) : $key;
+
+            /**
+             * @psalm-suppress MixedArrayOffset
+             * @psalm-suppress MixedAssignment
+             */
+            $newItems[$newKey] = self::apply($function, $value, $trimKeys);
+        }
+
+        return $newItems;
     }
 }

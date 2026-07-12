@@ -4,737 +4,775 @@ declare(strict_types=1);
 
 namespace BVP\Trimmer\Tests;
 
+use stdClass;
+
 /**
  * @author shimomo
  */
 final class TrimmerDataProvider
 {
     /**
-     * @psalm-return non-empty-list<
+     * @return non-empty-list<
      *     array{
-     *         arguments: list<mixed>,
+     *         items: list<mixed>,
      *         expected: list<mixed>,
-     *     }
+     *     },
      * >
-     *
-     * @return array
      */
     public static function trimArrayProvider(): array
     {
         return [
             [
-                'arguments' => [' trimmerA '],
+                'items' => [' trimmerA '],
                 'expected' => ['trimmerA']
             ],
             [
-                'arguments' => [' trimmerA ', [' trimmerB ']],
+                'items' => [' trimmerA ', [' trimmerB ']],
                 'expected' => ['trimmerA', ['trimmerB']],
             ],
             [
-                'arguments' => ["\n trimmerA \t"],
+                'items' => ["\n trimmerA \t"],
                 'expected' => ['trimmerA'],
             ],
             [
-                'arguments' => ["\n trimmerA \t", ["\n trimmerB \t"]],
+                'items' => ["\n trimmerA \t", ["\n trimmerB \t"]],
                 'expected' => ['trimmerA', ['trimmerB']],
             ],
             [
-                'arguments' => [' trimmerA ', 1, 1.0, true, null],
+                'items' => [' trimmerA ', 1, 1.0, true, null],
                 'expected' => ['trimmerA', 1, 1.0, true, null],
             ],
             [
-                'arguments' => [' trimmerA ', [' trimmerB ', 1, 1.0, true, null]],
+                'items' => [' trimmerA ', [' trimmerB ', 1, 1.0, true, null]],
                 'expected' => ['trimmerA', ['trimmerB', 1, 1.0, true, null]],
             ],
             [
-                'arguments' => [1, 1.0, true, null],
+                'items' => [1, 1.0, true, null],
                 'expected' => [1, 1.0, true, null],
             ],
             [
-                'arguments' => [1, 1.0, true, null, [1, 1.0, true, null]],
+                'items' => [1, 1.0, true, null, [1, 1.0, true, null]],
                 'expected' => [1, 1.0, true, null, [1, 1.0, true, null]],
             ],
             [
-                'arguments' => [],
+                'items' => [],
                 'expected' => [],
             ],
             [
-                'arguments' => [[]],
+                'items' => [[]],
                 'expected' => [[]],
             ],
         ];
     }
 
     /**
-     * @psalm-return non-empty-list<
+     * @return non-empty-list<
      *     array{
-     *         arguments: bool,
+     *         items: bool,
      *         expected: bool,
-     *     }
+     *     },
      * >
-     *
-     * @return array
      */
     public static function trimBoolProvider(): array
     {
         return [
             [
-                'arguments' => true,
+                'items' => true,
                 'expected' => true,
             ],
             [
-                'arguments' => false,
+                'items' => false,
                 'expected' => false,
             ],
         ];
     }
 
     /**
-     * @psalm-return non-empty-list<
+     * @return non-empty-list<
      *     array{
-     *         arguments: float,
+     *         items: float,
      *         expected: float,
-     *     }
+     *     },
      * >
-     *
-     * @return array
      */
     public static function trimFloatProvider(): array
     {
         return [
             [
-                'arguments' => 0.0,
+                'items' => 0.0,
                 'expected' => 0.0,
             ],
             [
-                'arguments' => 1.0,
+                'items' => 1.0,
                 'expected' => 1.0,
             ],
         ];
     }
 
     /**
-     * @psalm-return non-empty-list<
+     * @return non-empty-list<
      *     array{
-     *         arguments: int,
+     *         items: int,
      *         expected: int,
-     *     }
+     *     },
      * >
-     *
-     * @return array
      */
     public static function trimIntProvider(): array
     {
         return [
             [
-                'arguments' => 0,
+                'items' => 0,
                 'expected' => 0,
             ],
             [
-                'arguments' => 1,
+                'items' => 1,
                 'expected' => 1,
             ],
         ];
     }
 
     /**
-     * @psalm-return non-empty-list<
-     *     array{arguments: null}
+     * @return non-empty-list<
+     *     array{
+     *         items: null,
+     *     },
      * >
-     *
-     * @return array
      */
     public static function trimNullProvider(): array
     {
         return [
             [
-                'arguments' => null,
+                'items' => null,
             ],
         ];
     }
 
     /**
-     * @psalm-return non-empty-list<
+     * @return non-empty-list<
      *     array{
-     *         arguments: object,
-     *         expected: list<non-empty-string>,
-     *     }
-     * >
-     *
-     * @return array
-     */
-    public static function trimObjectProvider(): array
-    {
-        $objectA = new class {
-            private string $propertyA = ' trimmerA ';
-            private string $propertyB = ' trimmerB ';
-            private object $objectB;
-
-            public function __construct()
-            {
-                $this->objectB = new class {
-                    private string $propertyC = ' trimmerC ';
-                    private string $propertyD = ' trimmerD ';
-
-                    public function getPropertyC(): string
-                    {
-                        return $this->propertyC;
-                    }
-
-                    public function setPropertyC(string $value): void
-                    {
-                        $this->propertyC = $value;
-                    }
-
-                    public function getPropertyD(): string
-                    {
-                        return $this->propertyD;
-                    }
-                };
-            }
-
-            public function getPropertyA(): string
-            {
-                return $this->propertyA;
-            }
-
-            public function setPropertyA(string $value): void
-            {
-                $this->propertyA = $value;
-            }
-
-            public function getPropertyB(): string
-            {
-                return $this->propertyB;
-            }
-
-            public function getObjectB(): object
-            {
-                return $this->objectB;
-            }
-        };
-
-        return [
-            [
-                'arguments' => $objectA,
-                'expected' => ['trimmerA', ' trimmerB ', 'trimmerC', ' trimmerD '],
-            ],
-        ];
-    }
-
-    /**
-     * @psalm-return non-empty-list<
-     *     array{
-     *         arguments: string,
+     *         items: string,
      *         expected: string,
-     *     }
+     *     },
      * >
-     *
-     * @return array
      */
     public static function trimStringProvider(): array
     {
         return [
             [
-                'arguments' => ' trimmer ',
+                'items' => ' trimmer ',
                 'expected' => 'trimmer',
             ],
             [
-                'arguments' => "\n trimmer \t",
+                'items' => "\n trimmer \t",
                 'expected' => 'trimmer',
             ],
             [
-                'arguments' => '',
+                'items' => '',
                 'expected' => '',
             ],
             [
-                'arguments' => ' ',
+                'items' => ' ',
                 'expected' => '',
             ],
         ];
     }
 
     /**
-     * @psalm-return non-empty-list<
+     * @return non-empty-list<
      *     array{
-     *         arguments: list<mixed>,
-     *         expected: list<mixed>,
-     *     }
+     *         items: object,
+     *     },
      * >
-     *
-     * @return array
+     */
+    public static function trimObjectProvider(): array
+    {
+        return [
+            [
+                'items' => new stdClass(),
+            ],
+            [
+                'items' => (object) ['foo' => ' bar '],
+            ],
+        ];
+    }
+
+    /**
+     * @return non-empty-list<
+     *     array{
+     *         items: non-empty-string,
+     *         characters: non-empty-string,
+     *         expected: non-empty-string,
+     *     },
+     * >
+     */
+    public static function trimCharactersProvider(): array
+    {
+        return [
+            [
+                'items' => '__trimmer__',
+                'characters' => '_',
+                'expected' => 'trimmer',
+            ],
+            [
+                'items' => '--trimmer--',
+                'characters' => '-',
+                'expected' => 'trimmer',
+            ],
+            [
+                'items' => ' _trimmer_ ',
+                'characters' => ' _',
+                'expected' => 'trimmer',
+            ],
+        ];
+    }
+
+    /**
+     * @return non-empty-list<
+     *     array{
+     *         items: array<array-key, mixed>,
+     *         trimKeys: bool,
+     *         expected: array<array-key, mixed>,
+     *     },
+     * >
+     */
+    public static function trimKeysProvider(): array
+    {
+        return [
+            [
+                'items' => [' foo ' => ' bar '],
+                'trimKeys' => false,
+                'expected' => [' foo ' => 'bar'],
+            ],
+            [
+                'items' => [' foo ' => ' bar '],
+                'trimKeys' => true,
+                'expected' => ['foo' => 'bar'],
+            ],
+            [
+                'items' => [' foo ' => ' a ', 'foo' => ' b '],
+                'trimKeys' => true,
+                'expected' => ['foo' => 'b'],
+            ],
+            [
+                'items' => [8 => 'a', ' 8 ' => 'b'],
+                'trimKeys' => true,
+                'expected' => [8 => 'b'],
+            ],
+            [
+                'items' => [0 => ' a ', 1 => ' b '],
+                'trimKeys' => true,
+                'expected' => [0 => 'a', 1 => 'b'],
+            ],
+            [
+                'items' => [' outer ' => [' inner ' => ' value ']],
+                'trimKeys' => true,
+                'expected' => ['outer' => ['inner' => 'value']],
+            ],
+            [
+                'items' => [],
+                'trimKeys' => true,
+                'expected' => [],
+            ],
+        ];
+    }
+
+    /**
+     * @return non-empty-list<
+     *     array{
+     *         items: list<mixed>,
+     *         expected: list<mixed>,
+     *     },
+     * >
      */
     public static function ltrimArrayProvider(): array
     {
         return [
             [
-                'arguments' => [' trimmerA '],
+                'items' => [' trimmerA '],
                 'expected' => ['trimmerA '],
             ],
             [
-                'arguments' => [' trimmerA ', [' trimmerB ']],
+                'items' => [' trimmerA ', [' trimmerB ']],
                 'expected' => ['trimmerA ', ['trimmerB ']],
             ],
             [
-                'arguments' => ["\n trimmerA \t"],
+                'items' => ["\n trimmerA \t"],
                 'expected' => ["trimmerA \t"],
             ],
             [
-                'arguments' => ["\n trimmerA \t", ["\n trimmerB \t"]],
+                'items' => ["\n trimmerA \t", ["\n trimmerB \t"]],
                 'expected' => ["trimmerA \t", ["trimmerB \t"]],
             ],
             [
-                'arguments' => [' trimmerA ', 1, 1.0, true, null],
+                'items' => [' trimmerA ', 1, 1.0, true, null],
                 'expected' => ['trimmerA ', 1, 1.0, true, null]],
             [
-                'arguments' => [' trimmerA ', [' trimmerB ', 1, 1.0, true, null]],
+                'items' => [' trimmerA ', [' trimmerB ', 1, 1.0, true, null]],
                 'expected' => ['trimmerA ', ['trimmerB ', 1, 1.0, true, null]]],
             [
-                'arguments' => [1, 1.0, true, null],
+                'items' => [1, 1.0, true, null],
                 'expected' => [1, 1.0, true, null]],
             [
-                'arguments' => [1, 1.0, true, null, [1, 1.0, true, null]],
+                'items' => [1, 1.0, true, null, [1, 1.0, true, null]],
                 'expected' => [1, 1.0, true, null, [1, 1.0, true, null]]],
             [
-                'arguments' => [],
+                'items' => [],
                 'expected' => []],
             [
-                'arguments' => [[]],
+                'items' => [[]],
                 'expected' => [[]],
             ],
         ];
     }
 
     /**
-     * @psalm-return non-empty-list<
+     * @return non-empty-list<
      *     array{
-     *         arguments: bool,
+     *         items: bool,
      *         expected: bool,
-     *     }
+     *     },
      * >
-     *
-     * @return array
      */
     public static function ltrimBoolProvider(): array
     {
         return [
             [
-                'arguments' => true,
+                'items' => true,
                 'expected' => true,
             ],
             [
-                'arguments' => false,
+                'items' => false,
                 'expected' => false,
             ],
         ];
     }
 
     /**
-     * @psalm-return non-empty-list<
+     * @return non-empty-list<
      *     array{
-     *         arguments: float,
+     *         items: float,
      *         expected: float,
-     *     }
+     *     },
      * >
-     *
-     * @return array
      */
     public static function ltrimFloatProvider(): array
     {
         return [
             [
-                'arguments' => 0.0,
+                'items' => 0.0,
                 'expected' => 0.0,
             ],
             [
-                'arguments' => 1.0,
+                'items' => 1.0,
                 'expected' => 1.0,
             ],
         ];
     }
 
     /**
-     * @psalm-return non-empty-list<
+     * @return non-empty-list<
      *     array{
-     *         arguments: int,
+     *         items: int,
      *         expected: int,
-     *     }
+     *     },
      * >
-     *
-     * @return array
      */
     public static function ltrimIntProvider(): array
     {
         return [
             [
-                'arguments' => 0,
+                'items' => 0,
                 'expected' => 0,
             ],
             [
-                'arguments' => 1,
+                'items' => 1,
                 'expected' => 1,
             ],
         ];
     }
 
     /**
-     * @psalm-return non-empty-list<
-     *     array{arguments: null}
+     * @return non-empty-list<
+     *     array{
+     *         items: null,
+     *     },
      * >
-     *
-     * @return array
      */
     public static function ltrimNullProvider(): array
     {
         return [
             [
-                'arguments' => null,
+                'items' => null,
             ],
         ];
     }
 
     /**
-     * @psalm-return non-empty-list<
+     * @return non-empty-list<
      *     array{
-     *         arguments: object,
-     *         expected: list<non-empty-string>,
-     *     }
-     * >
-     *
-     * @return array
-     */
-    public static function ltrimObjectProvider(): array
-    {
-        $objectA = new class {
-            private string $propertyA = ' trimmerA ';
-            private string $propertyB = ' trimmerB ';
-            private object $objectB;
-
-            public function __construct()
-            {
-                $this->objectB = new class {
-                    private string $propertyC = ' trimmerC ';
-                    private string $propertyD = ' trimmerD ';
-
-                    public function getPropertyC(): string
-                    {
-                        return $this->propertyC;
-                    }
-
-                    public function setPropertyC(string $value): void
-                    {
-                        $this->propertyC = $value;
-                    }
-
-                    public function getPropertyD(): string
-                    {
-                        return $this->propertyD;
-                    }
-                };
-            }
-
-            public function getPropertyA(): string
-            {
-                return $this->propertyA;
-            }
-
-            public function setPropertyA(string $value): void
-            {
-                $this->propertyA = $value;
-            }
-
-            public function getPropertyB(): string
-            {
-                return $this->propertyB;
-            }
-
-            public function getObjectB(): object
-            {
-                return $this->objectB;
-            }
-        };
-
-        return [
-            [
-                'arguments' => $objectA,
-                'expected' => ['trimmerA ', ' trimmerB ', 'trimmerC ', ' trimmerD '],
-            ],
-        ];
-    }
-
-    /**
-     * @psalm-return non-empty-list<
-     *     array{
-     *         arguments: string,
+     *         items: string,
      *         expected: string,
-     *     }
+     *     },
      * >
-     *
-     * @return array
      */
     public static function ltrimStringProvider(): array
     {
         return [
             [
-                'arguments' => ' trimmer ',
+                'items' => ' trimmer ',
                 'expected' => 'trimmer ',
             ],
             [
-                'arguments' => "\n trimmer \t",
+                'items' => "\n trimmer \t",
                 'expected' => "trimmer \t",
             ],
             [
-                'arguments' => '',
+                'items' => '',
                 'expected' => '',
             ],
             [
-                'arguments' => ' ',
+                'items' => ' ',
                 'expected' => '',
             ],
         ];
     }
 
     /**
-     * @psalm-return non-empty-list<
+     * @return non-empty-list<
      *     array{
-     *         arguments: list<mixed>,
-     *         expected: list<mixed>,
-     *     }
+     *         items: object,
+     *     },
      * >
-     *
-     * @return array
+     */
+    public static function ltrimObjectProvider(): array
+    {
+        return self::trimObjectProvider();
+    }
+
+    /**
+     * @return non-empty-list<
+     *     array{
+     *         items: string,
+     *         characters: non-empty-string,
+     *         expected: string,
+     *     },
+     * >
+     */
+    public static function ltrimCharactersProvider(): array
+    {
+        return [
+            [
+                'items' => '__trimmer__',
+                'characters' => '_',
+                'expected' => 'trimmer__',
+            ],
+            [
+                'items' => '--trimmer--',
+                'characters' => '-',
+                'expected' => 'trimmer--',
+            ],
+        ];
+    }
+
+    /**
+     * @return non-empty-list<
+     *     array{
+     *         items: array<array-key, mixed>,
+     *         trimKeys: bool,
+     *         expected: array<array-key, mixed>,
+     *     },
+     * >
+     */
+    public static function ltrimKeysProvider(): array
+    {
+        return [
+            [
+                'items' => [' foo ' => ' bar '],
+                'trimKeys' => false,
+                'expected' => [' foo ' => 'bar '],
+            ],
+            [
+                'items' => [' foo ' => ' bar '],
+                'trimKeys' => true,
+                'expected' => ['foo ' => 'bar '],
+            ],
+            [
+                'items' => [' foo' => ' a', 'foo' => ' b'],
+                'trimKeys' => true,
+                'expected' => ['foo' => 'b'],
+            ],
+            [
+                'items' => [8 => 'a', ' 8' => 'b'],
+                'trimKeys' => true,
+                'expected' => [8 => 'b'],
+            ],
+            [
+                'items' => [0 => ' a ', 1 => ' b '],
+                'trimKeys' => true,
+                'expected' => [0 => 'a ', 1 => 'b '],
+            ],
+            [
+                'items' => [' outer ' => [' inner ' => ' value ']],
+                'trimKeys' => true,
+                'expected' => ['outer ' => ['inner ' => 'value ']],
+            ],
+            [
+                'items' => [],
+                'trimKeys' => true,
+                'expected' => [],
+            ],
+        ];
+    }
+
+    /**
+     * @return non-empty-list<
+     *     array{
+     *         items: list<mixed>,
+     *         expected: list<mixed>,
+     *     },
+     * >
      */
     public static function rtrimArrayProvider(): array
     {
         return [
             [
-                'arguments' => [' trimmerA '],
+                'items' => [' trimmerA '],
                 'expected' => [' trimmerA'],
             ],
             [
-                'arguments' => [' trimmerA ', [' trimmerB ']],
+                'items' => [' trimmerA ', [' trimmerB ']],
                 'expected' => [' trimmerA', [' trimmerB']],
             ],
             [
-                'arguments' => ["\n trimmerA \t"],
+                'items' => ["\n trimmerA \t"],
                 'expected' => ["\n trimmerA"],
             ],
             [
-                'arguments' => ["\n trimmerA \t", ["\n trimmerB \t"]],
+                'items' => ["\n trimmerA \t", ["\n trimmerB \t"]],
                 'expected' => ["\n trimmerA", ["\n trimmerB"]],
             ],
             [
-                'arguments' => [' trimmerA ', 1, 1.0, true, null],
+                'items' => [' trimmerA ', 1, 1.0, true, null],
                 'expected' => [' trimmerA', 1, 1.0, true, null],
             ],
             [
-                'arguments' => [' trimmerA ', [' trimmerB ', 1, 1.0, true, null]],
+                'items' => [' trimmerA ', [' trimmerB ', 1, 1.0, true, null]],
                 'expected' => [' trimmerA', [' trimmerB', 1, 1.0, true, null]],
             ],
             [
-                'arguments' => [1, 1.0, true, null],
+                'items' => [1, 1.0, true, null],
                 'expected' => [1, 1.0, true, null],
             ],
             [
-                'arguments' => [1, 1.0, true, null, [1, 1.0, true, null]],
+                'items' => [1, 1.0, true, null, [1, 1.0, true, null]],
                 'expected' => [1, 1.0, true, null, [1, 1.0, true, null]],
             ],
             [
-                'arguments' => [],
+                'items' => [],
                 'expected' => [],
             ],
             [
-                'arguments' => [[]],
+                'items' => [[]],
                 'expected' => [[]],
             ],
         ];
     }
 
     /**
-     * @psalm-return non-empty-list<
+     * @return non-empty-list<
      *     array{
-     *         arguments: bool,
+     *         items: bool,
      *         expected: bool,
-     *     }
+     *     },
      * >
-     *
-     * @return array
      */
     public static function rtrimBoolProvider(): array
     {
         return [
             [
-                'arguments' => true,
+                'items' => true,
                 'expected' => true,
             ],
             [
-                'arguments' => false,
+                'items' => false,
                 'expected' => false,
             ],
         ];
     }
 
     /**
-     * @psalm-return non-empty-list<
+     * @return non-empty-list<
      *     array{
-     *         arguments: float,
+     *         items: float,
      *         expected: float,
-     *     }
+     *     },
      * >
-     *
-     * @return array
      */
     public static function rtrimFloatProvider(): array
     {
         return [
             [
-                'arguments' => 0.0,
+                'items' => 0.0,
                 'expected' => 0.0,
             ],
             [
-                'arguments' => 1.0,
+                'items' => 1.0,
                 'expected' => 1.0,
             ],
         ];
     }
 
     /**
-     * @psalm-return non-empty-list<
+     * @return non-empty-list<
      *     array{
-     *         arguments: int,
+     *         items: int,
      *         expected: int,
-     *     }
+     *     },
      * >
-     *
-     * @return array
      */
     public static function rtrimIntProvider(): array
     {
         return [
             [
-                'arguments' => 0,
+                'items' => 0,
                 'expected' => 0,
             ],
             [
-                'arguments' => 1,
+                'items' => 1,
                 'expected' => 1,
             ],
         ];
     }
 
     /**
-     * @psalm-return non-empty-list<
-     *     array{arguments: null}
+     * @return non-empty-list<
+     *     array{
+     *         items: null,
+     *     },
      * >
-     *
-     * @return array
      */
     public static function rtrimNullProvider(): array
     {
         return [
             [
-                'arguments' => null,
+                'items' => null,
             ],
         ];
     }
 
     /**
-     * @psalm-return non-empty-list<
+     * @return non-empty-list<
      *     array{
-     *         arguments: object,
-     *         expected: list<non-empty-string>,
-     *     }
-     * >
-     *
-     * @return array
-     */
-    public static function rtrimObjectProvider(): array
-    {
-        $objectA = new class {
-            private string $propertyA = ' trimmerA ';
-            private string $propertyB = ' trimmerB ';
-            private object $objectB;
-
-            public function __construct()
-            {
-                $this->objectB = new class {
-                    private string $propertyC = ' trimmerC ';
-                    private string $propertyD = ' trimmerD ';
-
-                    public function getPropertyC(): string
-                    {
-                        return $this->propertyC;
-                    }
-
-                    public function setPropertyC(string $value): void
-                    {
-                        $this->propertyC = $value;
-                    }
-
-                    public function getPropertyD(): string
-                    {
-                        return $this->propertyD;
-                    }
-                };
-            }
-
-            public function getPropertyA(): string
-            {
-                return $this->propertyA;
-            }
-
-            public function setPropertyA(string $value): void
-            {
-                $this->propertyA = $value;
-            }
-
-            public function getPropertyB(): string
-            {
-                return $this->propertyB;
-            }
-
-            public function getObjectB(): object
-            {
-                return $this->objectB;
-            }
-        };
-
-        return [
-            [
-                'arguments' => $objectA,
-                'expected' => [' trimmerA', ' trimmerB ', ' trimmerC', ' trimmerD '],
-            ],
-        ];
-    }
-
-    /**
-     * @psalm-return non-empty-list<
-     *     array{
-     *         arguments: string,
+     *         items: string,
      *         expected: string,
-     *     }
+     *     },
      * >
-     *
-     * @return array
      */
     public static function rtrimStringProvider(): array
     {
         return [
             [
-                'arguments' => ' trimmer ',
+                'items' => ' trimmer ',
                 'expected' => ' trimmer',
             ],
             [
-                'arguments' => "\n trimmer \t",
+                'items' => "\n trimmer \t",
                 'expected' => "\n trimmer",
             ],
             [
-                'arguments' => '',
+                'items' => '',
                 'expected' => '',
             ],
             [
-                'arguments' => ' ',
+                'items' => ' ',
                 'expected' => '',
+            ],
+        ];
+    }
+
+    /**
+     * @return non-empty-list<
+     *     array{
+     *         items: object,
+     *     },
+     * >
+     */
+    public static function rtrimObjectProvider(): array
+    {
+        return self::trimObjectProvider();
+    }
+
+    /**
+     * @return non-empty-list<
+     *     array{
+     *         items: string,
+     *         characters: non-empty-string,
+     *         expected: string,
+     *     },
+     * >
+     */
+    public static function rtrimCharactersProvider(): array
+    {
+        return [
+            [
+                'items' => '__trimmer__',
+                'characters' => '_',
+                'expected' => '__trimmer',
+            ],
+            [
+                'items' => '--trimmer--',
+                'characters' => '-',
+                'expected' => '--trimmer',
+            ],
+        ];
+    }
+
+    /**
+     * @return non-empty-list<
+     *     array{
+     *         items: array<array-key, mixed>,
+     *         trimKeys: bool,
+     *         expected: array<array-key, mixed>,
+     *     },
+     * >
+     */
+    public static function rtrimKeysProvider(): array
+    {
+        return [
+            [
+                'items' => [' foo ' => ' bar '],
+                'trimKeys' => false,
+                'expected' => [' foo ' => ' bar'],
+            ],
+            [
+                'items' => [' foo ' => ' bar '],
+                'trimKeys' => true,
+                'expected' => [' foo' => ' bar'],
+            ],
+            [
+                'items' => ['foo ' => 'a ', 'foo' => 'b '],
+                'trimKeys' => true,
+                'expected' => ['foo' => 'b'],
+            ],
+            [
+                'items' => [8 => 'a', '8 ' => 'b'],
+                'trimKeys' => true,
+                'expected' => [8 => 'b'],
+            ],
+            [
+                'items' => [0 => ' a ', 1 => ' b '],
+                'trimKeys' => true,
+                'expected' => [0 => ' a', 1 => ' b'],
+            ],
+            [
+                'items' => [' outer ' => [' inner ' => ' value ']],
+                'trimKeys' => true,
+                'expected' => [' outer' => [' inner' => ' value']],
+            ],
+            [
+                'items' => [],
+                'trimKeys' => true,
+                'expected' => [],
             ],
         ];
     }
