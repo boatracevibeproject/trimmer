@@ -2,6 +2,16 @@
 
 [English](README.md) | [日本語](README_ja.md)
 
+[![php](https://poser.pugx.org/bvp/trimmer/require/php)](https://packagist.org/packages/bvp/trimmer)
+[![stable](https://poser.pugx.org/bvp/trimmer/v/stable)](https://packagist.org/packages/bvp/trimmer)
+[![license](https://poser.pugx.org/bvp/trimmer/license)](https://packagist.org/packages/bvp/trimmer)
+
+[![test](https://github.com/boatracevibeproject/trimmer/actions/workflows/test.yml/badge.svg)](https://github.com/boatracevibeproject/trimmer/actions/workflows/test.yml)
+[![psalm](https://github.com/boatracevibeproject/trimmer/actions/workflows/psalm.yml/badge.svg)](https://github.com/boatracevibeproject/trimmer/actions/workflows/psalm.yml)
+[![audit](https://github.com/boatracevibeproject/trimmer/actions/workflows/audit.yml/badge.svg)](https://github.com/boatracevibeproject/trimmer/actions/workflows/audit.yml)
+[![keepalive](https://github.com/boatracevibeproject/trimmer/actions/workflows/keepalive.yml/badge.svg)](https://github.com/boatracevibeproject/trimmer/actions/workflows/keepalive.yml)
+[![dependabot-updates](https://github.com/boatracevibeproject/trimmer/actions/workflows/dependabot/dependabot-updates/badge.svg)](https://github.com/boatracevibeproject/trimmer/actions/workflows/dependabot/dependabot-updates)
+
 A small utility class that recursively trims whitespace (or custom characters) from strings, including strings nested inside arrays of any depth.
 
 ## Why
