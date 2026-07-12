@@ -176,7 +176,7 @@ final class TrimmerTest extends TestCase
      */
     #[Test]
     #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimNullProvider')]
-    public function testLtrimNull(null $items): void
+    public function testLtrimNull($items): void
     {
         $this->assertNull(Trimmer::ltrim($items));
     }
@@ -284,7 +284,7 @@ final class TrimmerTest extends TestCase
      */
     #[Test]
     #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimNullProvider')]
-    public function testRtrimNull(null $items): void
+    public function testRtrimNull($items): void
     {
         $this->assertNull(Trimmer::rtrim($items));
     }
@@ -392,7 +392,7 @@ final class TrimmerTest extends TestCase
      */
     #[Test]
     #[DataProviderExternal(TrimmerDataProvider::class, 'ltrimNullProvider')]
-    public function testTrimStartNull(null $items): void
+    public function testTrimStartNull($items): void
     {
         $this->assertNull(Trimmer::trimStart($items));
     }
@@ -487,7 +487,7 @@ final class TrimmerTest extends TestCase
      */
     #[Test]
     #[DataProviderExternal(TrimmerDataProvider::class, 'rtrimNullProvider')]
-    public function testTrimEndNull(null $items): void
+    public function testTrimEndNull($items): void
     {
         $this->assertNull(Trimmer::trimEnd($items));
     }
