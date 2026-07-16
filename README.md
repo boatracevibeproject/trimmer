@@ -73,6 +73,10 @@ Trimmer::trim([' foo ' => ' bar ', 'foo' => 'baz'], trimKeys: true);
 
 **Note on collisions:** if trimming causes two keys to become identical (including PHP's automatic casting of a canonical numeric string key like `"8"` to the integer `8`), the later value silently overwrites the earlier one — the same behavior you'd get from a normal PHP array assignment (`$array[$key] = $value`).
 
+### Maximum nesting depth
+
+Nested arrays are walked recursively, so an array nested deeper than `Trimmer::MAX_DEPTH` (`512`, matching PHP's own `json_decode()` / `json_encode()` default) throws `OverflowException` instead of risking a stack overflow.
+
 ## What it does not do
 
 - It does not trim object properties. Objects are returned untouched, since trimming them safely would require knowing each class's getters/setters, `readonly` properties, and constructor validation — which can't be handled generically without risking broken invariants.

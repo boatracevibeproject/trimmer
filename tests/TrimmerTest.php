@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BVP\Trimmer\Tests;
 
 use BVP\Trimmer\Trimmer;
+use OverflowException;
 use PHPUnit\Framework\Attributes\DataProviderExternal;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -526,5 +527,44 @@ final class TrimmerTest extends TestCase
     public function testTrimEndKeys(array $items, bool $trimKeys, array $expected): void
     {
         $this->assertSame($expected, Trimmer::trimEnd($items, trimKeys: $trimKeys));
+    }
+
+    /**
+     * @return void
+     */
+    #[Test]
+    public function testTrimSucceedsAtMaxDepth(): void
+    {
+        $items = self::nest(Trimmer::MAX_DEPTH, ' value ');
+        $expected = self::nest(Trimmer::MAX_DEPTH, 'value');
+
+        $this->assertSame($expected, Trimmer::trim($items));
+    }
+
+    /**
+     * @return void
+     */
+    #[Test]
+    public function testTrimThrowsOverflowExceptionWhenMaxDepthExceeded(): void
+    {
+        $items = self::nest(Trimmer::MAX_DEPTH + 1, ' value ');
+
+        $this->expectException(OverflowException::class);
+
+        Trimmer::trim($items);
+    }
+
+    /**
+     * @param int $levels
+     * @param mixed $value
+     * @return mixed
+     */
+    private static function nest(int $levels, mixed $value): mixed
+    {
+        for ($i = 0; $i < $levels; $i++) {
+            $value = [$value];
+        }
+
+        return $value;
     }
 }
