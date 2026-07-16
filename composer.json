@@ -15,8 +15,8 @@
         }
     ],
     "support": {
-        "issues": "https://github.com/boatracevibeproject/bvp-trimmer/issues",
-        "source": "https://github.com/boatracevibeproject/bvp-trimmer"
+        "issues": "https://github.com/boatracevibeproject/trimmer/issues",
+        "source": "https://github.com/boatracevibeproject/trimmer"
     },
     "require": {
         "php": "^8.1"
