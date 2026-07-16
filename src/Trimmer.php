@@ -18,7 +18,7 @@ final class Trimmer
      * @param ?string $characters
      * @param ?string $encoding
      * @param bool $trimKeys
-     * @return mixed
+     * @return ($items is string ? string : ($items is array ? array<array-key, mixed> : mixed))
      */
     public static function trim(
         mixed $items,
@@ -26,6 +26,7 @@ final class Trimmer
         ?string $encoding = null,
         bool $trimKeys = false,
     ): mixed {
+        /** @psalm-suppress MixedReturnStatement */
         return self::apply(self::trimmer('trim', $characters, $encoding), $items, $trimKeys);
     }
 
@@ -34,7 +35,7 @@ final class Trimmer
      * @param ?string $characters
      * @param ?string $encoding
      * @param bool $trimKeys
-     * @return mixed
+     * @return ($items is string ? string : ($items is array ? array<array-key, mixed> : mixed))
      */
     public static function ltrim(
         mixed $items,
@@ -42,6 +43,7 @@ final class Trimmer
         ?string $encoding = null,
         bool $trimKeys = false,
     ): mixed {
+        /** @psalm-suppress MixedReturnStatement */
         return self::apply(self::trimmer('ltrim', $characters, $encoding), $items, $trimKeys);
     }
 
@@ -50,7 +52,7 @@ final class Trimmer
      * @param ?string $characters
      * @param ?string $encoding
      * @param bool $trimKeys
-     * @return mixed
+     * @return ($items is string ? string : ($items is array ? array<array-key, mixed> : mixed))
      */
     public static function rtrim(
         mixed $items,
@@ -58,6 +60,7 @@ final class Trimmer
         ?string $encoding = null,
         bool $trimKeys = false,
     ): mixed {
+        /** @psalm-suppress MixedReturnStatement */
         return self::apply(self::trimmer('rtrim', $characters, $encoding), $items, $trimKeys);
     }
 
@@ -66,7 +69,7 @@ final class Trimmer
      * @param ?string $characters
      * @param ?string $encoding
      * @param bool $trimKeys
-     * @return mixed
+     * @return ($items is string ? string : ($items is array ? array<array-key, mixed> : mixed))
      */
     public static function trimStart(
         mixed $items,
@@ -74,6 +77,7 @@ final class Trimmer
         ?string $encoding = null,
         bool $trimKeys = false,
     ): mixed {
+        /** @psalm-suppress MixedReturnStatement */
         return self::ltrim($items, $characters, $encoding, $trimKeys);
     }
 
@@ -82,7 +86,7 @@ final class Trimmer
      * @param ?string $characters
      * @param ?string $encoding
      * @param bool $trimKeys
-     * @return mixed
+     * @return ($items is string ? string : ($items is array ? array<array-key, mixed> : mixed))
      */
     public static function trimEnd(
         mixed $items,
@@ -90,6 +94,7 @@ final class Trimmer
         ?string $encoding = null,
         bool $trimKeys = false,
     ): mixed {
+        /** @psalm-suppress MixedReturnStatement */
         return self::rtrim($items, $characters, $encoding, $trimKeys);
     }
 
