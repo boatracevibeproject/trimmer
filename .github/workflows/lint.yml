@@ -1,0 +1,46 @@
+name: lint
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Pint on PHP ${{ matrix.php-version }} (Ubuntu 24.04)
+    runs-on: ubuntu-24.04
+    strategy:
+      matrix:
+        php-version:
+          - '8.3'
+    steps:
+      - name: Setup PHP ${{ matrix.php-version }}
+        uses: shivammathur/setup-php@f3e473d116dcccaddc5834248c87452386958240
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: mbstring, xml
+
+      - name: Checkout Repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+
+      # このパッケージは PHP 8.1 を支えるが、Pint は 8.2 以上を要求する。
+      # require-dev に入れると 8.1 のテストジョブで composer が解決できなくなるため、
+      # 8.3 で回すこのジョブだけがグローバルに入れて使う。
+      - name: Install Pint
+        run: composer global require laravel/pint --no-interaction --no-progress
+
+      - name: Run Pint
+        run: $(composer global config bin-dir --absolute)/pint --test
+
+      - name: Install Dependencies
+        run: composer install --prefer-dist --no-interaction --no-progress --dev
+
+      - name: Check composer.json Normalization
+        run: composer normalize --dry-run
